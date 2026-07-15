@@ -7,7 +7,29 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Nisarg Vaghela | Software Engineer',
-  description: 'Full-stack development portfolio showcasing mobile and web applications.',
+  description: 'Full-stack software engineer and B.Tech AI student at NIT Surat. Showcasing web, mobile, and artificial intelligence projects.',
+  openGraph: {
+    title: 'Nisarg Vaghela | Software Engineer',
+    description: 'Specializing in modern full-stack web and mobile architecture. View my latest projects and engineering work.',
+    url: 'https://nisargvaghela.dev', // You can change this when you get a custom domain
+    siteName: 'Nisarg Vaghela Portfolio',
+    images: [
+      {
+        url: '/og-image.jpg', 
+        width: 1200,
+        height: 630,
+        alt: 'Nisarg Vaghela Portfolio Preview',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Nisarg Vaghela | Software Engineer',
+    description: 'Specializing in modern full-stack web and mobile architecture. View my latest projects and engineering work.',
+    images: ['/og-image.jpg'],
+  },
 }
 
 export default function RootLayout({
