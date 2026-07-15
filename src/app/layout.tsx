@@ -6,10 +6,10 @@ import Link from 'next/link'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Nisarg Vaghela | Software Engineer',
-  description: 'Full-stack software engineer and B.Tech AI student at NIT Surat. Showcasing web, mobile, and artificial intelligence projects.',
+  title: 'Nisarg Vaghela | Full Stack Engineer',
+  description: 'Full-stack engineer and B.Tech AI student at NIT Surat. Showcasing web, mobile, and artificial intelligence projects.',
   openGraph: {
-    title: 'Nisarg Vaghela | Software Engineer',
+    title: 'Nisarg Vaghela | Full Stack Engineer',
     description: 'Specializing in modern full-stack web and mobile architecture. View my latest projects and engineering work.',
     url: 'https://nisargvaghela.dev', // You can change this when you get a custom domain
     siteName: 'Nisarg Vaghela Portfolio',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nisarg Vaghela | Software Engineer',
+    title: 'Nisarg Vaghela | Full Stack Engineer',
     description: 'Specializing in modern full-stack web and mobile architecture. View my latest projects and engineering work.',
     images: ['/og-image.jpg'],
   },
