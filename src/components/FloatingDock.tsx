@@ -111,11 +111,11 @@ function DockIcon({
     return val - bounds.x - bounds.width / 2
   })
 
-  // Dynamic width and height of the icon button container (scales from 44px to 68px)
-  const widthTransform = useTransform(distance, [-150, 0, 150], [44, 68, 44])
+  // Dynamic width and height of the icon button container (scales from 40px to 56px)
+  const widthTransform = useTransform(distance, [-150, 0, 150], [40, 56, 40])
   
-  // Dynamic internal SVG size (scales from 18px to 28px)
-  const iconSizeTransform = useTransform(distance, [-150, 0, 150], [18, 28, 18])
+  // Dynamic internal SVG size (scales from 16px to 22px)
+  const iconSizeTransform = useTransform(distance, [-150, 0, 150], [16, 22, 16])
 
   const width = useSpring(widthTransform, {
     mass: 0.1,
@@ -147,7 +147,7 @@ function DockIcon({
         {hoveredIndex === idx && (
           <motion.div
             initial={{ opacity: 0, y: 10, scale: 0.85 }}
-            animate={{ opacity: 1, y: -45, scale: 1 }}
+            animate={{ opacity: 1, y: -38, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.85 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className="absolute left-1/2 -translate-x-1/2 px-2.5 py-1 bg-black/90 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] rounded whitespace-nowrap glow-text pointer-events-none z-10 shadow-[0_0_10px_rgba(0,240,255,0.2)]"
@@ -167,7 +167,7 @@ function DockIcon({
         animate={
           isBouncing 
             ? { 
-                y: [0, -24, 0, -16, 0, -8, 0, -3, 0], 
+                y: [0, -18, 0, -12, 0, -6, 0, -2, 0], 
                 transition: { 
                   duration: 1.8, 
                   ease: "easeInOut",
@@ -223,7 +223,7 @@ export default function FloatingDock() {
         animate="visible"
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="glass-panel px-4 rounded-2xl flex items-center gap-4 bg-black/60 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] pointer-events-auto h-20"
+        className="glass-panel px-3.5 rounded-2xl flex items-center gap-3 bg-black/60 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] pointer-events-auto h-16"
       >
         {dockItems.map((item, idx) => (
           <DockIcon 
