@@ -1,17 +1,16 @@
 import { prisma } from '@/lib/prisma'
 import ContactForm from '@/components/ContactForm'
-import Link from 'next/link'
 import FadeIn from '@/components/FadeIn'
 import CPStats from '@/components/CPStats'
 import LeetCodeStats from '@/components/LeetCodeStats'
 import Education from '@/components/Education'
-import TypingEffect from '@/components/TypingEffect'
 import Skills from '@/components/Skills'
 import Experience from '@/components/Experience'
+import Certificates from '@/components/Certificates'
 import GitHubCalendar from '@/components/GitHubCalendar'
 import ProjectCard from '@/components/ProjectCard'
 import ScanlineDivider from '@/components/ScanlineDivider'
-import InteractiveConsole from '@/components/InteractiveConsole'
+import HeroCore from '@/components/HeroCore'
 
 export default async function HomePage() {
   let projects: any[] = []
@@ -25,70 +24,17 @@ export default async function HomePage() {
 
   return (
     <main className="max-w-5xl mx-auto px-6 space-y-32 overflow-hidden">
-      {/* Terminal Hero Section */}
-      <section id="hero" className="pt-8 md:pt-16 min-h-[70vh] flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center w-full">
-          {/* Hero Content Left */}
-          <div className="lg:col-span-7 space-y-6">
-            <FadeIn direction="scale">
-              {/* Availability tag */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] tracking-wider mb-2 uppercase select-none">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_#4ade80]" />
-                [ SYSTEM STATUS: ACTIVE / OPEN FOR HIRE ]
-              </div>
-              <TypingEffect />
-              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white select-none">
-                <span 
-                  className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 glow-text glitch-text"
-                  data-text="Nisarg Vaghela"
-                >
-                  Nisarg Vaghela
-                </span>
-              </h1>
-            </FadeIn>
-            <FadeIn delay={0.2} direction="up">
-              <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-xl font-light">
-                Full-Stack Software Engineer & Applied AI Student.
-                Specializing in scalable web architectures, machine learning integration, and high-performance mobile applications.
-              </p>
-            </FadeIn>
-
-            {/* Action Terminals */}
-            <FadeIn delay={0.3} direction="up">
-              <div className="flex flex-wrap gap-4 pt-2 font-mono text-xs md:text-sm">
-                <a
-                  href="/resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 px-5 py-3 hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.1)] hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all"
-                >
-                  [ EXECUTE: VIEW_RESUME ]
-                </a>
-                <a
-                  href="https://github.com/nisargvghl27"
-                  target="_blank"
-                  className="glass-panel text-gray-300 px-5 py-3 hover:text-white hover:border-gray-400 transition-all"
-                >
-                  [ CONNECT: GITHUB ]
-                </a>
-              </div>
-            </FadeIn>
-          </div>
-
-          {/* Interactive Workstation Right */}
-          <div className="lg:col-span-5 w-full">
-            <FadeIn delay={0.25} direction="scale">
-              <InteractiveConsole />
-            </FadeIn>
-          </div>
-        </div>
-      </section>
+      
+      {/* SHATTERED PARALLAX HERO INJECTION */}
+      <div className="w-screen relative left-1/2 -translate-x-1/2">
+        <HeroCore />
+      </div>
 
       {/* Matrix Project Cards */}
-      <section id="systems">
+      <section id="systems" className="pt-20">
         <FadeIn delay={0.2} direction="left">
           <div className="flex items-center gap-4 mb-10">
-            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">01.</span> Deployed_Systems</h2>
+            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">01.</span> Projects</h2>
             <ScanlineDivider />
           </div>
         </FadeIn>
@@ -143,7 +89,6 @@ export default async function HomePage() {
             <ScanlineDivider />
           </div>
         </FadeIn>
-        {/* The Skills component internally maps and triggers animations */}
         <Skills />
       </section>
 
@@ -155,8 +100,18 @@ export default async function HomePage() {
             <ScanlineDivider />
           </div>
         </FadeIn>
-        {/* The Experience component internally maps and triggers animations */}
         <Experience />
+      </section>
+
+      {/* Certificates & Achievements Section */}
+      <section id="credentials">
+        <FadeIn delay={0.2} direction="right">
+          <div className="flex items-center gap-4 mb-10">
+            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">06.</span> Credentials_&_Awards</h2>
+            <ScanlineDivider />
+          </div>
+        </FadeIn>
+        <Certificates />
       </section>
 
       {/* Contact Form Section */}
