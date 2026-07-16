@@ -87,40 +87,44 @@ export default function InteractiveConsole() {
   }
 
   const renderOutputLine = (text: string) => {
-    if (text.includes('PHONE    :')) {
-      const parts = text.split('PHONE    :')
+    if (text.includes('PHONE')) {
+      const parts = text.split(':')
+      const label = parts[0]
       const phone = parts[1].trim()
       const rawPhone = phone.replace(/\s+/g, '')
       return (
         <span>
-          PHONE    : <a href={`tel:${rawPhone}`} className="text-cyan-400 hover:underline cursor-pointer">{phone}</a>
+          {label}: <a href={`tel:${rawPhone}`} className="text-cyan-400 hover:underline cursor-pointer">{phone}</a>
         </span>
       )
     }
-    if (text.includes('EMAIL    :')) {
-      const parts = text.split('EMAIL    :')
+    if (text.includes('EMAIL')) {
+      const parts = text.split(':')
+      const label = parts[0]
       const email = parts[1].trim()
       return (
         <span>
-          EMAIL    : <a href={`mailto:${email}`} className="text-cyan-400 hover:underline cursor-pointer">{email}</a>
+          {label}: <a href={`mailto:${email}`} className="text-cyan-400 hover:underline cursor-pointer">{email}</a>
         </span>
       )
     }
-    if (text.includes('GITHUB   :')) {
-      const parts = text.split('GITHUB   :')
+    if (text.includes('GITHUB')) {
+      const parts = text.split(':')
+      const label = parts[0]
       const url = parts[1].trim()
       return (
         <span>
-          GITHUB   : <a href={`https://${url}`} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline cursor-pointer">{url}</a>
+          {label}: <a href={`https://${url}`} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline cursor-pointer">{url}</a>
         </span>
       )
     }
-    if (text.includes('LINKEDIN :')) {
-      const parts = text.split('LINKEDIN :')
+    if (text.includes('LINKEDIN')) {
+      const parts = text.split(':')
+      const label = parts[0]
       const url = parts[1].trim()
       return (
         <span>
-          LINKEDIN : <a href={`https://${url}`} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline cursor-pointer">{url}</a>
+          {label}: <a href={`https://${url}`} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline cursor-pointer">{url}</a>
         </span>
       )
     }
