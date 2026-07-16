@@ -88,7 +88,7 @@ export default function RootLayout({
                 [ ./github ]
               </a>
               <a 
-                href="https://linkedin.com/in/nisargvaghela" 
+                href="https://linkedin.com/in/nisargvghl27" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-gray-400 hover:text-cyan-400 transition-colors"

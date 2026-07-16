@@ -38,7 +38,7 @@ const COMMAND_DATA: Record<string, string[]> = {
     'PHONE    : +91 94097 18068',
     'EMAIL    : nisargvaghela27@gmail.com',
     'GITHUB   : github.com/nisargvghl27',
-    'LINKEDIN : linkedin.com/in/nisargvaghela',
+    'LINKEDIN : linkedin.com/in/nisargvghl27',
     'STATUS   : Standing by for connections...',
     '--------------------------------------',
     '✓ Handshake routes established.'
