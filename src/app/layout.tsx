@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
-import { Analytics } from '@vercel/analytics/react' // 1. Imported Analytics
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -50,6 +50,8 @@ export default function RootLayout({
             </Link>
             <div className="flex gap-6 text-sm font-medium text-gray-600 dark:text-gray-300">
               <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Work</Link>
+              {/* Added Garden Link Here */}
+              <Link href="/garden" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Garden</Link>
               <Link href="/admin" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Admin</Link>
             </div>
           </div>
@@ -65,7 +67,6 @@ export default function RootLayout({
           <p>© {new Date().getFullYear()} Nisarg Vaghela. All rights reserved.</p>
         </footer>
         
-        {/* 2. Injected Analytics component */}
         <Analytics /> 
       </body>
     </html>
