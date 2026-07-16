@@ -58,6 +58,33 @@ const dockItems = [
   }
 ]
 
+// Framer Motion Animation Variants for Page Load Stagger
+const containerVariants = {
+  hidden: { opacity: 0, y: 60, scale: 0.95 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: {
+      type: "spring" as const,
+      stiffness: 90,
+      damping: 16,
+      staggerChildren: 0.08,
+      delayChildren: 0.4
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.7 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: { type: "spring" as const, stiffness: 140, damping: 12 }
+  }
+}
+
 function DockIcon({
   mouseX,
   label,
@@ -76,6 +103,7 @@ function DockIcon({
   setHoveredIndex: (idx: number | null) => void
 }) {
   const ref = useRef<HTMLAnchorElement>(null)
+  const [isBouncing, setIsBouncing] = useState(false)
 
   // Calculate distance between mouse X and center of this icon
   const distance = useTransform(mouseX, (val: number) => {
@@ -101,9 +129,16 @@ function DockIcon({
     damping: 12
   })
 
+  // Bounces the icon when clicked (macOS style notification bounce)
+  const handleTap = () => {
+    setIsBouncing(true)
+    setTimeout(() => setIsBouncing(false), 2400)
+  }
+
   return (
-    <div
-      className="relative"
+    <motion.div
+      variants={itemVariants}
+      className="relative flex flex-col items-center"
       onMouseEnter={() => setHoveredIndex(idx)}
       onMouseLeave={() => setHoveredIndex(null)}
     >
@@ -127,20 +162,54 @@ function DockIcon({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={handleTap}
         style={{ width, height: width }}
+        animate={
+          isBouncing 
+            ? { 
+                y: [0, -24, 0, -16, 0, -8, 0, -3, 0], 
+                transition: { 
+                  duration: 1.8, 
+                  ease: "easeInOut",
+                  times: [0, 0.15, 0.3, 0.45, 0.6, 0.72, 0.82, 0.92, 1] 
+                } 
+              } 
+            : hoveredIndex === idx 
+              ? { y: -10 } 
+              : { y: 0 }
+        }
         whileHover={{ 
-          y: -10,
           borderColor: 'rgba(0, 240, 255, 0.6)',
-          boxShadow: '0 10px 20px rgba(0, 240, 255, 0.3)'
+          boxShadow: '0 10px 20px rgba(0, 240, 255, 0.35)',
         }}
-        whileTap={{ y: 2, scale: 0.95 }}
-        className="flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-cyan-400 transition-colors cursor-pointer"
+        whileTap={{ scale: 0.95 }}
+        className="flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-cyan-400 transition-colors cursor-pointer relative"
       >
-        <motion.div style={{ width: iconSize, height: iconSize }} className="flex items-center justify-center [&>svg]:w-full [&>svg]:h-full">
+        {/* Soft neon background glow on hover */}
+        {hoveredIndex === idx && (
+          <motion.div
+            layoutId="dock-bg-glow"
+            className="absolute inset-0 rounded-full bg-cyan-500/10 blur-sm pointer-events-none"
+            transition={{ type: "spring", stiffness: 300, damping: 24 }}
+          />
+        )}
+        
+        <motion.div style={{ width: iconSize, height: iconSize }} className="flex items-center justify-center [&>svg]:w-full [&>svg]:h-full z-10">
           {icon}
         </motion.div>
       </motion.a>
-    </div>
+
+      {/* Shared Sliding Indicator Dot at the bottom */}
+      <div className="h-2 flex items-center justify-center mt-1">
+        {hoveredIndex === idx && (
+          <motion.div
+            layoutId="dock-indicator"
+            className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] z-20"
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          />
+        )}
+      </div>
+    </motion.div>
   )
 }
 
@@ -151,9 +220,12 @@ export default function FloatingDock() {
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex justify-center w-full max-w-fit px-4 pointer-events-none">
       <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="glass-panel px-4 py-3 rounded-2xl flex items-end gap-4 bg-black/60 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] pointer-events-auto h-20 pb-4"
+        className="glass-panel px-4 pt-3 pb-1 rounded-2xl flex items-end gap-4 bg-black/60 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] pointer-events-auto h-24"
       >
         {dockItems.map((item, idx) => (
           <DockIcon 
