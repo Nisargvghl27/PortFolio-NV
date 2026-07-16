@@ -5,7 +5,6 @@ import CPStats from '@/components/CPStats'
 import LeetCodeStats from '@/components/LeetCodeStats'
 import Education from '@/components/Education'
 import Skills from '@/components/Skills'
-import Experience from '@/components/Experience'
 import Certificates from '@/components/Certificates'
 import GitHubCalendar from '@/components/GitHubCalendar'
 import ProjectCard from '@/components/ProjectCard'
@@ -92,22 +91,11 @@ export default async function HomePage() {
         <Skills />
       </section>
 
-      {/* Experience / Timeline Section */}
-      <section id="experience">
-        <FadeIn delay={0.2} direction="left">
-          <div className="flex items-center gap-4 mb-10">
-            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">05.</span> Experience_Log</h2>
-            <ScanlineDivider />
-          </div>
-        </FadeIn>
-        <Experience />
-      </section>
-
       {/* Certificates & Achievements Section */}
       <section id="credentials">
         <FadeIn delay={0.2} direction="right">
           <div className="flex items-center gap-4 mb-10">
-            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">06.</span> Credentials_&_Awards</h2>
+            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">05.</span> Credentials_&_Awards</h2>
             <ScanlineDivider />
           </div>
         </FadeIn>

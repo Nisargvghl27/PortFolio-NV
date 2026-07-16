@@ -8,7 +8,7 @@ const sections = [
   { id: 'metrics', label: '02. ALGORITHMIC_METRICS' },
   { id: 'academic', label: '03. ACADEMIC_CORE' },
   { id: 'arsenal', label: '04. TECH_ARSENAL' },
-  { id: 'experience', label: '05. EXPERIENCE_LOG' },
+  { id: 'credentials', label: '05. CREDENTIALS_&_AWARDS' },
   { id: 'contact', label: 'INITIALIZE_CONNECTION' }
 ]
 
