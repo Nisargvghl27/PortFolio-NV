@@ -9,48 +9,48 @@ interface Certificate {
   title: string
   issuer: string
   date: string
-  type: 'Hackathon' | 'Certification' | 'Milestone'
+  type: ('Hackathon' | 'Certification' | 'Milestone' | 'Award' | 'Course')[]
   url: string
   desc: string
 }
 
 const certificatesData: Certificate[] = [
   {
-    id: 'Powermind-2026',
-    title: 'Powermind Hackathon 2026',
+    id: 'powermind-2026',
+    title: '3rd Prize - Powermind Hackathon 2026',
     issuer: 'Adani Group',
-    date: 'May 2026',
-    type: 'Hackathon',
+    date: 'MAY 2026',
+    type: ['Hackathon', 'Award'],
     url: 'https://github.com/Powermind-Hackathon/ps2_choki-choki.git',
-    desc: 'Secured 3rd Prize for building PowerMind, an AI-powered financial data assistant utilizing LlamaIndex, FAISS, and Groq for intelligent document parsing and querying.'
+    desc: 'Secured 3rd Prize for developing ChatPDF, an AI-powered document assistant. Engineered a production RAG pipeline using FastAPI, Next.js, LlamaIndex, and FAISS for vector search. Integrated Groq (LLaMA 3) for sub-second parsing and built a split-view UI with clickable citations, backed by secure per-user data isolation via MongoDB and Supabase.'
   },
   {
     id: 'HTT',
     title: 'Hack The Tank 2026',
     issuer: 'HACK THE TANK',
     date: 'February 2026',
-    type: 'Hackathon',
-    url: 'https://aws.amazon.com/verification',
+    type: ['Hackathon'],
+    url: 'https://drive.google.com/file/d/1h4w26STqKz6TPCfNXpoAbLKsF2nK0sLU/view',
     desc: 'Engineered an interactive AI host using the Gemini API for dynamic questioning and Deepgram for real-time speech transcription. Architected a video pipeline using Groq LLaMA 3 for transcript analysis and FFmpeg to auto-generate social media-ready reels. Built a browser recording engine with the MediaRecorder API to sync user video and the AI avatar.',
+  },
+  {
+    id: 'odoo',
+    title: 'Odoo x GCET Hackathon 2026',
+    issuer: 'Odoo x GCET',
+    date: 'February 2026',
+    type: ['Hackathon'],
+    url: 'https://drive.google.com/file/d/1N9GHtvnoWceRxX3JzIBPr_FEtcuHQZ5v/view',
+    desc: 'Competed in an intense 24-hour coding marathon, gaining invaluable hands-on experience in rapid application development. Focused on seamlessly connecting frontend and backend architectures under tight deadlines, structuring dynamic data, and collaborating effectively to deliver a functional product.',
   },
   {
     id: 'leetcode-50',
     title: 'LeetCode 50 Days Active Badge',
     issuer: 'LeetCode Platform',
     date: 'OCT 2025',
-    type: 'Milestone',
+    type: ['Milestone', 'Certification'],
     url: 'https://leetcode.com/nisargvghl27',
     desc: 'Solved algorithmic problems consistently for 50+ consecutive days, focusing on dynamic programming and graph structures.'
   },
-  {
-    id: 'codechef-3s',
-    title: 'CodeChef 3-Star Coder (Rating 1650+)',
-    issuer: 'CodeChef competitive platform',
-    date: 'MAR 2025',
-    type: 'Milestone',
-    url: 'https://codechef.com',
-    desc: 'Participated in regular division rounds, ranking in top 5% of division candidates for optimal space-time complexity submissions.'
-  }
 ]
 
 export default function Certificates() {
@@ -59,7 +59,7 @@ export default function Certificates() {
 
   const filteredCerts = filterType === 'all'
     ? certificatesData
-    : certificatesData.filter(c => c.type === filterType)
+    : certificatesData.filter(c => c.type.includes(filterType as any))
 
   const activeCert = certificatesData.find(c => c.id === activeCertId) || certificatesData[0]
 
@@ -69,7 +69,7 @@ export default function Certificates() {
         <div className="space-y-6">
           {/* Filter Bar */}
           <div className="flex flex-wrap gap-2.5 justify-center border-b border-white/10 pb-5">
-            {['all', 'Hackathon', 'Certification', 'Milestone'].map((type) => (
+            {['all', 'Hackathon', 'Certification', 'Milestone', 'Award', 'Course'].map((type) => (
               <button
                 key={type}
                 onClick={() => setFilterType(type)}
@@ -121,14 +121,18 @@ export default function Certificates() {
                         <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-cyan-400" />
                       )}
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wide group-hover:text-cyan-500/60 transition-colors">
-                          {cert.type}
-                        </span>
-                        <span className="text-[9px] text-gray-500 font-mono">
+                        <div className="flex flex-wrap gap-1">
+                          {cert.type.map((t) => (
+                            <span key={t} className="text-[7.5px] bg-white/5 border border-white/10 text-gray-400 group-hover:text-cyan-400 group-hover:border-cyan-500/30 px-1 py-0.5 uppercase tracking-wide rounded-sm font-semibold transition-all">
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                        <span className="text-[9px] text-gray-500 font-mono shrink-0">
                           {cert.date}
                         </span>
                       </div>
-                      <span className="text-xs font-semibold mt-1 tracking-wide truncate max-w-full">
+                      <span className="text-xs font-semibold mt-1.5 tracking-wide truncate max-w-full">
                         {cert.title}
                       </span>
                     </button>
@@ -158,6 +162,13 @@ export default function Certificates() {
                     <div>
                       <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// CREDENTIAL_OBJECT</span>
                       <h3 className="text-lg font-bold text-white tracking-wide">{activeCert.title}</h3>
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {activeCert.type.map((t) => (
+                          <span key={t} className="text-[9px] bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 px-2 py-0.5 uppercase tracking-wider rounded-sm font-bold shadow-[0_0_10px_rgba(0,240,255,0.05)]">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                     <div className="flex items-center gap-2 px-2.5 py-1 border border-green-500/20 bg-green-500/5 text-green-400 font-bold text-[9px] select-none rounded-sm">
                       <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
