@@ -104,6 +104,8 @@ function DockIcon({
 }) {
   const ref = useRef<HTMLAnchorElement>(null)
   const [isBouncing, setIsBouncing] = useState(false)
+  const [showRipple, setShowRipple] = useState(false)
+  const [magneticPosition, setMagneticPosition] = useState({ x: 0, y: 0 })
 
   // Calculate distance between mouse X and center of this icon
   const distance = useTransform(mouseX, (val: number) => {
@@ -129,10 +131,28 @@ function DockIcon({
     damping: 12
   })
 
-  // Bounces the icon when clicked (macOS style notification bounce)
+  // Magnetic Pull Calculation when cursor moves inside the button
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const bounds = ref.current?.getBoundingClientRect()
+    if (bounds) {
+      const x = e.clientX - bounds.left - bounds.width / 2
+      const y = e.clientY - bounds.top - bounds.height / 2
+      // Move by 35% towards cursor position
+      setMagneticPosition({ x: x * 0.35, y: y * 0.35 })
+    }
+  }
+
+  const handleMouseLeave = () => {
+    setHoveredIndex(null)
+    setMagneticPosition({ x: 0, y: 0 })
+  }
+
+  // Bounces the icon when clicked + fires neon ripple wave
   const handleTap = () => {
     setIsBouncing(true)
+    setShowRipple(true)
     setTimeout(() => setIsBouncing(false), 2400)
+    setTimeout(() => setShowRipple(false), 800)
   }
 
   return (
@@ -140,7 +160,7 @@ function DockIcon({
       variants={itemVariants}
       className="relative flex items-center justify-center h-full"
       onMouseEnter={() => setHoveredIndex(idx)}
-      onMouseLeave={() => setHoveredIndex(null)}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Blinking tooltips above icons on hover */}
       <AnimatePresence>
@@ -163,11 +183,13 @@ function DockIcon({
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleTap}
+        onMouseMove={handleMouseMove}
         style={{ width, height: width }}
         animate={
           isBouncing 
             ? { 
                 y: [0, -18, 0, -12, 0, -6, 0, -2, 0], 
+                x: 0,
                 transition: { 
                   duration: 1.8, 
                   ease: "easeInOut",
@@ -175,14 +197,15 @@ function DockIcon({
                 } 
               } 
             : hoveredIndex === idx 
-              ? { y: -10 } 
-              : { y: 0 }
+              ? { x: magneticPosition.x, y: magneticPosition.y - 6 } 
+              : { x: 0, y: 0 }
         }
         whileHover={{ 
           borderColor: 'rgba(0, 240, 255, 0.6)',
-          boxShadow: '0 10px 20px rgba(0, 240, 255, 0.35)',
+          boxShadow: '0 8px 16px rgba(0, 240, 255, 0.25)',
         }}
-        whileTap={{ scale: 0.95 }}
+        whileTap={{ scale: 0.92 }}
+        transition={{ type: "spring", stiffness: 220, damping: 15 }}
         className="flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-cyan-400 transition-colors cursor-pointer relative"
       >
         {/* Soft neon background glow on hover */}
@@ -193,18 +216,46 @@ function DockIcon({
             transition={{ type: "spring", stiffness: 300, damping: 24 }}
           />
         )}
+
+        {/* Tap Ripple Ring Effect */}
+        <AnimatePresence>
+          {showRipple && (
+            <motion.span
+              initial={{ scale: 0.8, opacity: 0.8 }}
+              animate={{ scale: 2.2, opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="absolute inset-0 rounded-full border border-cyan-400 bg-cyan-500/10 pointer-events-none z-0"
+            />
+          )}
+        </AnimatePresence>
         
-        <motion.div style={{ width: iconSize, height: iconSize }} className="flex items-center justify-center [&>svg]:w-full [&>svg]:h-full z-10">
+        {/* SVG Icon with subtle hover wiggle */}
+        <motion.div 
+          style={{ width: iconSize, height: iconSize }} 
+          whileHover={{ rotate: [0, -10, 8, 0], transition: { duration: 0.4 } }}
+          className="flex items-center justify-center [&>svg]:w-full [&>svg]:h-full z-10"
+        >
           {icon}
         </motion.div>
       </motion.a>
 
-      {/* Shared Sliding Indicator Dot at the bottom */}
+      {/* Shared Sliding Indicator Dot at the bottom with breathing/pulsing animation */}
       {hoveredIndex === idx && (
         <motion.div
           layoutId="dock-indicator"
+          animate={{ 
+            scale: [1, 1.4, 1],
+            opacity: [0.8, 1, 0.8]
+          }}
+          transition={{ 
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+            scale: { repeat: Infinity, duration: 1.6, ease: "easeInOut" },
+            opacity: { repeat: Infinity, duration: 1.6, ease: "easeInOut" }
+          }}
           className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] z-20"
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
         />
       )}
     </motion.div>
