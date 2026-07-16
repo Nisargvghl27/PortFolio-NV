@@ -10,61 +10,28 @@ interface Certificate {
   issuer: string
   date: string
   type: 'Hackathon' | 'Certification' | 'Milestone'
-  verifyId: string
   url: string
   desc: string
 }
 
 const certificatesData: Certificate[] = [
   {
-    id: 'sih-2024',
-    title: 'Smart India Hackathon Finalist',
-    issuer: 'Ministry of Education, Govt of India',
-    date: 'DEC 2024',
+    id: 'Powermind-2026',
+    title: 'Powermind Hackathon 2026',
+    issuer: 'Adani Group',
+    date: 'May 2026',
     type: 'Hackathon',
-    verifyId: 'SIH-2024-NIT-9082',
-    url: 'https://sih.gov.in',
-    desc: 'Led a team to build a secure system for tracking academic research grant disbursements, optimizing release latency by 35%.'
+    url: 'https://github.com/Powermind-Hackathon/ps2_choki-choki.git',
+    desc: 'Secured 3rd Prize for building PowerMind, an AI-powered financial data assistant utilizing LlamaIndex, FAISS, and Groq for intelligent document parsing and querying.'
   },
   {
-    id: 'hackout-2024',
-    title: 'DA-IICT - Hackout Participant',
-    issuer: 'Dhirubhai Ambani Institute of Information and Communication Technology (DA-IICT)',
-    date: 'OCT 2024',
+    id: 'HTT',
+    title: 'Hack The Tank 2026',
+    issuer: 'HACK THE TANK',
+    date: 'February 2026',
     type: 'Hackathon',
-    verifyId: 'DAIICT-HO-24-NISARG',
-    url: 'https://hackout.co',
-    desc: 'Designed and prototyped a collaborative developer dashboard and smart search portal during the 36-hour hackathon sprint.'
-  },
-  {
-    id: 'odoo-gcet-2025',
-    title: 'Odoo X GCET Hackathon Competitor',
-    issuer: 'Odoo & G H Patel College of Engineering & Technology (GCET)',
-    date: 'FEB 2025',
-    type: 'Hackathon',
-    verifyId: 'ODOO-GCET-2025-VAGHELA',
-    url: 'https://www.odoo.com',
-    desc: 'Built custom business automation flows and integrated ERP workflows to solve real-world industry logistics problems.'
-  },
-  {
-    id: 'hack-the-tank-svnit',
-    title: 'Hack The Tank - SVNIT Contender',
-    issuer: 'Sardar Vallabhbhai National Institute of Technology (SVNIT)',
-    date: 'MAR 2025',
-    type: 'Hackathon',
-    verifyId: 'SVNIT-HTT-25-1049',
-    url: 'https://svnit.ac.in',
-    desc: 'Developed and optimized backend server pipelines and real-time socket updates for a collaborative web project.'
-  },
-  {
-    id: 'aws-ccp',
-    title: 'AWS Certified Cloud Practitioner',
-    issuer: 'Amazon Web Services (AWS)',
-    date: 'JAN 2025',
-    type: 'Certification',
-    verifyId: 'AWS-CCP-9831-N27',
     url: 'https://aws.amazon.com/verification',
-    desc: 'Validated foundational understanding of cloud security, core AWS services, architecture design principles, and pricing frameworks.'
+    desc: 'Engineered an interactive AI host using the Gemini API for dynamic questioning and Deepgram for real-time speech transcription. Architected a video pipeline using Groq LLaMA 3 for transcript analysis and FFmpeg to auto-generate social media-ready reels. Built a browser recording engine with the MediaRecorder API to sync user video and the AI avatar.',
   },
   {
     id: 'leetcode-50',
@@ -72,7 +39,6 @@ const certificatesData: Certificate[] = [
     issuer: 'LeetCode Platform',
     date: 'OCT 2025',
     type: 'Milestone',
-    verifyId: 'LC-BADGE-2025-50D',
     url: 'https://leetcode.com/nisargvghl27',
     desc: 'Solved algorithmic problems consistently for 50+ consecutive days, focusing on dynamic programming and graph structures.'
   },
@@ -82,7 +48,6 @@ const certificatesData: Certificate[] = [
     issuer: 'CodeChef competitive platform',
     date: 'MAR 2025',
     type: 'Milestone',
-    verifyId: 'CC-RATING-3STAR-1658',
     url: 'https://codechef.com',
     desc: 'Participated in regular division rounds, ranking in top 5% of division candidates for optimal space-time complexity submissions.'
   }
@@ -201,14 +166,10 @@ export default function Certificates() {
                   </div>
 
                   {/* Metadata matrix */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// ISSUING_ORGANIZATION</span>
                       <div className="text-cyan-300 font-semibold text-xs mt-0.5">{activeCert.issuer}</div>
-                    </div>
-                    <div>
-                      <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// VALIDATION_HASH</span>
-                      <div className="text-gray-300 text-xs font-mono mt-0.5">{activeCert.verifyId}</div>
                     </div>
                     <div>
                       <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// DATE_ISSUED</span>
