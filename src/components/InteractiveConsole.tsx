@@ -35,6 +35,7 @@ const COMMAND_DATA: Record<string, string[]> = {
   './contact.sh': [
     'Handshake initialized...',
     '--------------------------------------',
+    'PHONE    : +91 94097 18068',
     'EMAIL    : nisargvaghela27@gmail.com',
     'GITHUB   : github.com/nisargvghl27',
     'LINKEDIN : linkedin.com/in/nisargvaghela',
@@ -52,11 +53,13 @@ export default function InteractiveConsole() {
     { text: 'Click the shell scripts below to inspect system details.', type: 'output' }
   ])
   const [activeCommand, setActiveCommand] = useState<string | null>(null)
-  const terminalEndRef = useRef<HTMLDivElement>(null)
+  const consoleBodyRef = useRef<HTMLDivElement>(null)
 
-  // Scroll to bottom whenever history updates
+  // Scroll only the terminal screen container to bottom when history updates
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (consoleBodyRef.current) {
+      consoleBodyRef.current.scrollTop = consoleBodyRef.current.scrollHeight
+    }
   }, [history])
 
   const runCommand = async (cmd: string) => {
@@ -83,6 +86,47 @@ export default function InteractiveConsole() {
     setHistory([{ text: 'nisarg@ai-core:~$ clear', type: 'input' }])
   }
 
+  const renderOutputLine = (text: string) => {
+    if (text.includes('PHONE    :')) {
+      const parts = text.split('PHONE    :')
+      const phone = parts[1].trim()
+      const rawPhone = phone.replace(/\s+/g, '')
+      return (
+        <span>
+          PHONE    : <a href={`tel:${rawPhone}`} className="text-cyan-400 hover:underline cursor-pointer">{phone}</a>
+        </span>
+      )
+    }
+    if (text.includes('EMAIL    :')) {
+      const parts = text.split('EMAIL    :')
+      const email = parts[1].trim()
+      return (
+        <span>
+          EMAIL    : <a href={`mailto:${email}`} className="text-cyan-400 hover:underline cursor-pointer">{email}</a>
+        </span>
+      )
+    }
+    if (text.includes('GITHUB   :')) {
+      const parts = text.split('GITHUB   :')
+      const url = parts[1].trim()
+      return (
+        <span>
+          GITHUB   : <a href={`https://${url}`} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline cursor-pointer">{url}</a>
+        </span>
+      )
+    }
+    if (text.includes('LINKEDIN :')) {
+      const parts = text.split('LINKEDIN :')
+      const url = parts[1].trim()
+      return (
+        <span>
+          LINKEDIN : <a href={`https://${url}`} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline cursor-pointer">{url}</a>
+        </span>
+      )
+    }
+    return text
+  }
+
   return (
     <div className="w-full glass-panel border border-cyan-500/20 rounded-xl overflow-hidden shadow-[0_0_40px_rgba(0,240,255,0.05)] bg-black/60 relative z-10 flex flex-col font-mono text-[11px] md:text-[12px] h-[340px] text-gray-400">
       {/* Console Titlebar */}
@@ -97,7 +141,7 @@ export default function InteractiveConsole() {
       </div>
 
       {/* Console Display Screen */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-2.5 select-text scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+      <div ref={consoleBodyRef} className="flex-1 p-4 overflow-y-auto space-y-2.5 select-text scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
         {history.map((line, idx) => (
           <div key={idx} className="leading-relaxed whitespace-pre-wrap">
             {line.type === 'input' && (
@@ -107,7 +151,7 @@ export default function InteractiveConsole() {
               <span className="text-gray-600 italic">{line.text}</span>
             )}
             {line.type === 'output' && (
-              <span className="text-gray-300">{line.text}</span>
+              <span className="text-gray-300">{renderOutputLine(line.text)}</span>
             )}
             {line.type === 'error' && (
               <span className="text-red-400 font-bold">{line.text}</span>
@@ -126,7 +170,6 @@ export default function InteractiveConsole() {
             <span className="w-1.5 h-4 bg-cyan-400 animate-pulse inline-block" />
           </div>
         )}
-        <div ref={terminalEndRef} />
       </div>
 
       {/* Interactive Control Deck */}
