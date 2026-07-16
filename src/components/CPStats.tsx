@@ -6,22 +6,27 @@ export default async function CPStats({ handle }: { handle: string }) {
   if (!stats) return null;
 
   return (
-    <div className="p-6 border border-zinc-200 dark:border-zinc-800 rounded-2xl bg-white dark:bg-zinc-900 shadow-sm">
-      <h3 className="text-sm font-medium text-zinc-500 mb-4">Competitive Programming</h3>
+    <div className="glass-panel p-6 glow-border-hover relative overflow-hidden group">
+      <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/5 rounded-bl-full group-hover:bg-cyan-500/20 transition-colors"></div>
+      
+      <h3 className="text-xs font-mono text-gray-500 mb-4 tracking-wider">[ CODEFORCES_API ]</h3>
+      
       <div className="flex items-end gap-2 mb-2">
-        <span className="text-3xl font-bold tracking-tight">{stats.rating || 'Unrated'}</span>
-        <span className="text-zinc-500 mb-1">rating</span>
+        <span className="text-4xl font-bold tracking-tight text-white group-hover:glow-text transition-all">{stats.rating || 'UNRATED'}</span>
+        <span className="text-cyan-500/50 font-mono text-sm mb-1">/rating</span>
       </div>
-      <p className="text-sm text-zinc-600 dark:text-zinc-400">
-        Rank: <span className="font-semibold">{stats.rank}</span>
+      
+      <p className="text-sm font-mono text-gray-400">
+         current_rank: <span className="text-cyan-400">{stats.rank || 'N/A'}</span>
       </p>
-      <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+      
+      <div className="mt-6 pt-4 border-t border-white/10">
         <a 
           href={`https://codeforces.com/profile/${handle}`} 
           target="_blank"
-          className="text-sm text-blue-600 hover:underline"
+          className="text-xs font-mono text-gray-400 hover:text-cyan-400 transition-colors flex items-center gap-2"
         >
-          View Profile →
+          [ ACCESS_PROFILE ]
         </a>
       </div>
     </div>

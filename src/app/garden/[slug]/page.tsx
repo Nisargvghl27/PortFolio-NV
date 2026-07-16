@@ -14,32 +14,33 @@ export default async function BlogPost({ params }: { params: { slug: string } })
   }
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-20">
+    <main className="max-w-3xl mx-auto px-6 pb-24 pt-12">
       <FadeIn>
-        <Link href="/garden" className="text-sm text-blue-600 hover:underline mb-8 inline-block">
-          ← Back to Garden
+        <Link href="/garden" className="text-xs font-mono text-cyan-500 hover:text-cyan-400 hover:glow-text transition-all mb-8 inline-block">
+          &lt;&lt; [ RETURN_TO_ROOT ]
         </Link>
         
-        <header className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">{post.title}</h1>
-          <div className="text-gray-500 text-sm flex items-center gap-2">
+        <header className="mb-12 border-b border-white/10 pb-8">
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">
+            {post.title}
+          </h1>
+          <div className="text-cyan-500/50 font-mono text-xs flex flex-wrap items-center gap-4">
+            <span>AUTHOR: NISARG_VAGHELA</span>
+            <span className="hidden md:inline">//</span>
             <time>
-              {new Date(post.createdAt).toLocaleDateString('en-US', { 
-                month: 'long', 
-                day: 'numeric', 
+              TIMESTAMP: {new Date(post.createdAt).toLocaleDateString('en-US', { 
+                month: '2-digit', 
+                day: '2-digit', 
                 year: 'numeric' 
               })}
             </time>
-            <span>•</span>
-            <span>Nisarg Vaghela</span>
           </div>
         </header>
 
-        {/* 
-          Using whitespace-pre-wrap allows us to respect the line breaks you type into the database 
-          without needing a complex Markdown parser just yet!
+        {/* Main Content: We use whitespace-pre-wrap to respect line breaks.
+          The text is slightly dimmed (gray-300) with a light weight to look like a premium terminal.
         */}
-        <div className="prose prose-lg dark:prose-invert prose-blue max-w-none whitespace-pre-wrap text-gray-700 dark:text-gray-300 leading-relaxed">
+        <div className="prose prose-invert prose-cyan max-w-none whitespace-pre-wrap text-gray-300 font-light leading-relaxed prose-headings:font-bold prose-headings:text-white prose-a:text-cyan-400 hover:prose-a:glow-text prose-strong:text-white">
           {post.content}
         </div>
       </FadeIn>

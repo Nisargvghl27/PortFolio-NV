@@ -22,25 +22,25 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md" suppressHydrationWarning>
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md font-mono" suppressHydrationWarning>
       <div>
-        <label className="block text-sm font-medium mb-1">Name</label>
-        <input name="name" type="text" required className="w-full border border-gray-300 p-2 rounded" />
+        <label className="block text-xs text-cyan-500 mb-2"> input_name</label>
+        <input name="name" type="text" required className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all" />
       </div>
       <div>
-        <label className="block text-sm font-medium mb-1">Email</label>
-        <input name="email" type="email" required className="w-full border border-gray-300 p-2 rounded" />
+        <label className="block text-xs text-cyan-500 mb-2"> input_email</label>
+        <input name="email" type="email" required className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all" />
       </div>
       <div>
-        <label className="block text-sm font-medium mb-1">Message</label>
-        <textarea name="message" rows={4} required className="w-full border border-gray-300 p-2 rounded"></textarea>
+        <label className="block text-xs text-cyan-500 mb-2"> input_message</label>
+        <textarea name="message" rows={4} required className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all"></textarea>
       </div>
       <button 
         type="submit" 
         disabled={status === 'sending'} 
-        className="bg-black text-white px-4 py-2 rounded disabled:opacity-50"
+        className="w-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 px-4 py-3 hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.1)] hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all disabled:opacity-50 mt-2"
       >
-        {status === 'sending' ? 'Sending...' : status === 'success' ? 'Message Sent!' : 'Send Message'}
+        {status === 'sending' ? '[ TRANSMITTING... ]' : status === 'success' ? '[ TRANSMISSION_SUCCESS ]' : '[ EXECUTE_TRANSMISSION ]'}
       </button>
     </form>
   )

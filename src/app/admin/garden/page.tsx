@@ -36,71 +36,81 @@ export default async function GardenAdminPage() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto px-6 py-20">
-      <div className="flex justify-between items-center mb-12">
-        <h1 className="text-4xl font-bold">Garden Admin</h1>
-        <div className="flex gap-4">
-          <Link href="/admin" className="text-blue-600 hover:underline">← Back to Projects Admin</Link>
-          <Link href="/garden" target="_blank" className="text-gray-500 hover:underline">View Live Garden ↗</Link>
+    <main className="max-w-6xl mx-auto px-6 pt-12 pb-24 font-mono">
+      <div className="flex justify-between items-center border-b border-white/10 pb-6 mb-12">
+        <div>
+          <p className="text-cyan-500 text-xs mb-1"> SUDO_MODE</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white">System_Admin // <span className="text-cyan-400">Garden_Logs</span></h1>
+        </div>
+        <div className="flex gap-6 text-xs">
+          <Link href="/admin" className="text-gray-500 hover:text-cyan-400 hover:glow-text transition-all">&lt;&lt; [ PROJECTS ]</Link>
+          <Link href="/garden" target="_blank" className="text-gray-500 hover:text-cyan-400 hover:glow-text transition-all">[ VIEW_LIVE_GARDEN ] &gt;&gt;</Link>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
         {/* Create Post Form */}
-        <section className="bg-white dark:bg-zinc-900/50 p-8 rounded-2xl border border-gray-200 dark:border-zinc-800">
-          <h2 className="text-2xl font-bold mb-6">Write a new note</h2>
-          <form action={createPost} className="space-y-4">
+        <section className="lg:col-span-7 glass-panel p-8 relative">
+          <h2 className="text-lg font-bold mb-6 text-white"> Initialize_Log_Entry</h2>
+          
+          <form action={createPost} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium mb-1">Title</label>
-              <input name="title" required type="text" className="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-3" placeholder="e.g. How I Built Nova" />
+              <label className="block text-xs text-cyan-500 mb-2"> string title;</label>
+              <input name="title" required type="text" className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all placeholder:text-gray-700" placeholder="e.g. Protocol_Alpha" />
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-1">Slug (URL)</label>
-              <input name="slug" required type="text" className="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-3" placeholder="e.g. how-i-built-nova" />
+              <label className="block text-xs text-cyan-500 mb-2"> string slug_url;</label>
+              <input name="slug" required type="text" className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all placeholder:text-gray-700" placeholder="e.g. protocol-alpha" />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Excerpt (Optional)</label>
-              <input name="excerpt" type="text" className="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-3" placeholder="A brief summary..." />
+              <label className="block text-xs text-cyan-500 mb-2"> string excerpt_optional;</label>
+              <input name="excerpt" type="text" className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all placeholder:text-gray-700" placeholder="Brief summary of log..." />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Content</label>
-              <textarea name="content" required rows={8} className="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-3 font-mono text-sm" placeholder="Write your post here..."></textarea>
+              <label className="block text-xs text-cyan-500 mb-2"> text content_body;</label>
+              <textarea name="content" required rows={12} className="w-full bg-black/50 border border-white/10 p-3 text-gray-300 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all placeholder:text-gray-700 text-sm font-light leading-relaxed" placeholder="Write log data here..."></textarea>
             </div>
 
-            <div className="flex items-center gap-2">
-              <input name="published" type="checkbox" id="published" className="w-4 h-4" />
-              <label htmlFor="published" className="text-sm font-medium">Publish immediately</label>
+            <div className="flex items-center gap-3 pt-2">
+              <input name="published" type="checkbox" id="published" className="w-4 h-4 accent-cyan-500 bg-black/50 border-white/10" />
+              <label htmlFor="published" className="text-xs text-gray-300">Set boolean: is_published = true</label>
             </div>
 
-            <button type="submit" className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors">
-              Save Post
-            </button>
+            <div className="pt-4">
+              <button type="submit" className="w-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 px-4 py-3 hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.1)] hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all font-bold">
+                [ WRITE_TO_DATABASE ]
+              </button>
+            </div>
           </form>
         </section>
 
         {/* Existing Posts List */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6">Manage Notes</h2>
+        <section className="lg:col-span-5">
+          <h2 className="text-lg font-bold mb-6 text-white"> Log_Registry</h2>
+          
           <div className="space-y-4">
             {posts.length === 0 ? (
-              <p className="text-gray-500">No posts created yet.</p>
+              <p className="text-gray-500 italic text-sm"> Query returned 0 results.</p>
             ) : (
               posts.map((post) => (
-                <div key={post.id} className="bg-white dark:bg-zinc-900/50 p-6 rounded-2xl border border-gray-200 dark:border-zinc-800 flex justify-between items-start">
+                <div key={post.id} className="glass-panel p-5 border-l-2 border-l-cyan-500/50 hover:border-l-cyan-400 transition-colors flex justify-between items-start group">
                   <div>
-                    <h3 className="font-bold text-lg">{post.title}</h3>
-                    <p className="text-sm text-gray-500">/{post.slug}</p>
-                    <span className={`inline-block mt-2 text-xs px-2 py-1 rounded-full ${post.published ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'}`}>
-                      {post.published ? 'Published' : 'Draft'}
+                    <h3 className="font-bold text-gray-200 group-hover:text-cyan-400 transition-colors">{post.title}</h3>
+                    <p className="text-xs text-gray-500 mt-1 mb-3">./{post.slug}</p>
+                    
+                    <span className={`inline-block text-[10px] px-2 py-1 uppercase tracking-widest ${post.published ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30' : 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/30'}`}>
+                      {post.published ? 'LIVE' : 'DRAFT'}
                     </span>
                   </div>
+                  
                   <form action={deletePost}>
                     <input type="hidden" name="id" value={post.id} />
-                    <button type="submit" className="text-red-500 hover:text-red-700 text-sm font-semibold px-3 py-1 bg-red-50 dark:bg-red-500/10 rounded-md transition-colors">
-                      Delete
+                    <button type="submit" className="text-red-500/70 hover:text-red-400 text-xs font-bold px-2 py-1 border border-red-500/20 hover:border-red-500/50 hover:bg-red-500/10 transition-all">
+                      [ DEL ]
                     </button>
                   </form>
                 </div>
@@ -108,6 +118,7 @@ export default async function GardenAdminPage() {
             )}
           </div>
         </section>
+        
       </div>
     </main>
   )
