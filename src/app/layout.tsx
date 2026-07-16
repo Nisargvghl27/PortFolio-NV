@@ -5,7 +5,6 @@ import { Analytics } from '@vercel/analytics/react'
 import CursorGlow from '@/components/CursorGlow'
 import ScrollProgress from '@/components/ScrollProgress'
 import SectionNav from '@/components/SectionNav'
-import NavBar from '@/components/NavBar'
 import MatrixRain from '@/components/MatrixRain'
 import IntroScreen from '@/components/IntroScreen'
 import FloatingDock from '@/components/FloatingDock'
@@ -65,17 +64,14 @@ export default function RootLayout({
         {/* Floating Table of Contents / Progress Pill */}
         <SectionNav />
 
-        {/* Client-side Navigation Bar with Active Route Highlighting */}
-        <NavBar />
-        
         {/* Secret Matrix Easter Egg */}
         <MatrixRain />
 
         {/* Floating Dock Social Panel */}
         <FloatingDock />
 
-        {/* Main Content Area - padded to account for fixed navbar */}
-        <div className="flex-1 pt-24 pb-12">
+        {/* Main Content Area - padded to account for layout spacing */}
+        <div className="flex-1 pt-16 pb-12">
           {children}
         </div>
 
