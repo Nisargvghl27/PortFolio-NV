@@ -255,6 +255,7 @@ export default function Skills() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
+                  suppressHydrationWarning
                   className={`relative px-4 py-2 border transition-all text-xs font-bold uppercase tracking-wider select-none ${
                     isActive
                       ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)]'

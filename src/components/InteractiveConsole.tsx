@@ -182,6 +182,7 @@ export default function InteractiveConsole() {
           <button
             onClick={() => runCommand('./specs.sh')}
             disabled={activeCommand !== null}
+            suppressHydrationWarning
             className={`px-2 py-1 border rounded text-[10px] uppercase transition-all select-none ${
               activeCommand ? 'border-gray-800 text-gray-600 cursor-not-allowed' : 'border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400/50'
             }`}
@@ -191,6 +192,7 @@ export default function InteractiveConsole() {
           <button
             onClick={() => runCommand('./skills.sh')}
             disabled={activeCommand !== null}
+            suppressHydrationWarning
             className={`px-2 py-1 border rounded text-[10px] uppercase transition-all select-none ${
               activeCommand ? 'border-gray-800 text-gray-600 cursor-not-allowed' : 'border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400/50'
             }`}
@@ -200,6 +202,7 @@ export default function InteractiveConsole() {
           <button
             onClick={() => runCommand('./contact.sh')}
             disabled={activeCommand !== null}
+            suppressHydrationWarning
             className={`px-2 py-1 border rounded text-[10px] uppercase transition-all select-none ${
               activeCommand ? 'border-gray-800 text-gray-600 cursor-not-allowed' : 'border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-400/50'
             }`}
@@ -211,6 +214,7 @@ export default function InteractiveConsole() {
         <button
           onClick={clearConsole}
           disabled={activeCommand !== null}
+          suppressHydrationWarning
           className={`px-2 py-1 text-[10px] uppercase rounded border transition-all select-none ${
             activeCommand ? 'border-gray-800 text-gray-600 cursor-not-allowed' : 'border-red-500/20 text-red-400 hover:bg-red-500/10 hover:border-red-500/40'
           }`}
