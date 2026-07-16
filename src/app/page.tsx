@@ -10,6 +10,7 @@ import GitHubCalendar from '@/components/GitHubCalendar'
 import ProjectCard from '@/components/ProjectCard'
 import ScanlineDivider from '@/components/ScanlineDivider'
 import HeroCore from '@/components/HeroCore'
+import Leadership from '@/components/Leadership'
 
 export default async function HomePage() {
   let projects: any[] = []
@@ -100,6 +101,17 @@ export default async function HomePage() {
           </div>
         </FadeIn>
         <Certificates />
+      </section>
+
+      {/* Leadership Section */}
+      <section id="leadership">
+        <FadeIn delay={0.2} direction="left">
+          <div className="flex items-center gap-4 mb-10">
+            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">06.</span> Leadership_Logs</h2>
+            <ScanlineDivider />
+          </div>
+        </FadeIn>
+        <Leadership />
       </section>
 
       {/* Contact Form Section */}

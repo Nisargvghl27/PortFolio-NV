@@ -2,13 +2,30 @@
 
 import FadeIn from './FadeIn'
 
-const educationData = [
+interface EducationItem {
+  id: number
+  period: string
+  title: string
+  institution: string
+  score: string
+  coursework?: string[]
+}
+
+const educationData: EducationItem[] = [
   {
     id: 1,
     period: '2024 - PRESENT',
     title: 'B.Tech. in Artificial Intelligence',
     institution: 'Sardar Vallabhbhai National Institute of Technology, Surat',
-    score: 'CGPA: 7.00 (Till 2nd Semester)'
+    score: 'CGPA: 7.00 (Current)',
+    coursework: [
+      'Data Structures',
+      'Design & Analysis of Algorithms',
+      'DBMS',
+      'Computer Organization',
+      'Discrete Mathematics',
+      'Linear Algebra'
+    ]
   },
   {
     id: 2,
@@ -60,6 +77,20 @@ export default function Education() {
               <p className="text-gray-400 font-medium text-xs tracking-wide">
                 @ {item.institution}
               </p>
+
+              {/* Coursework Details */}
+              {item.coursework && (
+                <div className="mt-4 pt-3 border-t border-white/5">
+                  <span className="text-[9px] text-gray-500 font-bold uppercase tracking-wider block mb-2">// RELEVANT_COURSEWORK</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {item.coursework.map((course) => (
+                      <span key={course} className="text-[10px] bg-white/5 border border-white/10 text-cyan-300 px-2 py-0.5 rounded-sm font-semibold hover:border-cyan-500/30 transition-colors">
+                        {course}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
             </div>
           </FadeIn>

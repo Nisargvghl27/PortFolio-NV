@@ -9,7 +9,6 @@ interface Certificate {
   title: string
   issuer: string
   date: string
-  type: ('Hackathon' | 'Certification' | 'Milestone' | 'Award' | 'Course')[]
   url: string
   desc: string
 }
@@ -20,7 +19,6 @@ const certificatesData: Certificate[] = [
     title: '3rd Prize - Powermind Hackathon 2026',
     issuer: 'Adani Group',
     date: 'MAY 2026',
-    type: ['Hackathon', 'Award'],
     url: 'https://github.com/Powermind-Hackathon/ps2_choki-choki.git',
     desc: 'Secured 3rd Prize for developing ChatPDF, an AI-powered document assistant. Engineered a production RAG pipeline using FastAPI, Next.js, LlamaIndex, and FAISS for vector search. Integrated Groq (LLaMA 3) for sub-second parsing and built a split-view UI with clickable citations, backed by secure per-user data isolation via MongoDB and Supabase.'
   },
@@ -29,7 +27,6 @@ const certificatesData: Certificate[] = [
     title: 'Hack The Tank 2026',
     issuer: 'HACK THE TANK',
     date: 'February 2026',
-    type: ['Hackathon'],
     url: 'https://drive.google.com/file/d/1h4w26STqKz6TPCfNXpoAbLKsF2nK0sLU/view',
     desc: 'Engineered an interactive AI host using the Gemini API for dynamic questioning and Deepgram for real-time speech transcription. Architected a video pipeline using Groq LLaMA 3 for transcript analysis and FFmpeg to auto-generate social media-ready reels. Built a browser recording engine with the MediaRecorder API to sync user video and the AI avatar.',
   },
@@ -38,28 +35,37 @@ const certificatesData: Certificate[] = [
     title: 'Odoo x GCET Hackathon 2026',
     issuer: 'Odoo x GCET',
     date: 'February 2026',
-    type: ['Hackathon'],
     url: 'https://drive.google.com/file/d/1N9GHtvnoWceRxX3JzIBPr_FEtcuHQZ5v/view',
     desc: 'Competed in an intense 24-hour coding marathon, gaining invaluable hands-on experience in rapid application development. Focused on seamlessly connecting frontend and backend architectures under tight deadlines, structuring dynamic data, and collaborating effectively to deliver a functional product.',
   },
   {
-    id: 'leetcode-50',
-    title: 'LeetCode 50 Days Active Badge',
-    issuer: 'LeetCode Platform',
-    date: 'OCT 2025',
-    type: ['Milestone', 'Certification'],
-    url: 'https://leetcode.com/nisargvghl27',
-    desc: 'Solved algorithmic problems consistently for 50+ consecutive days, focusing on dynamic programming and graph structures.'
+    id: 'hackout-2025',
+    title: 'Daiict - Hackout Hackathon',
+    issuer: 'DA-IICT',
+    date: 'October 2025',
+    url: 'https://github.com/nisargvghl27',
+    desc: 'Actively competed and engineered solutions under tight deadlines during the DA-IICT Hackout Hackathon, collaborating to develop and showcase a functional software product.',
+  },
+  {
+    id: 'Web Wonders',
+    title: 'Web Wonders 2025',
+    issuer: 'Web Wonder',
+    date: 'July 2025',
+    url: 'https://drive.google.com/file/d/1k6Xg2SaFONsEAEqzfP1ZA7txg8PBTjEZ/view?usp=drive_link',
+    desc: 'Completed an intensive coding boot camp focused on building responsive, high-performance e-commerce web applications, mastering frontend workflows, state management, and core web layouts.',
+  },
+  {
+    id: 'ACM Summer Challenge',
+    title: 'ACM Summer Challenge 2025',
+    issuer: 'ACM Student Chapter',
+    date: 'July 2025',
+    url: 'https://drive.google.com/file/d/19_mdcBtvgWMdbdGUP8ObXqHSuT8S53gH/view?usp=sharing',
+    desc: 'Participated in the competitive programming summer sprint, solving advanced algorithmic puzzles, data structures optimizations, and logic challenges under strict time constraints.',
   },
 ]
 
 export default function Certificates() {
   const [activeCertId, setActiveCertId] = useState<string>(certificatesData[0].id)
-  const [filterType, setFilterType] = useState<string>('all')
-
-  const filteredCerts = filterType === 'all'
-    ? certificatesData
-    : certificatesData.filter(c => c.type.includes(filterType as any))
 
   const activeCert = certificatesData.find(c => c.id === activeCertId) || certificatesData[0]
 
@@ -67,30 +73,7 @@ export default function Certificates() {
     <div className="font-mono w-full max-w-6xl mx-auto relative">
       <FadeIn delay={0.1} direction="up">
         <div className="space-y-6">
-          {/* Filter Bar */}
-          <div className="flex flex-wrap gap-2.5 justify-center border-b border-white/10 pb-5">
-            {['all', 'Hackathon', 'Certification', 'Milestone', 'Award', 'Course'].map((type) => (
-              <button
-                key={type}
-                onClick={() => setFilterType(type)}
-                suppressHydrationWarning
-                className={`relative px-4 py-2 border transition-all text-xs font-bold uppercase tracking-wider select-none ${
-                  filterType === type
-                    ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)]'
-                    : 'border-white/10 text-gray-500 hover:text-white hover:border-white/30'
-                }`}
-              >
-                {filterType === type && (
-                  <>
-                    <span className="absolute -top-1 -left-1 w-1.5 h-1.5 border-t-2 border-l-2 border-cyan-400" />
-                    <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border-b-2 border-r-2 border-cyan-400" />
-                  </>
-                )}
-                [ {type === 'all' ? 'ALL_CREDENTIALS' : type.toUpperCase()} ]
-              </button>
-            ))}
-          </div>
-
+          
           {/* Master Detail Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
             
@@ -100,11 +83,11 @@ export default function Certificates() {
               
               <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 select-none z-10">
                 <span className="text-[10px] tracking-wider text-cyan-400 font-bold uppercase">// CREDENTIALS_DIR</span>
-                <span className="text-[9px] text-gray-600 font-bold">[ {filteredCerts.length} FILES ]</span>
+                <span className="text-[9px] text-gray-600 font-bold">[ {certificatesData.length} FILES ]</span>
               </div>
 
               <div className="flex flex-col gap-2 z-10">
-                {filteredCerts.map((cert) => {
+                {certificatesData.map((cert) => {
                   const isActive = cert.id === activeCertId
                   return (
                     <button
@@ -121,18 +104,11 @@ export default function Certificates() {
                         <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-cyan-400" />
                       )}
                       <div className="flex items-center justify-between gap-2">
-                        <div className="flex flex-wrap gap-1">
-                          {cert.type.map((t) => (
-                            <span key={t} className="text-[7.5px] bg-white/5 border border-white/10 text-gray-400 group-hover:text-cyan-400 group-hover:border-cyan-500/30 px-1 py-0.5 uppercase tracking-wide rounded-sm font-semibold transition-all">
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                        <span className="text-[9px] text-gray-500 font-mono shrink-0">
+                        <span className="text-[9px] text-gray-500 font-mono">
                           {cert.date}
                         </span>
                       </div>
-                      <span className="text-xs font-semibold mt-1.5 tracking-wide truncate max-w-full">
+                      <span className="text-xs font-semibold mt-1 tracking-wide truncate max-w-full">
                         {cert.title}
                       </span>
                     </button>
@@ -162,13 +138,6 @@ export default function Certificates() {
                     <div>
                       <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// CREDENTIAL_OBJECT</span>
                       <h3 className="text-lg font-bold text-white tracking-wide">{activeCert.title}</h3>
-                      <div className="flex flex-wrap gap-1.5 mt-2">
-                        {activeCert.type.map((t) => (
-                          <span key={t} className="text-[9px] bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 px-2 py-0.5 uppercase tracking-wider rounded-sm font-bold shadow-[0_0_10px_rgba(0,240,255,0.05)]">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
                     </div>
                     <div className="flex items-center gap-2 px-2.5 py-1 border border-green-500/20 bg-green-500/5 text-green-400 font-bold text-[9px] select-none rounded-sm">
                       <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />

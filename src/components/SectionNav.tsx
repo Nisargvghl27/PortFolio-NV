@@ -9,6 +9,7 @@ const sections = [
   { id: 'academic', label: '03. ACADEMIC_CORE' },
   { id: 'arsenal', label: '04. TECH_ARSENAL' },
   { id: 'credentials', label: '05. CREDENTIALS_&_AWARDS' },
+  { id: 'leadership', label: '06. LEADERSHIP_LOGS' },
   { id: 'contact', label: 'INITIALIZE_CONNECTION' }
 ]
 
