@@ -8,6 +8,7 @@ import SectionNav from '@/components/SectionNav'
 import NavBar from '@/components/NavBar'
 import MatrixRain from '@/components/MatrixRain'
 import IntroScreen from '@/components/IntroScreen'
+import FloatingDock from '@/components/FloatingDock'
 
 // Apple-esque body font
 const inter = Inter({
@@ -69,6 +70,9 @@ export default function RootLayout({
         
         {/* Secret Matrix Easter Egg */}
         <MatrixRain />
+
+        {/* Floating Dock Social Panel */}
+        <FloatingDock />
 
         {/* Main Content Area - padded to account for fixed navbar */}
         <div className="flex-1 pt-24 pb-12">
