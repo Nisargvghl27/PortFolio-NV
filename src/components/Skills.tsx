@@ -102,9 +102,21 @@ const skillIcons: Record<string, React.ReactNode> = {
       <path d="M21.36 9.886H12.89l5.054-9.043A.77.77 0 0017.27.02L2.64 11.233a.77.77 0 00.323 1.343h8.471l-5.055 9.043a.77.77 0 00.672.825l14.63-12.212a.77.77 0 00-.322-1.346z" />
     </svg>
   ),
-  'REST APIs': (
-    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  Firebase: (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M3.89 15.57L1.1 10.51c-.24-.26-.24-.66 0-.92L10.3 1.4a.63.63 0 0 1 .98 0l3.07 3.07-10.46 11.1zm16.22-3.16L18 2.87a.63.63 0 0 0-1.1 0L14 8.24l-3.3-3.3 9.4-1.37z" />
+    </svg>
+  ),
+  MongoDB: (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.15 10.37c-.36-1.8-1.57-4.14-3.13-6.26-.85-1.16-1.74-2.22-2.02-2.5a.73.73 0 0 0-1.02 0c-.28.28-1.17 1.34-2.02 2.5-1.56 2.12-2.77 4.46-3.13 6.26A10.82 10.82 0 0 0 5.4 14.8c0 3.2 2 5.56 5.6 7.42a2.31 2.31 0 0 0 2 0c3.6-1.86 5.6-4.22 5.6-7.42a10.82 10.82 0 0 0-.45-4.43zM12 21.05v-5.63a1.44 1.44 0 0 0 0-2.88V6.52c.9.9 1.79 2 2.41 3 .9 1.44 1.43 2.83 1.57 4.14A3.4 3.4 0 0 1 12 21.05z" />
+    </svg>
+  ),
+  MySQL: (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+      <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
     </svg>
   ),
   Git: (
@@ -117,19 +129,9 @@ const skillIcons: Record<string, React.ReactNode> = {
       <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
     </svg>
   ),
-  Docker: (
-    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M13.983 11.078h2.119c.102 0 .186-.084.186-.186V8.77c0-.102-.084-.186-.186-.186h-2.119c-.102 0-.186.084-.186.186v2.122c0 .101.084.186.186.186zm-2.93 0h2.119c.102 0 .185-.084.185-.186V8.77c0-.102-.083-.186-.185-.186h-2.119c-.102 0-.186.084-.186.186v2.122c0 .101.084.186.186.186zm-2.93 0h2.12c.102 0 .185-.084.185-.186V8.77c0-.102-.083-.186-.185-.186h-2.12c-.102 0-.186.084-.186.186v2.122c0 .101.084.186.186.186zm-2.93 0h2.119c.102 0 .185-.084.185-.186V8.77c0-.102-.083-.186-.185-.186H5.193c-.102 0-.185.084-.185.186v2.122c0 .101.083.186.185.186zm-2.93 0h2.12c.102 0 .185-.084.185-.186V8.77c0-.102-.083-.186-.185-.186h-2.12c-.102 0-.186.084-.186.186v2.122c0 .101.084.186.186.186zm2.93-2.93h2.12c.102 0 .185-.084.185-.185V5.84c0-.102-.083-.186-.185-.186h-2.12c-.102 0-.186.084-.186.186v2.121c0 .101.084.185.186.185zm2.93 0h2.119c.102 0 .185-.084.185-.185V5.84c0-.102-.083-.186-.185-.186h-2.119c-.102 0-.185.084-.185.186v2.121c0 .101.083.185.185.185zm2.93 0h2.12c.102 0 .185-.084.185-.185V5.84c0-.102-.083-.186-.185-.186h-2.12c-.102 0-.186.084-.186.186v2.121c0 .101.084.185.186.185zm-8.79 0h2.119c.102 0 .185-.084.185-.185V5.84c0-.102-.083-.186-.185-.186H5.193c-.102 0-.185.084-.185.186v2.121c0 .101.083.185.185.185zm12.012-4.148c-.115-.039-.314-.09-.506-.09h-3.23c-.102 0-.186.083-.186.185v2.122c0 .101.084.185.186.185h3.23c.102 0 .186-.084.186-.185v-2.122a.185.185 0 00-.18-.195zm5.72 5.08c-.287-.417-.798-.57-1.312-.663l-.147-.025c-.217-.037-.461-.077-.732-.077h-.146v1.464h.146c.928 0 1.633.242 1.633.585 0 .285-.5.586-1.633.586h-17.7c-1.127 0-1.633-.301-1.633-.586 0-.343.705-.585 1.633-.585h.88V6.848H2.3c-.928 0-1.633.243-1.633.586 0 .307.567.625 1.838.641l.245.002H21.5c1.472 0 2.213-.67 2.213-1.642 0-.36-.103-.7-.272-1.015z" />
-    </svg>
-  ),
   Vercel: (
     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
       <path d="M24 22.525H0L12 1.475L24 22.525Z" />
-    </svg>
-  ),
-  Linux: (
-    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12.04 2c-.67 0-1.28.08-1.84.23-.27.08-.54.2-.76.38-.45.35-.74.88-.79 1.44-.06.7.21 1.4.67 1.94.34.4.83.69 1.34.82.52.14 1.07.13 1.59-.03.5-.16.96-.48 1.28-.9.41-.53.62-1.2.55-1.86-.06-.55-.32-1.07-.74-1.42-.23-.2-.5-.32-.78-.4-.53-.14-1.09-.2-1.62-.2zm-3.03 2.82c-.36.08-.7.25-.97.51-.43.43-.65 1.02-.6 1.63.04.57.3 1.1.72 1.48.42.38.97.58 1.54.55.53-.02 1.05-.23 1.44-.59.4-.38.64-.9.67-1.45.03-.58-.19-1.15-.59-1.57-.4-.42-.96-.65-1.54-.64-.23 0-.46.03-.67.08z" />
     </svg>
   ),
   Postman: (
@@ -155,7 +157,6 @@ const skillsData: Skill[] = [
   { name: 'Python', category: 'Languages', color: 'hover:text-[#3776AB] hover:border-[#3776AB]/50 hover:bg-[#3776AB]/5', level: '85%', latency: '24ms', status: 'OPTIMIZED', desc: 'Automation, analytics & backend' },
   { name: 'Dart', category: 'Languages', color: 'hover:text-[#0175C2] hover:border-[#0175C2]/50 hover:bg-[#0175C2]/5', level: '78%', latency: '18ms', status: 'READY', desc: 'Cross-platform app code base' },
   { name: 'C++', category: 'Languages', color: 'hover:text-[#00599C] hover:border-[#00599C]/50 hover:bg-[#00599C]/5', level: '80%', latency: '4ms', status: 'OPTIMIZED', desc: 'Performant systems & low-level structures' },
-  { name: 'Java', category: 'Languages', color: 'hover:text-[#ED8B00] hover:border-[#ED8B00]/50 hover:bg-[#ED8B00]/5', level: '75%', latency: '35ms', status: 'READY', desc: 'OOP systems & legacy integrations' },
   
   { name: 'Next.js', category: 'Frontend', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '90%', latency: '12ms', status: 'OPTIMIZED', desc: 'Server-side rendering & app routing' },
   { name: 'React', category: 'Frontend', color: 'hover:text-[#61DAFB] hover:border-[#61DAFB]/50 hover:bg-[#61DAFB]/5', level: '94%', latency: '8ms', status: 'READY', desc: 'Component architectures & state layers' },
@@ -168,13 +169,13 @@ const skillsData: Skill[] = [
   { name: 'PostgreSQL', category: 'Backend', color: 'hover:text-[#4169E1] hover:border-[#4169E1]/50 hover:bg-[#4169E1]/5', level: '84%', latency: '28ms', status: 'OPTIMIZED', desc: 'Relational data structures & queries' },
   { name: 'Prisma', category: 'Backend', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '90%', latency: '5ms', status: 'READY', desc: 'ORM data schema declaration' },
   { name: 'Supabase', category: 'Backend', color: 'hover:text-[#3ECF8E] hover:border-[#3ECF8E]/50 hover:bg-[#3ECF8E]/5', level: '85%', latency: '16ms', status: 'READY', desc: 'Serverless datastore & security' },
-  { name: 'REST APIs', category: 'Backend', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '92%', latency: '12ms', status: 'READY', desc: 'HTTP data-exchange protocols' },
+  { name: 'Firebase', category: 'Backend', color: 'hover:text-[#FFCA28] hover:border-[#FFCA28]/50 hover:bg-[#FFCA28]/5', level: '88%', latency: '12ms', status: 'READY', desc: 'Realtime database & serverless platform' },
+  { name: 'MongoDB', category: 'Backend', color: 'hover:text-[#47A248] hover:border-[#47A248]/50 hover:bg-[#47A248]/5', level: '86%', latency: '15ms', status: 'READY', desc: 'NoSQL document-oriented database engine' },
+  { name: 'MySQL', category: 'Backend', color: 'hover:text-[#4479A1] hover:border-[#4479A1]/50 hover:bg-[#4479A1]/5', level: '85%', latency: '22ms', status: 'READY', desc: 'Structured query language database system' },
   
   { name: 'Git', category: 'Tools_&_DevOps', color: 'hover:text-[#F05032] hover:border-[#F05032]/50 hover:bg-[#F05032]/5', level: '90%', latency: '4ms', status: 'READY', desc: 'Decentralized version control' },
   { name: 'GitHub', category: 'Tools_&_DevOps', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '92%', latency: '5ms', status: 'READY', desc: 'Workflows & repository operations' },
-  { name: 'Docker', category: 'Tools_&_DevOps', color: 'hover:text-[#2496ED] hover:border-[#2496ED]/50 hover:bg-[#2496ED]/5', level: '80%', latency: '45ms', status: 'OPTIMIZED', desc: 'Container deployment sandboxing' },
   { name: 'Vercel', category: 'Tools_&_DevOps', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '95%', latency: '8ms', status: 'READY', desc: 'Global edge deployment networks' },
-  { name: 'Linux', category: 'Tools_&_DevOps', color: 'hover:text-[#FCC624] hover:border-[#FCC624]/50 hover:bg-[#FCC624]/5', level: '85%', latency: '10ms', status: 'READY', desc: 'CLI scripts & server admin' },
   { name: 'Postman', category: 'Tools_&_DevOps', color: 'hover:text-[#FF6C37] hover:border-[#FF6C37]/50 hover:bg-[#FF6C37]/5', level: '88%', latency: '12ms', status: 'READY', desc: 'HTTP request diagnostics' }
 ]
 
