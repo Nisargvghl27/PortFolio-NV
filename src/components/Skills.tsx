@@ -65,8 +65,8 @@ const skillIcons: Record<string, React.ReactNode> = {
     </svg>
   ),
   React: (
-    <svg className="w-3.5 h-3.5 text-[#61DAFB]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(0 12 12)" />
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="12" cy="12" rx="10" ry="3.5" />
       <ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(60 12 12)" />
       <ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(120 12 12)" />
       <circle cx="12" cy="12" r="1.5" fill="currentColor" />
@@ -99,8 +99,11 @@ const skillIcons: Record<string, React.ReactNode> = {
     </svg>
   ),
   PostgreSQL: (
-    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z" />
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+      <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
+      <path d="M12 8v11" />
     </svg>
   ),
   Prisma: (
@@ -309,7 +312,7 @@ export default function Skills() {
                       <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
 
                       {skillIcons[skill.name] && (
-                        <span className="text-gray-400 group-hover:text-inherit transition-colors duration-300">
+                        <span className="flex items-center justify-center w-4 h-4 text-gray-400 group-hover:text-inherit transition-colors duration-300 shrink-0">
                           {skillIcons[skill.name]}
                         </span>
                       )}
