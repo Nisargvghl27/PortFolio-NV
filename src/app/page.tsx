@@ -109,12 +109,78 @@ export default async function HomePage() {
           <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500/50"></div>
           <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-500/50"></div>
 
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-3xl font-mono font-bold mb-4 text-white">Initialize_Connection</h2>
-            <p className="text-gray-400 mb-8 font-light">
-              Secure channel open. Ping me for collaborations, architectural reviews, or full-stack opportunities.
-            </p>
-            <ContactForm />
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+              
+              {/* Left Column: Direct Info */}
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-3xl font-mono font-bold mb-3 text-white">Initialize_Connection</h2>
+                  <p className="text-gray-400 font-light text-sm leading-relaxed">
+                    Feel free to reach out through the form or connect with me directly through my social media profiles.
+                  </p>
+                </div>
+
+                <div className="space-y-4 pt-4 border-t border-white/5 font-mono">
+                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">// DIRECT_CHANNELS</span>
+                  
+                  {/* Email Channel */}
+                  <div className="flex items-start gap-3 bg-white/[0.02] border border-white/5 p-4 rounded-sm hover:border-cyan-500/30 transition-colors group">
+                    <span className="text-cyan-500 mt-1 shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                      </svg>
+                    </span>
+                    <div>
+                      <span className="text-[9px] text-gray-600 font-bold block uppercase tracking-wider">EMAIL_ENDPOINT</span>
+                      <a href="mailto:nisargvaghela103@gmail.com" className="text-xs text-cyan-300 hover:text-cyan-200 transition-colors hover:underline">
+                        nisargvaghela103@gmail.com
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Social Routing */}
+                  <div className="bg-white/[0.02] border border-white/5 p-4 rounded-sm hover:border-cyan-500/30 transition-colors">
+                    <span className="text-[9px] text-gray-600 font-bold block uppercase tracking-wider mb-3">SOCIAL_ROUTING</span>
+                    <div className="flex flex-wrap gap-2.5">
+                      <a
+                        href="https://linkedin.com/in/nisargvghl27"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] font-bold border border-white/10 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/40 px-3 py-1.5 rounded-sm uppercase tracking-wide transition-all bg-black/20 hover:bg-cyan-500/5 shadow-sm"
+                      >
+                        LinkedIn
+                      </a>
+                      <a
+                        href="https://github.com/nisargvghl27"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] font-bold border border-white/10 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/40 px-3 py-1.5 rounded-sm uppercase tracking-wide transition-all bg-black/20 hover:bg-cyan-500/5 shadow-sm"
+                      >
+                        GitHub
+                      </a>
+                      <a
+                        href="https://leetcode.com/u/nisargvghl27/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[10px] font-bold border border-white/10 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/40 px-3 py-1.5 rounded-sm uppercase tracking-wide transition-all bg-black/20 hover:bg-cyan-500/5 shadow-sm"
+                      >
+                        LeetCode
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Right Column: Contact Form */}
+              <div className="bg-black/30 border border-white/5 p-6 rounded-sm backdrop-blur-md">
+                <span className="text-[10px] font-mono text-gray-500 font-bold uppercase tracking-wider block mb-4">// TRANSMIT_MESSAGE</span>
+                <ContactForm />
+              </div>
+
+            </div>
           </div>
         </section>
       </FadeIn>
