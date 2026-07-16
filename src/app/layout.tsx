@@ -49,12 +49,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth dark">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-mono antialiased min-h-screen flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200`}>
-        
+    <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
+      <body suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200`}>
+
         {/* Animated Boot Sequence (Only plays once per session) */}
         <IntroScreen />
-
         {/* Top Scroll Progress Bar */}
         <ScrollProgress />
 
@@ -76,33 +75,52 @@ export default function RootLayout({
         </div>
 
         {/* Technical Footer with Social Commands */}
-        <footer className="border-t border-white/10 py-10 text-center text-xs font-mono text-gray-600 bg-black/80 shadow-[0_-1px_0_rgba(0,240,255,0.1)] relative z-10">
-          <div className="max-w-5xl mx-auto px-6 flex flex-col items-center gap-6">
-            <div className="flex flex-wrap justify-center gap-6 text-sm">
-              <a 
-                href="https://github.com/nisargvghl27" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-cyan-400 transition-colors"
+        <footer className="border-t border-white/10 py-12 text-center text-xs font-mono text-gray-500 bg-black/85 shadow-[0_-4px_30px_rgba(0,240,255,0.02)] relative z-10 select-none">
+          <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            {/* System Info & Heartbeat */}
+            <div className="flex items-center gap-3 text-gray-600">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span className="text-[10px] tracking-widest uppercase">
+                SYS.ONLINE // HOST: VERCEL // LATENCY: 14ms
+              </span>
+            </div>
+
+            {/* Quick Links */}
+            <div className="flex flex-wrap justify-center gap-6 text-[11px] font-bold">
+              <a
+                href="https://github.com/nisargvghl27"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-cyan-400 transition-colors uppercase tracking-wider"
               >
                 [ ./github ]
               </a>
-              <a 
-                href="https://linkedin.com/in/nisargvghl27" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-cyan-400 transition-colors"
+              <a
+                href="https://linkedin.com/in/nisargvghl27"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-cyan-400 transition-colors uppercase tracking-wider"
               >
                 [ ./linkedin ]
               </a>
-              <a 
-                href="mailto:nisargvaghela@email.com" 
-                className="text-gray-400 hover:text-cyan-400 transition-colors"
+              <a
+                href="mailto:nisargvaghela103@gmail.com"
+                className="text-gray-400 hover:text-cyan-400 transition-colors uppercase tracking-wider"
               >
                 [ ./email ]
               </a>
             </div>
-            <p>SYS.TIME: {new Date().getFullYear()} // STATUS: ONLINE // USER: NISARG_VAGHELA</p>
+
+            {/* Copyright & Time */}
+            <div className="text-[10px] text-gray-600 tracking-wider flex flex-col md:items-end gap-1">
+              <span>© 2026 NISARG_VAGHELA. ALL_SYSTEMS_OPERATIONAL.</span>
+              <span className="text-gray-700">LOCATION: SURAT, INDIA [21.17° N, 72.83° E]</span>
+            </div>
+            
           </div>
         </footer>
 
