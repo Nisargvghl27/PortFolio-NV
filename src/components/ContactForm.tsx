@@ -22,7 +22,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md" suppressHydrationWarning>
       <div>
         <label className="block text-sm font-medium mb-1">Name</label>
         <input name="name" type="text" required className="w-full border border-gray-300 p-2 rounded" />

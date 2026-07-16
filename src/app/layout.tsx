@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
+import ChatBot from '@/components/ChatBot'
+import { Analytics } from '@vercel/analytics/react' // 1. Imported Analytics
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Nisarg Vaghela | Full Stack Engineer',
     description: 'Specializing in modern full-stack web and mobile architecture. View my latest projects and engineering work.',
-    url: 'https://nisargvaghela.dev', // You can change this when you get a custom domain
+    url: 'https://nisargvaghela.dev', 
     siteName: 'Nisarg Vaghela Portfolio',
     images: [
       {
@@ -64,6 +66,10 @@ export default function RootLayout({
           <p>© {new Date().getFullYear()} Nisarg Vaghela. All rights reserved.</p>
         </footer>
         
+        <ChatBot />
+        
+        {/* 2. Injected Analytics component */}
+        <Analytics /> 
       </body>
     </html>
   )

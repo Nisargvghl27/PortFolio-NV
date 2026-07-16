@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma'
 import ContactForm from '@/components/ContactForm'
 import Link from 'next/link'
 import FadeIn from '@/components/FadeIn'
+import CPStats from '@/components/CPStats'
+import LeetCodeStats from '@/components/LeetCodeStats';
 
 export default async function HomePage() {
   const projects = await prisma.project.findMany({
@@ -10,12 +12,12 @@ export default async function HomePage() {
 
   return (
     <main className="max-w-5xl mx-auto px-6 py-20 space-y-24 overflow-hidden">
-      
+
       {/* Animated Hero Section */}
       <section className="space-y-6 max-w-3xl">
         <FadeIn>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight">
-            Building digital <br className="hidden md:block"/>
+            Building digital <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">
               experiences.
             </span>
@@ -36,7 +38,7 @@ export default async function HomePage() {
             <div className="h-px bg-gray-200 dark:bg-zinc-800 flex-1"></div>
           </div>
         </FadeIn>
-        
+
         {projects.length === 0 ? (
           <FadeIn delay={0.4}>
             <p className="text-gray-500 italic">No projects added yet.</p>
@@ -57,7 +59,7 @@ export default async function HomePage() {
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="mt-8 flex gap-4 text-sm font-semibold">
                     {project.liveLink && (
                       <Link href={project.liveLink} target="_blank" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 flex items-center gap-1">
@@ -75,6 +77,20 @@ export default async function HomePage() {
             ))}
           </div>
         )}
+      </section>
+
+      {/* 2. New Stats Section */}
+      <section>
+        <FadeIn delay={0.5}>
+          <div className="flex items-center gap-4 mb-8">
+            <h2 className="text-3xl font-bold tracking-tight">Competitive Stats</h2>
+            <div className="h-px bg-gray-200 dark:bg-zinc-800 flex-1"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+            <CPStats handle="nisargvghl27" />
+            <LeetCodeStats username="nisargvghl27" />
+          </div>
+        </FadeIn>
       </section>
 
       {/* Animated Contact Section */}
