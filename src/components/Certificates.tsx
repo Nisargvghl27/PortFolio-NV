@@ -43,7 +43,7 @@ const certificatesData: Certificate[] = [
     title: 'Daiict - Hackout Hackathon',
     issuer: 'DA-IICT',
     date: 'October 2025',
-    url: 'https://github.com/nisargvghl27',
+    url: '',
     desc: 'Actively competed and engineered solutions under tight deadlines during the DA-IICT Hackout Hackathon, collaborating to develop and showcase a functional software product.',
   },
   {
@@ -175,14 +175,16 @@ export default function Certificates() {
                     [ VERIFICATION_ROUTE_SECURE: PASS ]
                   </span>
                 </div>
-                <a
-                  href={activeCert.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 border border-cyan-500 bg-cyan-500/10 text-cyan-400 font-bold text-xs uppercase tracking-wider hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.15)] transition-all select-none rounded-sm"
-                >
-                  [ VIEW_CREDENTIAL_DATA ]
-                </a>
+                {activeCert.url && (
+                  <a
+                    href={activeCert.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 border border-cyan-500 bg-cyan-500/10 text-cyan-400 font-bold text-xs uppercase tracking-wider hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.15)] transition-all select-none rounded-sm"
+                  >
+                    [ VIEW_CREDENTIAL_DATA ]
+                  </a>
+                )}
               </div>
 
             </div>

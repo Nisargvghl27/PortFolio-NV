@@ -103,11 +103,11 @@ export default async function HomePage() {
         <Certificates />
       </section>
 
-      {/* Leadership Section */}
+      {/* Positions of Responsibility Section */}
       <section id="leadership">
         <FadeIn delay={0.2} direction="left">
           <div className="flex items-center gap-4 mb-10">
-            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">06.</span> Leadership_Logs</h2>
+            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">06.</span> Positions_of_Responsibility</h2>
             <ScanlineDivider />
           </div>
         </FadeIn>

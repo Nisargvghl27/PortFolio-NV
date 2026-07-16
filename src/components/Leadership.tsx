@@ -9,7 +9,7 @@ const leadershipData = [
     team: 'Technical Expertise',
     organization: 'Google Developer Group (GDG), NIT Surat',
     period: 'OCT 2025 – PRESENT',
-    desc: 'Contributing technical expertise to build campus developer products, participate in technical workshops, and implement student-led software engineering initiatives.'
+    desc: 'Contributing technical expertise to build campus developer projects and supporting tech workshops and events.'
   },
   {
     id: 'acm',
@@ -17,7 +17,7 @@ const leadershipData = [
     team: 'Organizing Tech Events',
     organization: 'Association for Computing Machinery (ACM), NIT Surat',
     period: 'SEPT 2025 – PRESENT',
-    desc: 'Co-organizing campus competitive coding contests, algorithmic problem-solving sprints, and managing participant outreach networks for core technical events.'
+    desc: 'Participating to competitive coding events, managing student participations, and assisting in coordinating technical activities.'
   },
   {
     id: 'cev',
@@ -25,7 +25,7 @@ const leadershipData = [
     team: 'Organizing Tech Bootcamps',
     organization: 'Cutting Edge Visionaries (CEV), NIT Surat',
     period: 'AUG 2025 – PRESENT',
-    desc: 'Conducting technical bootcamps, structuring study materials for computer science foundations, and mentoring junior cohorts in software development paradigms.'
+    desc: 'Assisting in technical bootcamps, structuring study materials for computer science foundations, and helping junior cohorts in coding practices.'
   }
 ]
 
