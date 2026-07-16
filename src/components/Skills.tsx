@@ -191,8 +191,8 @@ export default function Skills() {
       <FadeIn delay={0.1} direction="up">
         <div className="space-y-6">
           
-          {/* 1. Left-Aligned Terminal Filter Bar */}
-          <div className="flex flex-wrap gap-2.5 justify-start border-b border-white/10 pb-5">
+          {/* 1. Centered Terminal Filter Bar (Restore Previous Arrangement) */}
+          <div className="flex flex-wrap gap-2.5 justify-center border-b border-white/10 pb-5">
             {categories.map((cat) => {
               const isActive = activeCategory === cat.id
               return (
@@ -217,67 +217,56 @@ export default function Skills() {
             })}
           </div>
 
-          {/* 2. Main Deck Grid - items-stretch works perfectly now */}
+          {/* 2. Main Deck Grid - Stretched height box sizes preserved */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
             
-            {/* Left Card: Skill tag deck (Takes 2 columns) */}
-            <div className="lg:col-span-2 relative glass-panel p-6 border border-white/10 rounded-lg overflow-hidden bg-black/60 shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[340px]">
+            {/* Left Card: Skill tag deck (Centered tags, no left card header - Restore Previous Arrangement) */}
+            <div className="lg:col-span-2 relative glass-panel p-8 border border-white/10 rounded-lg overflow-hidden bg-black/60 shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col justify-center min-h-[340px]">
               {/* Background grid */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
               {/* Intersect symbols */}
-              <span className="absolute top-2 left-2 text-white/20 text-xs pointer-events-none select-none">+</span>
-              <span className="absolute top-2 right-2 text-white/20 text-xs pointer-events-none select-none">+</span>
-              <span className="absolute bottom-2 left-2 text-white/20 text-xs pointer-events-none select-none">+</span>
-              <span className="absolute bottom-2 right-2 text-white/20 text-xs pointer-events-none select-none">+</span>
+              <span className="absolute top-2 left-2 text-cyan-500/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute top-2 right-2 text-cyan-500/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute bottom-2 left-2 text-cyan-500/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute bottom-2 right-2 text-cyan-500/40 text-xs font-bold pointer-events-none select-none">+</span>
 
-              <div className="space-y-6">
-                {/* Header matching the Diagnostics title */}
-                <div className="flex items-center gap-2 border-b border-white/5 pb-3 select-none">
-                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">SYSTEM_INVENTORY // STACK_INTEGRITY</span>
-                </div>
+              {/* Ambient center cyan shadow glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-cyan-500/5 blur-3xl pointer-events-none" />
 
-                {/* Left-aligned flow of tags */}
-                <motion.div 
-                  layout 
-                  className="flex flex-wrap gap-3 justify-start items-start relative z-10"
-                >
-                  <AnimatePresence mode="popLayout">
-                    {filteredSkills.map((skill) => (
-                      <motion.span
-                        layout
-                        initial={{ opacity: 0, scale: 0.85, y: 10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.85, y: -10 }}
-                        transition={{ type: 'spring', stiffness: 450, damping: 28 }}
-                        key={skill.name}
-                        onMouseEnter={() => setHoveredSkill(skill)}
-                        onMouseLeave={() => setHoveredSkill(null)}
-                        className={`group relative flex items-center gap-2 bg-black/40 border border-white/10 text-gray-300 text-xs px-3.5 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color}`}
-                      >
-                        <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
-                        <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+              {/* Centered flow of tags */}
+              <motion.div 
+                layout 
+                className="flex flex-wrap gap-4 justify-center items-center max-w-3xl mx-auto relative z-10"
+              >
+                <AnimatePresence mode="popLayout">
+                  {filteredSkills.map((skill) => (
+                    <motion.span
+                      layout
+                      initial={{ opacity: 0, scale: 0.85, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.85, y: -10 }}
+                      transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+                      key={skill.name}
+                      onMouseEnter={() => setHoveredSkill(skill)}
+                      onMouseLeave={() => setHoveredSkill(null)}
+                      className={`group relative flex items-center gap-2 bg-black/40 border border-white/10 text-gray-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color}`}
+                    >
+                      <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                      <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
 
-                        {skillIcons[skill.name] && (
-                          <span className="text-gray-400 group-hover:text-inherit transition-colors duration-300">
-                            {skillIcons[skill.name]}
-                          </span>
-                        )}
-                        <span className="relative tracking-wider font-semibold">
-                          {skill.name}
+                      {skillIcons[skill.name] && (
+                        <span className="text-gray-400 group-hover:text-inherit transition-colors duration-300">
+                          {skillIcons[skill.name]}
                         </span>
-                      </motion.span>
-                    ))}
-                  </AnimatePresence>
-                </motion.div>
-              </div>
-
-              {/* Bottom detail row */}
-              <div className="border-t border-white/5 pt-3 mt-6 text-[8px] text-gray-600 flex justify-between select-none">
-                <span>INDEX_COUNT: {filteredSkills.length} SYSTEMS</span>
-                <span>telemetry_link: true</span>
-              </div>
+                      )}
+                      <span className="relative tracking-wider font-semibold">
+                        {skill.name}
+                      </span>
+                    </motion.span>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
             </div>
 
             {/* Right Card: Live Diagnostics Deck (Takes 1 column) */}
