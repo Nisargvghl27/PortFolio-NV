@@ -5,6 +5,10 @@ import FadeIn from '@/components/FadeIn'
 import CPStats from '@/components/CPStats'
 import LeetCodeStats from '@/components/LeetCodeStats'
 import Education from '@/components/Education'
+import TypingEffect from '@/components/TypingEffect'
+import Skills from '@/components/Skills'
+import Experience from '@/components/Experience'
+import GitHubCalendar from '@/components/GitHubCalendar'
 
 export default async function HomePage() {
   const projects = await prisma.project.findMany({
@@ -18,9 +22,7 @@ export default async function HomePage() {
       <section className="space-y-8 max-w-4xl pt-12">
         <div className="space-y-4">
           <FadeIn>
-            <p className="font-mono text-cyan-400 text-sm mb-4">
-              <span className="text-gray-500">nisarg@ai-core:~$</span> ./initialize_portfolio.sh
-            </p>
+            <TypingEffect />
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white">
               Architecting <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 glow-text">
@@ -75,41 +77,59 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project, index) => (
               <FadeIn key={project.id} delay={0.5 + (index * 0.1)}>
-                <div className="group glass-panel rounded-none p-6 md:p-8 h-full flex flex-col justify-between glow-border-hover relative overflow-hidden">
-                  {/* Subtle top-right accent */}
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/5 rounded-bl-full group-hover:bg-cyan-500/20 transition-colors"></div>
-
-                  <div>
-                    <h3 className="text-2xl font-bold mb-3 text-gray-100 group-hover:text-cyan-400 transition-colors">{project.title}</h3>
-                    <p className="text-gray-400 leading-relaxed mb-6 font-light text-sm">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.techStack.map((tech) => (
-                        <span key={tech} className="bg-white/5 border border-white/10 text-cyan-200 text-xs px-2 py-1 font-mono">
-                          {tech}
-                        </span>
-                      ))}
+                <div className="group glass-panel rounded-none p-0 h-full flex flex-col justify-between glow-border-hover relative overflow-hidden">
+                  
+                  {/* Project Image (if exists) */}
+                  {project.imageUrl && (
+                    <div className="w-full h-48 relative overflow-hidden border-b border-white/10">
+                      <img 
+                        src={project.imageUrl} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                      {/* Cyan tint overlay that fades on hover */}
+                      <div className="absolute inset-0 bg-cyan-500/10 mix-blend-overlay group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
                     </div>
-                  </div>
+                  )}
 
-                  <div className="mt-8 flex gap-6 text-sm font-mono font-bold">
-                    {project.liveLink && (
-                      <Link
-                        href={project.liveLink}
-                        target="_blank"
-                        className="text-cyan-400 hover:text-cyan-300 hover:glow-text flex items-center gap-2"
-                      >
-                        [ LIVE_DEMO ]
-                      </Link>
+                  <div className="p-6 md:p-8 flex-1 flex flex-col justify-between relative">
+                    {/* Subtle top-right accent (only show if no image to avoid cluttering) */}
+                    {!project.imageUrl && (
+                      <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/5 rounded-bl-full group-hover:bg-cyan-500/20 transition-colors"></div>
                     )}
-                    {project.githubLink && (
-                      <Link
-                        href={project.githubLink}
-                        target="_blank"
-                        className="text-gray-400 hover:text-white flex items-center gap-2"
-                      >
-                        [ SRC_CODE ]
-                      </Link>
-                    )}
+
+                    <div>
+                      <h3 className="text-2xl font-bold mb-3 text-gray-100 group-hover:text-cyan-400 transition-colors">{project.title}</h3>
+                      <p className="text-gray-400 leading-relaxed mb-6 font-light text-sm">{project.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {project.techStack.map((tech) => (
+                          <span key={tech} className="bg-white/5 border border-white/10 text-cyan-200 text-xs px-2 py-1 font-mono">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="mt-8 flex gap-6 text-sm font-mono font-bold">
+                      {project.liveLink && (
+                        <Link
+                          href={project.liveLink}
+                          target="_blank"
+                          className="text-cyan-400 hover:text-cyan-300 hover:glow-text flex items-center gap-2"
+                        >
+                          [ LIVE_DEMO ]
+                        </Link>
+                      )}
+                      {project.githubLink && (
+                        <Link
+                          href={project.githubLink}
+                          target="_blank"
+                          className="text-gray-400 hover:text-white flex items-center gap-2"
+                        >
+                          [ SRC_CODE ]
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
               </FadeIn>
@@ -125,10 +145,12 @@ export default async function HomePage() {
             <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">02.</span> Algorithmic_Metrics</h2>
             <div className="h-px bg-white/10 flex-1"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mb-6">
             <CPStats handle="nisargvghl27" />
             <LeetCodeStats username="nisargvghl27" />
           </div>
+          
+          <GitHubCalendar />
         </FadeIn>
       </section>
 
@@ -143,8 +165,30 @@ export default async function HomePage() {
         </FadeIn>
       </section>
 
+      {/* Skills / Tech Arsenal Section */}
+      <section>
+        <FadeIn delay={0.65}>
+          <div className="flex items-center gap-4 mb-10">
+            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">04.</span> Tech_Arsenal</h2>
+            <div className="h-px bg-white/10 flex-1"></div>
+          </div>
+          <Skills />
+        </FadeIn>
+      </section>
+
+      {/* Experience / Timeline Section */}
+      <section>
+        <FadeIn delay={0.7}>
+          <div className="flex items-center gap-4 mb-10">
+            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">05.</span> Experience_Log</h2>
+            <div className="h-px bg-white/10 flex-1"></div>
+          </div>
+          <Experience />
+        </FadeIn>
+      </section>
+
       {/* Contact Form Section */}
-      <FadeIn delay={0.7}>
+      <FadeIn delay={0.75}>
         <section className="glass-panel p-8 md:p-12 relative overflow-hidden">
           {/* Cyberpunk corner accent */}
           <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500/50"></div>

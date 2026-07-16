@@ -8,6 +8,7 @@ export async function addProject(formData: FormData) {
   const description = formData.get('description') as string
   const githubLink = formData.get('githubLink') as string
   const liveLink = formData.get('liveLink') as string
+  const imageUrl = formData.get('imageUrl') as string
   
   // Get the tech stack string and split it by commas into an array
   const techStackInput = formData.get('techStack') as string
@@ -27,6 +28,7 @@ export async function addProject(formData: FormData) {
       techStack,
       githubLink: githubLink || null,
       liveLink: liveLink || null,
+      imageUrl: imageUrl || null,
       featured: false,
     },
   })
