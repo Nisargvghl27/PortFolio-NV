@@ -11,56 +11,77 @@ import Experience from '@/components/Experience'
 import GitHubCalendar from '@/components/GitHubCalendar'
 import ProjectCard from '@/components/ProjectCard'
 import ScanlineDivider from '@/components/ScanlineDivider'
+import InteractiveConsole from '@/components/InteractiveConsole'
 
 export default async function HomePage() {
-  const projects = await prisma.project.findMany({
-    orderBy: { createdAt: 'desc' }
-  })
+  let projects: any[] = []
+  try {
+    projects = await prisma.project.findMany({
+      orderBy: { createdAt: 'desc' }
+    })
+  } catch (error) {
+    console.error("Database connection failed during build: ", error)
+  }
 
   return (
     <main className="max-w-5xl mx-auto px-6 space-y-32 overflow-hidden">
       {/* Terminal Hero Section */}
-      <section id="hero" className="space-y-8 max-w-4xl pt-12">
-        <div className="space-y-4">
-          <FadeIn direction="scale">
-            <TypingEffect />
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white">
-              <span 
-                className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 glow-text glitch-text"
-                data-text="Nisarg Vaghela"
-              >
-                Nisarg Vaghela
-              </span>
-            </h1>
-          </FadeIn>
-          <FadeIn delay={0.2} direction="up">
-            <p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl font-light">
-              Full-Stack Software Engineer & Applied AI Student.
-              Specializing in scalable web architectures, machine learning integration, and high-performance mobile applications.
-            </p>
-          </FadeIn>
-        </div>
+      <section id="hero" className="pt-8 md:pt-16 min-h-[70vh] flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center w-full">
+          {/* Hero Content Left */}
+          <div className="lg:col-span-7 space-y-6">
+            <FadeIn direction="scale">
+              {/* Availability tag */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] tracking-wider mb-2 uppercase select-none">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_#4ade80]" />
+                [ SYSTEM STATUS: ACTIVE / OPEN FOR HIRE ]
+              </div>
+              <TypingEffect />
+              <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white select-none">
+                <span 
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 glow-text glitch-text"
+                  data-text="Nisarg Vaghela"
+                >
+                  Nisarg Vaghela
+                </span>
+              </h1>
+            </FadeIn>
+            <FadeIn delay={0.2} direction="up">
+              <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-xl font-light">
+                Full-Stack Software Engineer & Applied AI Student.
+                Specializing in scalable web architectures, machine learning integration, and high-performance mobile applications.
+              </p>
+            </FadeIn>
 
-        {/* Action Terminals */}
-        <FadeIn delay={0.3} direction="up">
-          <div className="flex flex-wrap gap-4 pt-4 font-mono text-sm">
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 px-6 py-3 hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.1)] hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all"
-            >
-              [ EXECUTE: VIEW_RESUME ]
-            </a>
-            <a
-              href="https://github.com/nisargvghl27"
-              target="_blank"
-              className="glass-panel text-gray-300 px-6 py-3 hover:text-white hover:border-gray-400 transition-all"
-            >
-              [ CONNECT: GITHUB ]
-            </a>
+            {/* Action Terminals */}
+            <FadeIn delay={0.3} direction="up">
+              <div className="flex flex-wrap gap-4 pt-2 font-mono text-xs md:text-sm">
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 px-5 py-3 hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.1)] hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all"
+                >
+                  [ EXECUTE: VIEW_RESUME ]
+                </a>
+                <a
+                  href="https://github.com/nisargvghl27"
+                  target="_blank"
+                  className="glass-panel text-gray-300 px-5 py-3 hover:text-white hover:border-gray-400 transition-all"
+                >
+                  [ CONNECT: GITHUB ]
+                </a>
+              </div>
+            </FadeIn>
           </div>
-        </FadeIn>
+
+          {/* Interactive Workstation Right */}
+          <div className="lg:col-span-5 w-full">
+            <FadeIn delay={0.25} direction="scale">
+              <InteractiveConsole />
+            </FadeIn>
+          </div>
+        </div>
       </section>
 
       {/* Matrix Project Cards */}
