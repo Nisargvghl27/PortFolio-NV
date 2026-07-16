@@ -9,11 +9,15 @@ export default function AdminLogin() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    // Compare against env variable
+    
+    // Check against the environment variable
     if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
-      // Set the security cookie
-      document.cookie = `admin_auth=${password}; path=/; max-age=86400; SameSite=Strict`
-      router.push('/admin')
+      // 1. Set the cookie without restrictive SameSite attributes for local dev
+      // Using path=/ ensures it is available across all /admin routes
+      document.cookie = `admin_auth=${password}; path=/; max-age=86400`
+      
+      // 2. Force a hard navigation to the Admin Hub
+      window.location.href = '/admin'
     } else {
       alert('> ACCESS_DENIED: Invalid_Credentials')
     }

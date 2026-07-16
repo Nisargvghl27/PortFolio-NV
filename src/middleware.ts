@@ -11,7 +11,8 @@ export function middleware(req: NextRequest) {
   const authCookie = req.cookies.get('admin_auth')
 
   // If cookie exists and is correct, proceed
-  if (authCookie?.value === process.env.ADMIN_PASSWORD) {
+  const expectedPassword = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD
+  if (authCookie?.value === expectedPassword) {
     return NextResponse.next()
   }
 
