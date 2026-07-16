@@ -12,12 +12,56 @@
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
-  /* Deep-tech structural grid background */
+  /* The position is relative by default, but we keep it clean here as backgrounds are handled via pseudo-elements */
+}
+
+/* 1. Animated Aurora Mesh (Layered beneath the grid) */
+body::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0, 240, 255, 0.06) 0%, transparent 40%),  /* Cyan */
+    radial-gradient(circle at 70% 40%, rgba(0, 112, 243, 0.06) 0%, transparent 50%),  /* Blue */
+    radial-gradient(circle at 40% 70%, rgba(128, 0, 255, 0.05) 0%, transparent 50%);  /* Purple */
+  animation: aurora-drift 25s ease-in-out infinite alternate;
+  pointer-events: none; /* Prevents blocking clicks */
+}
+
+/* 2. Deep-tech structural grid (Layered above aurora, below content) */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
   background-image: 
     linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
-  background-attachment: fixed;
+  pointer-events: none; /* Prevents blocking clicks */
+}
+
+/* Keyframes for the slow, subtle aurora drift */
+@keyframes aurora-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(3%, -3%) scale(1.05);
+  }
+  66% {
+    transform: translate(-3%, 3%) scale(0.95);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 /* Custom Neon & Glass Utilities */
