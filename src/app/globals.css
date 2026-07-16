@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme inline {
+@theme {
   --color-background: #030303;
   --color-foreground: #ededed;
   --color-neon-cyan: #00f0ff;
