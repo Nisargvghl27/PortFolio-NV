@@ -27,6 +27,36 @@ const certificatesData: Certificate[] = [
     desc: 'Led a team to build a secure system for tracking academic research grant disbursements, optimizing release latency by 35%.'
   },
   {
+    id: 'hackout-2024',
+    title: 'DA-IICT - Hackout Participant',
+    issuer: 'Dhirubhai Ambani Institute of Information and Communication Technology (DA-IICT)',
+    date: 'OCT 2024',
+    type: 'Hackathon',
+    verifyId: 'DAIICT-HO-24-NISARG',
+    url: 'https://hackout.co',
+    desc: 'Designed and prototyped a collaborative developer dashboard and smart search portal during the 36-hour hackathon sprint.'
+  },
+  {
+    id: 'odoo-gcet-2025',
+    title: 'Odoo X GCET Hackathon Competitor',
+    issuer: 'Odoo & G H Patel College of Engineering & Technology (GCET)',
+    date: 'FEB 2025',
+    type: 'Hackathon',
+    verifyId: 'ODOO-GCET-2025-VAGHELA',
+    url: 'https://www.odoo.com',
+    desc: 'Built custom business automation flows and integrated ERP workflows to solve real-world industry logistics problems.'
+  },
+  {
+    id: 'hack-the-tank-svnit',
+    title: 'Hack The Tank - SVNIT Contender',
+    issuer: 'Sardar Vallabhbhai National Institute of Technology (SVNIT)',
+    date: 'MAR 2025',
+    type: 'Hackathon',
+    verifyId: 'SVNIT-HTT-25-1049',
+    url: 'https://svnit.ac.in',
+    desc: 'Developed and optimized backend server pipelines and real-time socket updates for a collaborative web project.'
+  },
+  {
     id: 'aws-ccp',
     title: 'AWS Certified Cloud Practitioner',
     issuer: 'Amazon Web Services (AWS)',
