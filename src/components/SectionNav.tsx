@@ -44,13 +44,14 @@ export default function SectionNav() {
   }
 
   return (
-    <div className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-4 glass-panel px-2 py-4 rounded-full">
+    <div suppressHydrationWarning={true} className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-4 glass-panel px-2 py-4 rounded-full">
       {sections.map(({ id, label }) => {
         const isActive = activeSection === id
         return (
           <button
             key={id}
             onClick={() => scrollToSection(id)}
+            suppressHydrationWarning
             className="relative group p-2 focus:outline-none"
             aria-label={`Scroll to ${label}`}
           >
