@@ -8,31 +8,28 @@ const educationData = [
     period: '2024 - PRESENT',
     title: 'B.Tech. in Artificial Intelligence',
     institution: 'Sardar Vallabhbhai National Institute of Technology, Surat',
-    score: 'CGPA: 7.00 (Till 2nd Semester)',
-    desc: 'Deep diving into machine learning, deep learning architectures, algorithms, data structures, and statistical optimization models. Active in campus programming networks and hackathons.'
+    score: 'CGPA: 7.00 (Till 2nd Semester)'
   },
   {
     id: 2,
     period: '2024',
     title: 'XII (GSEB-HSC)',
     institution: 'Mahatma Gandhi Science School, Rajkot',
-    score: 'Percentage: 86.00%',
-    desc: 'Completed secondary education with physics, chemistry, and mathematics focus, scoring distinction-tier metrics.'
+    score: 'Percentage: 86.00%'
   },
   {
     id: 3,
     period: '2022',
     title: 'X (GSEB-SSC)',
     institution: 'Mahatma Gandhi Education Campus, Rajkot',
-    score: 'Percentage: 94.83%',
-    desc: 'Graduated primary board exams with top percentile rankings across regional science and math cohorts.'
+    score: 'Percentage: 94.83%'
   }
 ]
 
 export default function Education() {
   return (
     <div className="font-mono max-w-3xl">
-      <div className="relative border-l border-cyan-500/20 ml-3 pl-8 py-2 space-y-12">
+      <div className="relative border-l border-cyan-500/20 ml-3 pl-8 py-2 space-y-8">
         {educationData.map((item, index) => (
           <FadeIn key={item.id} delay={0.1 + index * 0.15} direction="right">
             <div className="relative group bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-cyan-500/30 p-5 rounded-md transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
@@ -60,13 +57,8 @@ export default function Education() {
               <h3 className="text-lg font-bold text-white mb-0.5 group-hover:text-cyan-400 transition-colors duration-300">
                 {item.title}
               </h3>
-              <p className="text-gray-400 font-medium mb-3 text-xs tracking-wide">
+              <p className="text-gray-400 font-medium text-xs tracking-wide">
                 @ {item.institution}
-              </p>
-
-              {/* Description */}
-              <p className="text-xs text-gray-500 leading-relaxed font-light">
-                {item.desc}
               </p>
 
             </div>
