@@ -140,6 +140,38 @@ export default async function HomePage() {
                     </div>
                   </div>
 
+                  {/* Phone Channel */}
+                  <div className="flex items-start gap-3 bg-white/[0.02] border border-white/5 p-4 rounded-sm hover:border-cyan-500/30 transition-colors group">
+                    <span className="text-cyan-500 mt-1 shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                      </svg>
+                    </span>
+                    <div>
+                      <span className="text-[9px] text-gray-600 font-bold block uppercase tracking-wider">TELEPHONY_ENDPOINT</span>
+                      <a href="tel:+919409718068" className="text-xs text-cyan-300 hover:text-cyan-200 transition-colors hover:underline">
+                        +91 94097 18068
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Instagram Channel */}
+                  <div className="flex items-start gap-3 bg-white/[0.02] border border-white/5 p-4 rounded-sm hover:border-cyan-500/30 transition-colors group">
+                    <span className="text-cyan-500 mt-1 shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                      </svg>
+                    </span>
+                    <div>
+                      <span className="text-[9px] text-gray-600 font-bold block uppercase tracking-wider">INSTAGRAM_ENDPOINT</span>
+                      <a href="https://www.instagram.com/nisarg_vaghela9?igsh=MXh2bW1jNmZrYzRqYQ==" target="_blank" rel="noopener noreferrer" className="text-xs text-cyan-300 hover:text-cyan-200 transition-colors hover:underline">
+                        nisarg_vaghela9
+                      </a>
+                    </div>
+                  </div>
+
                   {/* Social Routing */}
                   <div className="bg-white/[0.02] border border-white/5 p-4 rounded-sm hover:border-cyan-500/30 transition-colors">
                     <span className="text-[9px] text-gray-600 font-bold block uppercase tracking-wider mb-3">SOCIAL_ROUTING</span>
