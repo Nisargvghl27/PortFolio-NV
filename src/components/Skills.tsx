@@ -10,6 +10,7 @@ const categories = [
   { id: 'Languages', label: 'LANGUAGES' },
   { id: 'Frontend', label: 'FRONTEND' },
   { id: 'Backend', label: 'BACKEND' },
+  { id: 'CS_Core', label: 'CS CORE' },
   { id: 'Tools_&_DevOps', label: 'DEVOPS & TOOLS' }
 ]
 
@@ -41,9 +42,19 @@ const skillIcons: Record<string, React.ReactNode> = {
       <path d="M2.35 12c0-5.32 4.31-9.65 9.65-9.65 2.85 0 5.42 1.24 7.2 3.22l2.67-2.67C19.26 1.05 15.82 0 12 0 5.37 0 0 5.37 0 12s5.37 12 12 12c3.82 0 7.26-1.05 9.87-2.9l-2.67-2.67c-1.78 1.98-4.35 3.22-7.2 3.22-5.34 0-9.65-4.33-9.65-9.65zM17.4 10.5v3h-3v1h3v3h1h.1v-3h3v-1h-3v-3zm5.6 0v3h-3v1h3v3h1.1v-3h3v-1h-3v-3z" />
     </svg>
   ),
-  Java: (
+  C: (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 7a6 6 0 1 0 0 10" />
+    </svg>
+  ),
+  HTML: (
     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M9.02 21.058c-1.396.066-2.697-.243-3.69-.974-.634-.467-.937-1.042-.904-1.745.034-.73.435-1.315 1.103-1.8 1.157-.84 2.87-1.26 4.793-1.264.444 0 .86.012 1.268.038-.344.423-.65.882-.907 1.378-1.57.067-2.906.33-3.722.842-.395.247-.61.5-.644.757-.037.282.164.55.602.793.856.47 2.228.723 3.864.708 1.488-.013 2.91-.252 4.004-.672.176.452.392.883.654 1.28-1.42.483-3.328.727-5.166.868zm9.585-7.794c.376.126.69.317.933.568.21.22.317.47.318.736a1.9 1.9 0 0 1-.365.992c-.173.238-.396.444-.664.62l.85 1.18c.456-.28.827-.638 1.1-1.054.343-.523.515-1.127.513-1.782-.002-.628-.198-1.196-.583-1.688-.415-.532-1.002-.937-1.747-1.2L18.6 13.26z" />
+      <path d="M1.5 0h21l-1.9 19-8.6 5-8.6-5L1.5 0zm16.7 5H6.2l.3 3h11.2l-.3 3.5-3.4.9-3.4-.9-.2-2H7.4l.4 4.5 6.2 1.7 6.2-1.7.7-7.5H18.2z" />
+    </svg>
+  ),
+  CSS: (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M1.5 0h21l-1.9 19-8.6 5-8.6-5L1.5 0zm17 5H8.7l.2 2.5h9.3l-.3 3.5-3.4.9-3.4-.9-.2-2H7.9l.4 4.5 5.7 1.6 5.7-1.6.7-7.5H18.5z" />
     </svg>
   ),
   'Next.js': (
@@ -81,7 +92,7 @@ const skillIcons: Record<string, React.ReactNode> = {
       <path d="M12 0l-10.4 6v12l10.4 6 10.4-6v-12l-10.4-6zm-1.8 17.2c-.8 0-1.5-.3-2.1-.9-.6-.6-.9-1.3-.9-2.1v-.8h1.8v.8c0 .3.1.6.3.8.2.2.5.3.8.3.3 0 .6-.1.8-.3.2-.2.3-.5.3-.8 0-.3-.1-.5-.3-.7l-.8-.6c-1-.7-1.5-1.5-1.5-2.5 0-.8.3-1.5.9-2.1.6-.6 1.3-.9 2.1-.9.8 0 1.5.3 2.1.9.6.6.9 1.3.9 2.1v.8h-1.8v-.8c0-.3-.1-.6-.3-.8-.2-.2-.5-.3-.8-.3-.3 0-.6.1-.8.3-.2.2-.3.5-.3.8 0 .3.1.5.3.7l.8.6c1 .7 1.5 1.5 1.5 2.5 0 .8-.3 1.5-.9 2.1-.6.6-1.3.9-2.1.9z" />
     </svg>
   ),
-  Express: (
+  'Express.js': (
     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <rect x="3" y="3" width="18" height="18" rx="2" />
       <path d="M7 9h4M7 12h4M7 15h2" />
@@ -119,6 +130,44 @@ const skillIcons: Record<string, React.ReactNode> = {
       <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
     </svg>
   ),
+  'Data Structures': (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="5" r="2.5" />
+      <circle cx="6" cy="15" r="2.5" />
+      <circle cx="18" cy="15" r="2.5" />
+      <path d="M12 7.5L7.5 12.5m4.5-5l4.5 5" />
+    </svg>
+  ),
+  Algorithms: (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="6" height="6" rx="1" />
+      <rect x="15" y="15" width="6" height="6" rx="1" />
+      <path d="M9 6h4v10h2" />
+    </svg>
+  ),
+  'Computer Networks': (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="9" y="9" width="6" height="6" rx="1" />
+      <circle cx="4" cy="4" r="2" />
+      <circle cx="20" cy="4" r="2" />
+      <circle cx="4" cy="20" r="2" />
+      <circle cx="20" cy="20" r="2" />
+      <path d="M5.5 5.5l4 4m9-4l-4 4m-9 9l4-4m9 4l-4-4" />
+    </svg>
+  ),
+  'Operating Systems': (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M9 3v18M3 9h18" />
+    </svg>
+  ),
+  'Database Management': (
+    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5v6c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+      <path d="M3 11v6c0 1.66 4 3 9 3s9-1.34 9-3v-6" />
+    </svg>
+  ),
   Git: (
     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
       <path d="M23.2 10.8L13.2.8C12.7.3 12 .3 11.5.8L9.2 3.1l2.4 2.4c.5-.2 1.1-.1 1.5.3.4.4.5 1 .3 1.5l2.4 2.4c.5-.2 1.1-.1 1.5.3.6.6.6 1.5 0 2.1-.6.6-1.5.6-2.1 0-.4-.4-.5-1-.3-1.5l-2.4-2.4c-.2.1-.4.2-.6.2-.2 0-.4-.1-.6-.2L8.5 11l.2.6c.2.5.1 1.1-.3 1.5-.4.4-1 .5-1.5.3L4.5 15.8c.2.5.1 1.1-.3 1.5-.6.6-1.5.6-2.1 0-.6-.6-.6-1.5 0-2.1.4-.4 1-.5 1.5-.3l2.4-2.4c-.2-.5-.1-1.1.3-1.5.4-.4 1-.5 1.5-.3l2.4-2.4L.8 11.5c-.5-.5-.5-1.2 0-1.7l10-10C11.3-.7 12-.7 12.5-.2l10.7 10.7c.5.5.5 1.3 0 1.8-.5-.5-.5-.5 0 0z" />
@@ -132,11 +181,6 @@ const skillIcons: Record<string, React.ReactNode> = {
   Vercel: (
     <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
       <path d="M24 22.525H0L12 1.475L24 22.525Z" />
-    </svg>
-  ),
-  Postman: (
-    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.836 14.18c-.378.118-.755.195-1.127.234-.51.055-.99.075-1.425.06-1.15-.04-2.144-.316-2.923-.812-.66-.42-1.14-.997-1.41-1.696-.067-.17-.116-.35-.145-.536-.046-.3-.046-.615-.002-.91.063-.443.208-.857.433-1.233.364-.606.914-1.07 1.622-1.37.587-.247 1.272-.376 2.015-.376.814 0 1.542.155 2.128.455.52.266.924.646 1.182 1.11.23.414.34 88.005.327 1.36-.01 1.04-.374 1.954-1.085 2.678-.582.593-1.365.945-2.222 1.026z" />
     </svg>
   )
 }
@@ -157,7 +201,10 @@ const skillsData: Skill[] = [
   { name: 'Python', category: 'Languages', color: 'hover:text-[#3776AB] hover:border-[#3776AB]/50 hover:bg-[#3776AB]/5', level: '85%', latency: '24ms', status: 'OPTIMIZED', desc: 'Automation, analytics & backend' },
   { name: 'Dart', category: 'Languages', color: 'hover:text-[#0175C2] hover:border-[#0175C2]/50 hover:bg-[#0175C2]/5', level: '78%', latency: '18ms', status: 'READY', desc: 'Cross-platform app code base' },
   { name: 'C++', category: 'Languages', color: 'hover:text-[#00599C] hover:border-[#00599C]/50 hover:bg-[#00599C]/5', level: '80%', latency: '4ms', status: 'OPTIMIZED', desc: 'Performant systems & low-level structures' },
+  { name: 'C', category: 'Languages', color: 'hover:text-[#A8B9CC] hover:border-[#A8B9CC]/50 hover:bg-[#A8B9CC]/5', level: '82%', latency: '3ms', status: 'READY', desc: 'Low-level imperative systems compilation' },
   
+  { name: 'HTML', category: 'Frontend', color: 'hover:text-[#E34F26] hover:border-[#E34F26]/50 hover:bg-[#E34F26]/5', level: '95%', latency: '1ms', status: 'READY', desc: 'Semantic document markup layouts' },
+  { name: 'CSS', category: 'Frontend', color: 'hover:text-[#1572B6] hover:border-[#1572B6]/50 hover:bg-[#1572B6]/5', level: '93%', latency: '1ms', status: 'READY', desc: 'Styling, layout engines & variables' },
   { name: 'Next.js', category: 'Frontend', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '90%', latency: '12ms', status: 'OPTIMIZED', desc: 'Server-side rendering & app routing' },
   { name: 'React', category: 'Frontend', color: 'hover:text-[#61DAFB] hover:border-[#61DAFB]/50 hover:bg-[#61DAFB]/5', level: '94%', latency: '8ms', status: 'READY', desc: 'Component architectures & state layers' },
   { name: 'Tailwind CSS', category: 'Frontend', color: 'hover:text-[#06B6D4] hover:border-[#06B6D4]/50 hover:bg-[#06B6D4]/5', level: '96%', latency: '2ms', status: 'READY', desc: 'Utility-first layout engines' },
@@ -165,7 +212,7 @@ const skillsData: Skill[] = [
   { name: 'Flutter', category: 'Frontend', color: 'hover:text-[#02569B] hover:border-[#02569B]/50 hover:bg-[#02569B]/5', level: '80%', latency: '22ms', status: 'READY', desc: 'Multi-platform user interfaces' },
   
   { name: 'Node.js', category: 'Backend', color: 'hover:text-[#339933] hover:border-[#339933]/50 hover:bg-[#339933]/5', level: '88%', latency: '14ms', status: 'READY', desc: 'Asynchronous event-driven runtimes' },
-  { name: 'Express', category: 'Backend', color: 'hover:text-gray-300 hover:border-gray-500/50 hover:bg-gray-500/5', level: '88%', latency: '10ms', status: 'READY', desc: 'REST server request management' },
+  { name: 'Express.js', category: 'Backend', color: 'hover:text-gray-300 hover:border-gray-500/50 hover:bg-gray-500/5', level: '88%', latency: '10ms', status: 'READY', desc: 'REST server request management' },
   { name: 'PostgreSQL', category: 'Backend', color: 'hover:text-[#4169E1] hover:border-[#4169E1]/50 hover:bg-[#4169E1]/5', level: '84%', latency: '28ms', status: 'OPTIMIZED', desc: 'Relational data structures & queries' },
   { name: 'Prisma', category: 'Backend', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '90%', latency: '5ms', status: 'READY', desc: 'ORM data schema declaration' },
   { name: 'Supabase', category: 'Backend', color: 'hover:text-[#3ECF8E] hover:border-[#3ECF8E]/50 hover:bg-[#3ECF8E]/5', level: '85%', latency: '16ms', status: 'READY', desc: 'Serverless datastore & security' },
@@ -173,10 +220,15 @@ const skillsData: Skill[] = [
   { name: 'MongoDB', category: 'Backend', color: 'hover:text-[#47A248] hover:border-[#47A248]/50 hover:bg-[#47A248]/5', level: '86%', latency: '15ms', status: 'READY', desc: 'NoSQL document-oriented database engine' },
   { name: 'MySQL', category: 'Backend', color: 'hover:text-[#4479A1] hover:border-[#4479A1]/50 hover:bg-[#4479A1]/5', level: '85%', latency: '22ms', status: 'READY', desc: 'Structured query language database system' },
   
+  { name: 'Data Structures', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '90%', latency: '2ms', status: 'READY', desc: 'Core memory organizations & complexity analysis' },
+  { name: 'Algorithms', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '88%', latency: '5ms', status: 'READY', desc: 'Sorting, searching & graph computations' },
+  { name: 'Computer Networks', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '82%', latency: '15ms', status: 'READY', desc: 'TCP/IP, routing & HTTP protocols' },
+  { name: 'Operating Systems', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '84%', latency: '10ms', status: 'READY', desc: 'Threads, processes, memory paging & kernel schedulers' },
+  { name: 'Database Management', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '88%', latency: '8ms', status: 'READY', desc: 'Relational design, indexing & NoSQL stores' },
+
   { name: 'Git', category: 'Tools_&_DevOps', color: 'hover:text-[#F05032] hover:border-[#F05032]/50 hover:bg-[#F05032]/5', level: '90%', latency: '4ms', status: 'READY', desc: 'Decentralized version control' },
   { name: 'GitHub', category: 'Tools_&_DevOps', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '92%', latency: '5ms', status: 'READY', desc: 'Workflows & repository operations' },
-  { name: 'Vercel', category: 'Tools_&_DevOps', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '95%', latency: '8ms', status: 'READY', desc: 'Global edge deployment networks' },
-  { name: 'Postman', category: 'Tools_&_DevOps', color: 'hover:text-[#FF6C37] hover:border-[#FF6C37]/50 hover:bg-[#FF6C37]/5', level: '88%', latency: '12ms', status: 'READY', desc: 'HTTP request diagnostics' }
+  { name: 'Vercel', category: 'Tools_&_DevOps', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '95%', latency: '8ms', status: 'READY', desc: 'Global edge deployment networks' }
 ]
 
 export default function Skills() {
