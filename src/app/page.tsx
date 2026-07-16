@@ -117,7 +117,7 @@ export default async function HomePage() {
                 <div>
                   <h2 className="text-3xl font-mono font-bold mb-3 text-white">Initialize_Connection</h2>
                   <p className="text-gray-400 font-light text-sm leading-relaxed">
-                    Feel free to reach out through the form or connect with me directly through my social media profiles.
+                    Have a project proposal, collaboration idea, or question? Initiate a secure message transmission below, or reach out directly via my official network channels.
                   </p>
                 </div>
 
