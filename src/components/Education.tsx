@@ -11,7 +11,7 @@ export default function Education() {
         <h3 className="text-xl font-bold text-white mb-1">B.Tech in Artificial Intelligence</h3>
         <p className="text-gray-400 font-medium mb-4 text-sm">@ National_Institute_of_Technology_Surat</p>
         
-        <p className="text-sm font-sans text-gray-500 leading-relaxed max-w-xl">
+        <p className="text-sm text-gray-500 leading-relaxed max-w-xl">
           Focusing on core artificial intelligence, software engineering, and modern web architecture. 
           Active in competitive programming and algorithmic problem-solving.
         </p>

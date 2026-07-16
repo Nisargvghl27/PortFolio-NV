@@ -9,6 +9,8 @@ import TypingEffect from '@/components/TypingEffect'
 import Skills from '@/components/Skills'
 import Experience from '@/components/Experience'
 import GitHubCalendar from '@/components/GitHubCalendar'
+import ProjectCard from '@/components/ProjectCard'
+import ScanlineDivider from '@/components/ScanlineDivider'
 
 export default async function HomePage() {
   const projects = await prisma.project.findMany({
@@ -17,20 +19,22 @@ export default async function HomePage() {
 
   return (
     <main className="max-w-5xl mx-auto px-6 space-y-32 overflow-hidden">
-
       {/* Terminal Hero Section */}
-      <section className="space-y-8 max-w-4xl pt-12">
+      <section id="hero" className="space-y-8 max-w-4xl pt-12">
         <div className="space-y-4">
-          <FadeIn>
+          <FadeIn direction="scale">
             <TypingEffect />
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white">
               Architecting <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 glow-text">
+              <span 
+                className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 glow-text glitch-text"
+                data-text="digital systems."
+              >
                 digital systems.
               </span>
             </h1>
           </FadeIn>
-          <FadeIn delay={0.2}>
+          <FadeIn delay={0.2} direction="up">
             <p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl font-light">
               Full-Stack Software Engineer & Applied AI Student.
               Specializing in scalable web architectures, machine learning integration, and high-performance mobile applications.
@@ -39,13 +43,13 @@ export default async function HomePage() {
         </div>
 
         {/* Action Terminals */}
-        <FadeIn delay={0.3}>
+        <FadeIn delay={0.3} direction="up">
           <div className="flex flex-wrap gap-4 pt-4 font-mono text-sm">
             <a
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 px-6 py-3 hover:bg-cyan-500/20 hover:glow-box transition-all"
+              className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 px-6 py-3 hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.1)] hover:shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-all"
             >
               [ EXECUTE: VIEW_RESUME ]
             </a>
@@ -61,77 +65,23 @@ export default async function HomePage() {
       </section>
 
       {/* Matrix Project Cards */}
-      <section>
-        <FadeIn delay={0.4}>
+      <section id="systems">
+        <FadeIn delay={0.2} direction="left">
           <div className="flex items-center gap-4 mb-10">
             <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">01.</span> Deployed_Systems</h2>
-            <div className="h-px bg-white/10 flex-1"></div>
+            <ScanlineDivider />
           </div>
         </FadeIn>
 
         {projects.length === 0 ? (
-          <FadeIn delay={0.5}>
+          <FadeIn delay={0.3} direction="up">
             <p className="text-gray-500 font-mono italic"> No systems initialized yet...</p>
           </FadeIn>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project, index) => (
-              <FadeIn key={project.id} delay={0.5 + (index * 0.1)}>
-                <div className="group glass-panel rounded-none p-0 h-full flex flex-col justify-between glow-border-hover relative overflow-hidden">
-                  
-                  {/* Project Image (if exists) */}
-                  {project.imageUrl && (
-                    <div className="w-full h-48 relative overflow-hidden border-b border-white/10">
-                      <img 
-                        src={project.imageUrl} 
-                        alt={project.title} 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                      {/* Cyan tint overlay that fades on hover */}
-                      <div className="absolute inset-0 bg-cyan-500/10 mix-blend-overlay group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
-                    </div>
-                  )}
-
-                  <div className="p-6 md:p-8 flex-1 flex flex-col justify-between relative">
-                    {/* Subtle top-right accent (only show if no image to avoid cluttering) */}
-                    {!project.imageUrl && (
-                      <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/5 rounded-bl-full group-hover:bg-cyan-500/20 transition-colors"></div>
-                    )}
-
-                    <div>
-                      <h3 className="text-2xl font-bold mb-3 text-gray-100 group-hover:text-cyan-400 transition-colors">{project.title}</h3>
-                      <p className="text-gray-400 leading-relaxed mb-6 font-light text-sm">{project.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.techStack.map((tech) => (
-                          <span key={tech} className="bg-white/5 border border-white/10 text-cyan-200 text-xs px-2 py-1 font-mono">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="mt-8 flex gap-6 text-sm font-mono font-bold">
-                      {project.liveLink && (
-                        <Link
-                          href={project.liveLink}
-                          target="_blank"
-                          className="text-cyan-400 hover:text-cyan-300 hover:glow-text flex items-center gap-2"
-                        >
-                          [ LIVE_DEMO ]
-                        </Link>
-                      )}
-                      {project.githubLink && (
-                        <Link
-                          href={project.githubLink}
-                          target="_blank"
-                          className="text-gray-400 hover:text-white flex items-center gap-2"
-                        >
-                          [ SRC_CODE ]
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </div>
+              <FadeIn key={project.id} delay={0.2 + (index * 0.1)} direction="up">
+                <ProjectCard project={project} />
               </FadeIn>
             ))}
           </div>
@@ -139,11 +89,11 @@ export default async function HomePage() {
       </section>
 
       {/* Stats Section with new GitHub Graph */}
-      <section>
-        <FadeIn delay={0.5}>
+      <section id="metrics">
+        <FadeIn delay={0.2} direction="right">
           <div className="flex items-center gap-4 mb-10">
             <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">02.</span> Algorithmic_Metrics</h2>
-            <div className="h-px bg-white/10 flex-1"></div>
+            <ScanlineDivider />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mb-6">
             <CPStats handle="nisargvghl27" />
@@ -155,41 +105,43 @@ export default async function HomePage() {
       </section>
 
       {/* Education Section */}
-      <section>
-        <FadeIn delay={0.6}>
+      <section id="academic">
+        <FadeIn delay={0.2} direction="left">
           <div className="flex items-center gap-4 mb-10">
             <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">03.</span> Academic_Core</h2>
-            <div className="h-px bg-white/10 flex-1"></div>
+            <ScanlineDivider />
           </div>
           <Education />
         </FadeIn>
       </section>
 
       {/* Skills / Tech Arsenal Section */}
-      <section>
-        <FadeIn delay={0.65}>
+      <section id="arsenal">
+        <FadeIn delay={0.2} direction="right">
           <div className="flex items-center gap-4 mb-10">
             <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">04.</span> Tech_Arsenal</h2>
-            <div className="h-px bg-white/10 flex-1"></div>
+            <ScanlineDivider />
           </div>
-          <Skills />
         </FadeIn>
+        {/* The Skills component internally maps and triggers animations */}
+        <Skills />
       </section>
 
       {/* Experience / Timeline Section */}
-      <section>
-        <FadeIn delay={0.7}>
+      <section id="experience">
+        <FadeIn delay={0.2} direction="left">
           <div className="flex items-center gap-4 mb-10">
             <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">05.</span> Experience_Log</h2>
-            <div className="h-px bg-white/10 flex-1"></div>
+            <ScanlineDivider />
           </div>
-          <Experience />
         </FadeIn>
+        {/* The Experience component internally maps and triggers animations */}
+        <Experience />
       </section>
 
       {/* Contact Form Section */}
-      <FadeIn delay={0.75}>
-        <section className="glass-panel p-8 md:p-12 relative overflow-hidden">
+      <FadeIn delay={0.2} direction="scale">
+        <section id="contact" className="glass-panel p-8 md:p-12 relative overflow-hidden">
           {/* Cyberpunk corner accent */}
           <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500/50"></div>
           <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-500/50"></div>
@@ -203,7 +155,6 @@ export default async function HomePage() {
           </div>
         </section>
       </FadeIn>
-
     </main>
   )
 }

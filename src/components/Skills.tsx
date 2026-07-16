@@ -23,8 +23,8 @@ export default function Skills() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono">
       {skillsData.map((skillGroup, index) => (
-        <FadeIn key={skillGroup.category} delay={0.2 + (index * 0.1)}>
-          <div className="glass-panel p-6 glow-border-hover">
+        <FadeIn key={skillGroup.category} delay={0.1 + (index * 0.1)} direction="left">
+          <div className="glass-panel p-6 glow-border-hover h-full">
             <h3 className="text-sm font-bold text-gray-400 mb-4 tracking-widest uppercase">
               // {skillGroup.category}
             </h3>

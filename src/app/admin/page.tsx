@@ -23,21 +23,13 @@ export default function AdminHub() {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Link href="/admin/projects" className="glass-panel p-8 hover:border-cyan-500 transition-all group relative overflow-hidden">
+      <div className="max-w-md mx-auto">
+        <Link href="/admin/projects" className="glass-panel p-8 hover:border-cyan-500 transition-all group relative overflow-hidden block">
           {/* Subtle top-right accent */}
           <div className="absolute top-0 right-0 w-8 h-8 bg-cyan-500/5 rounded-bl-full group-hover:bg-cyan-500/20 transition-colors"></div>
           
           <h2 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">./manage_projects</h2>
           <p className="text-xs text-gray-500 mt-3 leading-relaxed">Deploy new system architecture and update portfolio showcases.</p>
-        </Link>
-        
-        <Link href="/admin/garden" className="glass-panel p-8 hover:border-cyan-500 transition-all group relative overflow-hidden">
-          {/* Subtle top-right accent */}
-          <div className="absolute top-0 right-0 w-8 h-8 bg-cyan-500/5 rounded-bl-full group-hover:bg-cyan-500/20 transition-colors"></div>
-
-          <h2 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">./manage_garden</h2>
-          <p className="text-xs text-gray-500 mt-3 leading-relaxed">Update knowledge base, write technical logs, and share learnings.</p>
         </Link>
       </div>
     </main>
