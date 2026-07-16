@@ -187,88 +187,101 @@ export default function Skills() {
     : skillsData.filter(skill => skill.category === activeCategory)
 
   return (
-    <div className="font-mono space-y-8 w-full max-w-6xl mx-auto relative px-4">
-      {/* 1. Terminal Filter Bar */}
+    <div className="font-mono w-full max-w-6xl mx-auto relative px-4">
       <FadeIn delay={0.1} direction="up">
-        <div className="flex flex-wrap gap-2.5 justify-center border-b border-white/10 pb-6">
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat.id
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`relative px-4 py-2 border transition-all text-xs font-bold uppercase tracking-wider select-none ${
-                  isActive
-                    ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)]'
-                    : 'border-white/10 text-gray-500 hover:text-white hover:border-white/30'
-                }`}
-              >
-                {isActive && (
-                  <>
-                    <span className="absolute -top-1 -left-1 w-1.5 h-1.5 border-t-2 border-l-2 border-cyan-400" />
-                    <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border-b-2 border-r-2 border-cyan-400" />
-                  </>
-                )}
-                [ {cat.label} ]
-              </button>
-            )
-          })}
-        </div>
-      </FadeIn>
+        <div className="space-y-6">
+          
+          {/* 1. Left-Aligned Terminal Filter Bar */}
+          <div className="flex flex-wrap gap-2.5 justify-start border-b border-white/10 pb-5">
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat.id
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`relative px-4 py-2 border transition-all text-xs font-bold uppercase tracking-wider select-none ${
+                    isActive
+                      ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)]'
+                      : 'border-white/10 text-gray-500 hover:text-white hover:border-white/30'
+                  }`}
+                >
+                  {isActive && (
+                    <>
+                      <span className="absolute -top-1 -left-1 w-1.5 h-1.5 border-t-2 border-l-2 border-cyan-400" />
+                      <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border-b-2 border-r-2 border-cyan-400" />
+                    </>
+                  )}
+                  [ {cat.label} ]
+                </button>
+              )
+            })}
+          </div>
 
-      {/* 2. Main Deck Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-        
-        {/* Skill tag deck (Takes 2 columns) */}
-        <div className="lg:col-span-2">
-          <FadeIn delay={0.2} direction="up">
-            <div className="relative glass-panel p-6 min-h-[260px] flex flex-col justify-center border border-white/10 rounded-lg overflow-hidden bg-black/60 shadow-[0_0_50px_rgba(0,0,0,0.5)] h-full">
-              {/* Intersects */}
+          {/* 2. Main Deck Grid - items-stretch works perfectly now */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+            
+            {/* Left Card: Skill tag deck (Takes 2 columns) */}
+            <div className="lg:col-span-2 relative glass-panel p-6 border border-white/10 rounded-lg overflow-hidden bg-black/60 shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col justify-between min-h-[340px]">
+              {/* Background grid */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+
+              {/* Intersect symbols */}
               <span className="absolute top-2 left-2 text-white/20 text-xs pointer-events-none select-none">+</span>
               <span className="absolute top-2 right-2 text-white/20 text-xs pointer-events-none select-none">+</span>
               <span className="absolute bottom-2 left-2 text-white/20 text-xs pointer-events-none select-none">+</span>
               <span className="absolute bottom-2 right-2 text-white/20 text-xs pointer-events-none select-none">+</span>
 
-              <motion.div 
-                layout 
-                className="flex flex-wrap gap-3.5 justify-center items-center max-w-3xl mx-auto relative z-10"
-              >
-                <AnimatePresence mode="popLayout">
-                  {filteredSkills.map((skill) => (
-                    <motion.span
-                      layout
-                      initial={{ opacity: 0, scale: 0.85, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.85, y: -10 }}
-                      transition={{ type: 'spring', stiffness: 450, damping: 28 }}
-                      key={skill.name}
-                      onMouseEnter={() => setHoveredSkill(skill)}
-                      onMouseLeave={() => setHoveredSkill(null)}
-                      className={`group relative flex items-center gap-2 bg-black/40 border border-white/10 text-gray-300 text-xs px-3.5 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color}`}
-                    >
-                      <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
-                      <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+              <div className="space-y-6">
+                {/* Header matching the Diagnostics title */}
+                <div className="flex items-center gap-2 border-b border-white/5 pb-3 select-none">
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold">SYSTEM_INVENTORY // STACK_INTEGRITY</span>
+                </div>
 
-                      {skillIcons[skill.name] && (
-                        <span className="text-gray-400 group-hover:text-inherit transition-colors duration-300">
-                          {skillIcons[skill.name]}
+                {/* Left-aligned flow of tags */}
+                <motion.div 
+                  layout 
+                  className="flex flex-wrap gap-3 justify-start items-start relative z-10"
+                >
+                  <AnimatePresence mode="popLayout">
+                    {filteredSkills.map((skill) => (
+                      <motion.span
+                        layout
+                        initial={{ opacity: 0, scale: 0.85, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.85, y: -10 }}
+                        transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+                        key={skill.name}
+                        onMouseEnter={() => setHoveredSkill(skill)}
+                        onMouseLeave={() => setHoveredSkill(null)}
+                        className={`group relative flex items-center gap-2 bg-black/40 border border-white/10 text-gray-300 text-xs px-3.5 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color}`}
+                      >
+                        <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                        <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+
+                        {skillIcons[skill.name] && (
+                          <span className="text-gray-400 group-hover:text-inherit transition-colors duration-300">
+                            {skillIcons[skill.name]}
+                          </span>
+                        )}
+                        <span className="relative tracking-wider font-semibold">
+                          {skill.name}
                         </span>
-                      )}
-                      <span className="relative tracking-wider font-semibold">
-                        {skill.name}
-                      </span>
-                    </motion.span>
-                  ))}
-                </AnimatePresence>
-              </motion.div>
-            </div>
-          </FadeIn>
-        </div>
+                      </motion.span>
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
+              </div>
 
-        {/* Live Diagnostics Deck (Takes 1 column) */}
-        <div className="lg:col-span-1">
-          <FadeIn delay={0.25} direction="up">
-            <div className="relative glass-panel p-5 border border-white/10 rounded-lg bg-black/85 shadow-[0_0_40px_rgba(0,240,255,0.03)] h-full min-h-[300px] flex flex-col justify-between overflow-hidden">
+              {/* Bottom detail row */}
+              <div className="border-t border-white/5 pt-3 mt-6 text-[8px] text-gray-600 flex justify-between select-none">
+                <span>INDEX_COUNT: {filteredSkills.length} SYSTEMS</span>
+                <span>telemetry_link: true</span>
+              </div>
+            </div>
+
+            {/* Right Card: Live Diagnostics Deck (Takes 1 column) */}
+            <div className="lg:col-span-1 relative glass-panel p-5 border border-white/10 rounded-lg bg-black/85 shadow-[0_0_40px_rgba(0,240,255,0.03)] flex flex-col justify-between overflow-hidden min-h-[340px]">
               
               {/* Scanline Sweep Overlay */}
               <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.06)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_5s_ease-in-out_infinite]" />
@@ -413,10 +426,10 @@ export default function Skills() {
               </div>
 
             </div>
-          </FadeIn>
-        </div>
+          </div>
 
-      </div>
+        </div>
+      </FadeIn>
     </div>
   )
 }
