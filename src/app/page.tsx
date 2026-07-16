@@ -30,7 +30,7 @@ export default async function HomePage() {
           </FadeIn>
           <FadeIn delay={0.2}>
             <p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-2xl font-light">
-              Full-Stack Software Engineer & Applied AI Student. 
+              Full-Stack Software Engineer & Applied AI Student.
               Specializing in scalable web architectures, machine learning integration, and high-performance mobile applications.
             </p>
           </FadeIn>
@@ -78,7 +78,7 @@ export default async function HomePage() {
                 <div className="group glass-panel rounded-none p-6 md:p-8 h-full flex flex-col justify-between glow-border-hover relative overflow-hidden">
                   {/* Subtle top-right accent */}
                   <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/5 rounded-bl-full group-hover:bg-cyan-500/20 transition-colors"></div>
-                  
+
                   <div>
                     <h3 className="text-2xl font-bold mb-3 text-gray-100 group-hover:text-cyan-400 transition-colors">{project.title}</h3>
                     <p className="text-gray-400 leading-relaxed mb-6 font-light text-sm">{project.description}</p>
@@ -93,12 +93,20 @@ export default async function HomePage() {
 
                   <div className="mt-8 flex gap-6 text-sm font-mono font-bold">
                     {project.liveLink && (
-                      <Link href={project.liveLink} target="_blank" className="text-cyan-400 hover:text-cyan-300 hover:glow-text flex items-center gap-2">
+                      <Link
+                        href={project.liveLink}
+                        target="_blank"
+                        className="text-cyan-400 hover:text-cyan-300 hover:glow-text flex items-center gap-2"
+                      >
                         [ LIVE_DEMO ]
                       </Link>
                     )}
                     {project.githubLink && (
-                      <Link href={project.githubLink} target="_blank" className="text-gray-400 hover:text-white flex items-center gap-2">
+                      <Link
+                        href={project.githubLink}
+                        target="_blank"
+                        className="text-gray-400 hover:text-white flex items-center gap-2"
+                      >
                         [ SRC_CODE ]
                       </Link>
                     )}
@@ -110,17 +118,14 @@ export default async function HomePage() {
         )}
       </section>
 
-      {/* Stats Section */}
+      {/* Stats Section with new GitHub Graph */}
       <section>
         <FadeIn delay={0.5}>
           <div className="flex items-center gap-4 mb-10">
             <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">02.</span> Algorithmic_Metrics</h2>
             <div className="h-px bg-white/10 flex-1"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
-            {/* Note: We will need to update the internal UI of these components 
-              to match the dark mode later, but they will render fine for now! 
-            */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
             <CPStats handle="nisargvghl27" />
             <LeetCodeStats username="nisargvghl27" />
           </div>
@@ -148,7 +153,7 @@ export default async function HomePage() {
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl font-mono font-bold mb-4 text-white">Initialize_Connection</h2>
             <p className="text-gray-400 mb-8 font-light">
-               Secure channel open. Ping me for collaborations, architectural reviews, or full-stack opportunities.
+              Secure channel open. Ping me for collaborations, architectural reviews, or full-stack opportunities.
             </p>
             <ContactForm />
           </div>
