@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
-import ChatBot from '@/components/ChatBot'
 import { Analytics } from '@vercel/analytics/react' // 1. Imported Analytics
 
 const inter = Inter({ subsets: ['latin'] })
@@ -65,8 +64,6 @@ export default function RootLayout({
         <footer className="border-t border-gray-200 dark:border-zinc-800 py-8 text-center text-sm text-gray-500">
           <p>© {new Date().getFullYear()} Nisarg Vaghela. All rights reserved.</p>
         </footer>
-        
-        <ChatBot />
         
         {/* 2. Injected Analytics component */}
         <Analytics /> 
