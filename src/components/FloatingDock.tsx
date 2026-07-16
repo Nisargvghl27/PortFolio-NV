@@ -138,7 +138,7 @@ function DockIcon({
   return (
     <motion.div
       variants={itemVariants}
-      className="relative flex flex-col items-center"
+      className="relative flex items-center justify-center h-full"
       onMouseEnter={() => setHoveredIndex(idx)}
       onMouseLeave={() => setHoveredIndex(null)}
     >
@@ -200,15 +200,13 @@ function DockIcon({
       </motion.a>
 
       {/* Shared Sliding Indicator Dot at the bottom */}
-      <div className="h-2 flex items-center justify-center mt-1">
-        {hoveredIndex === idx && (
-          <motion.div
-            layoutId="dock-indicator"
-            className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] z-20"
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          />
-        )}
-      </div>
+      {hoveredIndex === idx && (
+        <motion.div
+          layoutId="dock-indicator"
+          className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff] z-20"
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        />
+      )}
     </motion.div>
   )
 }
@@ -225,7 +223,7 @@ export default function FloatingDock() {
         animate="visible"
         onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="glass-panel px-4 pt-3 pb-1 rounded-2xl flex items-end gap-4 bg-black/60 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] pointer-events-auto h-24"
+        className="glass-panel px-4 rounded-2xl flex items-center gap-4 bg-black/60 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] pointer-events-auto h-20"
       >
         {dockItems.map((item, idx) => (
           <DockIcon 
