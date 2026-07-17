@@ -39,14 +39,6 @@ const certificatesData: Certificate[] = [
     desc: 'Competed in an intense 24-hour coding marathon, gaining invaluable hands-on experience in rapid application development. Focused on seamlessly connecting frontend and backend architectures under tight deadlines, structuring dynamic data, and collaborating effectively to deliver a functional product.',
   },
   {
-    id: 'hackout-2025',
-    title: 'Daiict - Hackout Hackathon',
-    issuer: 'DA-IICT',
-    date: 'October 2025',
-    url: '',
-    desc: 'Actively competed and engineered solutions under tight deadlines during the DA-IICT Hackout Hackathon, collaborating to develop and showcase a functional software product.',
-  },
-  {
     id: 'Web Wonders',
     title: 'Web Wonders 2025',
     issuer: 'Web Wonder',
@@ -73,14 +65,14 @@ export default function Certificates() {
     <div className="font-mono w-full max-w-6xl mx-auto relative">
       <FadeIn delay={0.1} direction="up">
         <div className="space-y-6">
-          
+
           {/* Master Detail Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-            
+
             {/* Left Side: Directory navigation panel (Takes 1 column) */}
             <div className="lg:col-span-1 relative glass-panel p-5 border border-white/10 rounded-lg bg-black/60 shadow-[0_0_40px_rgba(0,0,0,0.4)] flex flex-col justify-start min-h-[320px]">
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff01_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
-              
+
               <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 select-none z-10">
                 <span className="text-[10px] tracking-wider text-cyan-400 font-bold uppercase">// CREDENTIALS_DIR</span>
                 <span className="text-[9px] text-gray-600 font-bold">[ {certificatesData.length} FILES ]</span>
@@ -94,11 +86,10 @@ export default function Certificates() {
                       key={cert.id}
                       onClick={() => setActiveCertId(cert.id)}
                       suppressHydrationWarning
-                      className={`w-full text-left p-3 border transition-all relative flex flex-col group ${
-                        isActive
+                      className={`w-full text-left p-3 border transition-all relative flex flex-col group ${isActive
                           ? 'border-cyan-500/50 bg-cyan-500/5 text-cyan-400 shadow-[0_0_15px_rgba(0,240,255,0.05)]'
                           : 'border-white/5 bg-black/20 text-gray-400 hover:border-white/20 hover:text-white'
-                      }`}
+                        }`}
                     >
                       {isActive && (
                         <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-cyan-400" />
@@ -175,16 +166,14 @@ export default function Certificates() {
                     [ VERIFICATION_ROUTE_SECURE: PASS ]
                   </span>
                 </div>
-                {activeCert.url && (
-                  <a
-                    href={activeCert.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 border border-cyan-500 bg-cyan-500/10 text-cyan-400 font-bold text-xs uppercase tracking-wider hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.15)] transition-all select-none rounded-sm"
-                  >
-                    [ VIEW_CREDENTIAL_DATA ]
-                  </a>
-                )}
+                <a
+                  href={activeCert.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 border border-cyan-500 bg-cyan-500/10 text-cyan-400 font-bold text-xs uppercase tracking-wider hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.15)] transition-all select-none rounded-sm"
+                >
+                  [ VIEW_CREDENTIAL_DATA ]
+                </a>
               </div>
 
             </div>

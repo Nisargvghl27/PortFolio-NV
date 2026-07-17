@@ -10,7 +10,6 @@ import GitHubCalendar from '@/components/GitHubCalendar'
 import ProjectCard from '@/components/ProjectCard'
 import ScanlineDivider from '@/components/ScanlineDivider'
 import HeroCore from '@/components/HeroCore'
-import Leadership from '@/components/Leadership'
 
 export default async function HomePage() {
   let projects: any[] = []
@@ -24,7 +23,7 @@ export default async function HomePage() {
 
   return (
     <main className="max-w-5xl mx-auto px-6 space-y-32 overflow-hidden">
-      
+
       {/* SHATTERED PARALLAX HERO INJECTION */}
       <div className="w-screen relative left-1/2 -translate-x-1/2">
         <HeroCore />
@@ -65,7 +64,7 @@ export default async function HomePage() {
             <CPStats handle="nisargvghl27" />
             <LeetCodeStats username="nisargvghl27" />
           </div>
-          
+
           <GitHubCalendar />
         </FadeIn>
       </section>
@@ -103,17 +102,6 @@ export default async function HomePage() {
         <Certificates />
       </section>
 
-      {/* Positions of Responsibility Section */}
-      <section id="leadership">
-        <FadeIn delay={0.2} direction="left">
-          <div className="flex items-center gap-4 mb-10">
-            <h2 className="text-2xl font-mono text-white"><span className="text-cyan-400">06.</span> Positions_of_Responsibility</h2>
-            <ScanlineDivider />
-          </div>
-        </FadeIn>
-        <Leadership />
-      </section>
-
       {/* Contact Form Section */}
       <FadeIn delay={0.2} direction="scale">
         <section id="contact" className="glass-panel p-8 md:p-12 relative overflow-hidden">
@@ -123,7 +111,7 @@ export default async function HomePage() {
 
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-              
+
               {/* Left Column: Direct Info */}
               <div className="space-y-6">
                 <div>
@@ -135,7 +123,7 @@ export default async function HomePage() {
 
                 <div className="space-y-4 pt-4 border-t border-white/5 font-mono">
                   <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">// DIRECT_CHANNELS</span>
-                  
+
                   {/* Email Channel */}
                   <div className="flex items-start gap-3 bg-white/[0.02] border border-white/5 p-4 rounded-sm hover:border-cyan-500/30 transition-colors group">
                     <span className="text-cyan-500 mt-1 shrink-0">

@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 
 const dockItems = [
   {
@@ -115,7 +116,6 @@ function DockIcon({
 
   // Dynamic width and height of the icon button container (scales from 40px to 56px)
   const widthTransform = useTransform(distance, [-150, 0, 150], [40, 56, 40])
-  
   // Dynamic internal SVG size (scales from 16px to 22px)
   const iconSizeTransform = useTransform(distance, [-150, 0, 150], [16, 22, 16])
 
@@ -265,6 +265,12 @@ function DockIcon({
 export default function FloatingDock() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const mouseX = useMotionValue(Infinity)
+  const pathname = usePathname()
+
+  // Hide the dock on admin pages
+  if (pathname?.startsWith('/admin')) {
+    return null
+  }
 
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex justify-center w-full max-w-fit px-4 pointer-events-none">

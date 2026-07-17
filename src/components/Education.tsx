@@ -2,30 +2,13 @@
 
 import FadeIn from './FadeIn'
 
-interface EducationItem {
-  id: number
-  period: string
-  title: string
-  institution: string
-  score: string
-  coursework?: string[]
-}
-
-const educationData: EducationItem[] = [
+const educationData = [
   {
     id: 1,
     period: '2024 - PRESENT',
     title: 'B.Tech. in Artificial Intelligence',
     institution: 'Sardar Vallabhbhai National Institute of Technology, Surat',
-    score: 'CGPA: 7.00 (Current)',
-    coursework: [
-      'Data Structures',
-      'Design & Analysis of Algorithms',
-      'DBMS',
-      'Computer Organization',
-      'Discrete Mathematics',
-      'Linear Algebra'
-    ]
+    score: 'CGPA: 7.00 (Till 2nd Semester)'
   },
   {
     id: 2,
@@ -50,12 +33,12 @@ export default function Education() {
         {educationData.map((item, index) => (
           <FadeIn key={item.id} delay={0.1 + index * 0.15} direction="right">
             <div className="relative group bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-cyan-500/30 p-5 rounded-md transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
-              
+
               {/* Glowing Timeline Dot */}
               <div className="absolute w-3 h-3 bg-cyan-400 -left-[38.5px] top-6 shadow-[0_0_10px_rgba(0,240,255,0.8)] group-hover:scale-125 transition-transform duration-300">
                 <span className="absolute inset-0 rounded-full bg-cyan-400 animate-ping opacity-75" />
               </div>
-              
+
               {/* Corner accent details */}
               <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-white/20 group-hover:border-cyan-400 transition-colors" />
               <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-white/20 group-hover:border-cyan-400 transition-colors" />
@@ -77,20 +60,6 @@ export default function Education() {
               <p className="text-gray-400 font-medium text-xs tracking-wide">
                 @ {item.institution}
               </p>
-
-              {/* Coursework Details */}
-              {item.coursework && (
-                <div className="mt-4 pt-3 border-t border-white/5">
-                  <span className="text-[9px] text-gray-500 font-bold uppercase tracking-wider block mb-2">// RELEVANT_COURSEWORK</span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {item.coursework.map((course) => (
-                      <span key={course} className="text-[10px] bg-white/5 border border-white/10 text-cyan-300 px-2 py-0.5 rounded-sm font-semibold hover:border-cyan-500/30 transition-colors">
-                        {course}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
 
             </div>
           </FadeIn>

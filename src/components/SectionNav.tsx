@@ -9,7 +9,6 @@ const sections = [
   { id: 'academic', label: '03. ACADEMIC_CORE' },
   { id: 'arsenal', label: '04. TECH_ARSENAL' },
   { id: 'credentials', label: '05. CREDENTIALS_&_AWARDS' },
-  { id: 'leadership', label: '06. RESPONSIBILITY_LOGS' },
   { id: 'contact', label: 'INITIALIZE_CONNECTION' }
 ]
 
@@ -26,7 +25,7 @@ export default function SectionNav() {
           }
         })
       },
-      { rootMargin: '-40% 0px -40% 0px' } 
+      { rootMargin: '-40% 0px -40% 0px' }
     )
 
     sections.forEach(({ id }) => {
@@ -60,14 +59,13 @@ export default function SectionNav() {
             <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 bg-black/80 border border-cyan-500/30 text-cyan-400 text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap uppercase tracking-wider shadow-[0_0_10px_rgba(0,240,255,0.1)]">
               {label}
             </span>
-            
+
             {/* Glowing Dot */}
             <div
-              className={`rounded-full transition-all duration-300 ${
-                isActive
+              className={`rounded-full transition-all duration-300 ${isActive
                   ? 'w-2.5 h-2.5 bg-cyan-400 shadow-[0_0_12px_rgba(0,240,255,0.9)]'
                   : 'w-1.5 h-1.5 bg-white/20 group-hover:bg-cyan-500/50'
-              }`}
+                }`}
             />
           </button>
         )

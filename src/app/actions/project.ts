@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 
+// 1. Add Project Action
 export async function addProject(formData: FormData) {
   const title = formData.get('title') as string
   const description = formData.get('description') as string
@@ -10,7 +11,6 @@ export async function addProject(formData: FormData) {
   const liveLink = formData.get('liveLink') as string
   const imageUrl = formData.get('imageUrl') as string
   
-  // Get the tech stack string and split it by commas into an array
   const techStackInput = formData.get('techStack') as string
   const techStack = techStackInput
     ? techStackInput.split(',').map((tech) => tech.trim())
@@ -20,7 +20,6 @@ export async function addProject(formData: FormData) {
     throw new Error('Title and Description are required.')
   }
 
-  // Insert the project into Supabase via Prisma
   await prisma.project.create({
     data: {
       title,
@@ -33,6 +32,59 @@ export async function addProject(formData: FormData) {
     },
   })
 
-  // Instantly refresh the homepage so the new project shows up
+  // Refresh both the homepage and the admin dashboard
   revalidatePath('/')
+  revalidatePath('/admin/projects')
+}
+
+// 2. Delete Project Action
+export async function deleteProject(formData: FormData) {
+  const id = formData.get('id') as string
+
+  if (!id) {
+    throw new Error('Project ID is required.')
+  }
+
+  await prisma.project.delete({
+    where: { id },
+  })
+
+  // Refresh both the homepage and the admin dashboard
+  revalidatePath('/')
+  revalidatePath('/admin/projects')
+}
+
+// 3. Update Project Action
+export async function updateProject(formData: FormData) {
+  const id = formData.get('id') as string
+  const title = formData.get('title') as string
+  const description = formData.get('description') as string
+  const githubLink = formData.get('githubLink') as string
+  const liveLink = formData.get('liveLink') as string
+  const imageUrl = formData.get('imageUrl') as string
+  
+  const techStackInput = formData.get('techStack') as string
+  const techStack = techStackInput
+    ? techStackInput.split(',').map((tech) => tech.trim())
+    : []
+
+  if (!id || !title || !description) {
+    throw new Error('ID, Title, and Description are required.')
+  }
+
+  await prisma.project.update({
+    where: { id },
+    data: {
+      title,
+      description,
+      techStack,
+      githubLink: githubLink || null,
+      liveLink: liveLink || null,
+      imageUrl: imageUrl || null,
+    },
+  })
+
+  // Refresh both the homepage and the admin dashboard
+  revalidatePath('/')
+  revalidatePath('/admin/projects')
 }
