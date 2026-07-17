@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 import CursorGlow from '@/components/CursorGlow'
@@ -8,18 +7,6 @@ import SectionNav from '@/components/SectionNav'
 import MatrixRain from '@/components/MatrixRain'
 import IntroScreen from '@/components/IntroScreen'
 import FloatingDock from '@/components/FloatingDock'
-
-// Apple-esque body font
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-})
-
-// Matrix-esque technical font
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://nisargvaghela.dev'),
@@ -50,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200`}>
+      <body suppressHydrationWarning className="font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
 
         {/* Animated Boot Sequence (Only plays once per session) */}
         <IntroScreen />
