@@ -1,37 +1,122 @@
-import { getCodeforcesStats } from '@/lib/codeforces';
-import AnimatedCounter from './AnimatedCounter';
+'use client'
 
-export default async function CPStats({ handle }: { handle: string }) {
-  const stats = await getCodeforcesStats(handle);
+import { useEffect, useState } from 'react'
 
-  if (!stats) return null;
+interface CodeforcesStats {
+  handle: string
+  rating: number
+  maxRating: number
+  rank: string
+  maxRank: string
+}
+
+export default function CPStats({ handle }: { handle: string }) {
+  const [stats, setStats] = useState<CodeforcesStats | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchCFStats() {
+      try {
+        const res = await fetch(`https://codeforces.com/api/user.info?handles=${handle}`)
+        const data = await res.json()
+        if (data.status === 'OK' && data.result.length > 0) {
+          const user = data.result[0]
+          setStats({
+            handle: user.handle,
+            rating: user.rating || 0,
+            maxRating: user.maxRating || 0,
+            rank: user.rank || 'unranked',
+            maxRank: user.maxRank || 'unranked'
+          })
+        }
+      } catch (err) {
+        console.error('Failed fetching Codeforces telemetry:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchCFStats()
+  }, [handle])
 
   return (
-    <div className="glass-panel p-6 glow-border-hover relative overflow-hidden group">
-      <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/5 rounded-bl-full group-hover:bg-cyan-500/20 transition-colors"></div>
-      
-      <h3 className="text-xs font-mono text-gray-500 mb-4 tracking-wider">[ CODEFORCES_API ]</h3>
-      
-      <div className="flex items-end gap-2 mb-2">
-        <span className="text-4xl font-bold tracking-tight text-white group-hover:glow-text transition-all">
-          <AnimatedCounter value={stats.rating || 'UNRATED'} />
-        </span>
-        <span className="text-cyan-500/50 font-mono text-sm mb-1">/rating</span>
+    <div className="glass-panel relative overflow-hidden flex flex-col justify-between font-mono rounded-md min-h-[220px]">
+      {/* Terminal Header Bar */}
+      <div className="bg-black/50 border-b border-[#00f0ff]/20 px-4 py-2 flex items-center justify-between z-10">
+        <div className="flex gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-red-500/60" />
+          <span className="w-2 h-2 rounded-full bg-yellow-500/60" />
+          <span className="w-2 h-2 rounded-full bg-green-500/60" />
+        </div>
+        <div className="text-[10px] text-[#00f0ff]/70 font-bold tracking-widest uppercase">
+          CF_STREAM_CONNECTION.exe
+        </div>
       </div>
-      
-      <p className="text-sm font-mono text-gray-400">
-         current_rank: <span className="text-cyan-400"><AnimatedCounter value={stats.rank || 'N/A'} /></span>
-      </p>
-      
-      <div className="mt-6 pt-4 border-t border-white/10">
-        <a 
-          href={`https://codeforces.com/profile/${handle}`} 
-          target="_blank"
-          className="text-xs font-mono text-gray-400 hover:text-cyan-400 transition-colors flex items-center gap-2"
-        >
-          [ ACCESS_PROFILE ]
-        </a>
+
+      <div className="p-6 flex-1 flex flex-col justify-center relative z-10">
+        {loading ? (
+          <div className="text-xs text-[#00f0ff]/60 animate-pulse tracking-widest uppercase">
+            &gt; Syncing_Codeforces_Telemetry...
+          </div>
+        ) : stats ? (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between border-b border-[#00f0ff]/10 pb-2">
+              <div>
+                <span className="text-[9px] text-slate-500 block tracking-widest uppercase">&gt; CF_HANDLE</span>
+                <a 
+                  href={`https://codeforces.com/profile/${stats.handle}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-white text-sm font-bold tracking-wide hover:text-[#00f0ff] hover:underline transition-colors cursor-pointer"
+                >
+                  {stats.handle}
+                </a>
+              </div>
+              <span className="text-[9px] text-emerald-400 border border-emerald-500/30 bg-emerald-500/5 px-2 py-0.5 uppercase tracking-widest">
+                UPLINK_OK
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <span className="text-[9px] text-slate-500 block tracking-widest uppercase">&gt; CURR_RATING</span>
+                <div className="text-2xl font-black text-[#00f0ff] tracking-tight glow-text mt-0.5">
+                  {stats.rating}
+                </div>
+                <span className="text-[10px] text-slate-400 uppercase tracking-wider">{stats.rank}</span>
+              </div>
+              <div>
+                <span className="text-[9px] text-slate-500 block tracking-widest uppercase">&gt; MAX_PEAK</span>
+                <div className="text-2xl font-black text-slate-300 tracking-tight mt-0.5">
+                  {stats.maxRating}
+                </div>
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider">{stats.maxRank}</span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="text-xs text-red-400 tracking-widest uppercase">
+            &gt; ERROR: TELEMETRY_OFFLINE
+          </div>
+        )}
+      </div>
+
+      {/* Footer Meta Stream with Link */}
+      <div className="bg-black/30 border-t border-[#00f0ff]/10 px-4 py-2 text-[8px] text-slate-500 uppercase tracking-widest flex items-center justify-between">
+        <span>PROT: HTTP_CF_API</span>
+        <div className="flex items-center gap-3">
+          <span className="text-[#00f0ff]/60 font-bold hidden sm:inline-block">[ FREQ: Realtime ]</span>
+          {stats && (
+            <a 
+              href={`https://codeforces.com/profile/${stats.handle}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#00f0ff] hover:text-white hover:bg-[#00f0ff]/20 px-2 py-1 border border-transparent hover:border-[#00f0ff]/50 transition-all cursor-pointer"
+            >
+              [ VISIT_PROFILE ]
+            </a>
+          )}
+        </div>
       </div>
     </div>
-  );
+  )
 }

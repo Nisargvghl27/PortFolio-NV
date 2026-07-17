@@ -56,8 +56,8 @@ export default function RootLayout({
         {/* Floating Dock Social Panel */}
         <FloatingDock />
 
-        {/* Main Content Area - padded to account for layout spacing */}
-        <div className="flex-1 pt-16 pb-12">
+        {/* Main Content Area */}
+        <div className="flex-1 pb-0">
           {children}
         </div>
 

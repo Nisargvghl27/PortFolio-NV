@@ -58,27 +58,28 @@ const certificatesData: Certificate[] = [
 
 export default function Certificates() {
   const [activeCertId, setActiveCertId] = useState<string>(certificatesData[0].id)
-
   const activeCert = certificatesData.find(c => c.id === activeCertId) || certificatesData[0]
 
   return (
-    <div className="font-mono w-full max-w-6xl mx-auto relative">
+    <div className="font-mono w-full max-w-6xl mx-auto relative px-4">
       <FadeIn delay={0.1} direction="up">
         <div className="space-y-6">
-
+          
           {/* Master Detail Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-
-            {/* Left Side: Directory navigation panel (Takes 1 column) */}
-            <div className="lg:col-span-1 relative glass-panel p-5 border border-white/10 rounded-lg bg-black/60 shadow-[0_0_40px_rgba(0,0,0,0.4)] flex flex-col justify-start min-h-[320px]">
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff01_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
-
-              <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 select-none z-10">
-                <span className="text-[10px] tracking-wider text-cyan-400 font-bold uppercase">// CREDENTIALS_DIR</span>
-                <span className="text-[9px] text-gray-600 font-bold">[ {certificatesData.length} FILES ]</span>
+            
+            {/* Left Side: Directory navigation panel */}
+            <div className="lg:col-span-1 relative glass-panel flex flex-col justify-start min-h-[320px] p-0">
+              
+              {/* Terminal Header */}
+              <div className="bg-black/50 border-b border-[#00f0ff]/20 px-4 py-2 flex items-center justify-between z-20 relative">
+                <span className="text-[10px] tracking-widest text-[#00f0ff] font-bold uppercase">&gt; ls ./credentials</span>
+                <span className="text-[9px] text-slate-500 font-bold tracking-widest">[ {certificatesData.length} FILES ]</span>
               </div>
-
-              <div className="flex flex-col gap-2 z-10">
+              
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#00f0ff05_1px,transparent_1px),linear-gradient(to_bottom,#00f0ff05_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none rounded-md" />
+              
+              <div className="flex flex-col gap-2 z-10 p-4">
                 {certificatesData.map((cert) => {
                   const isActive = cert.id === activeCertId
                   return (
@@ -86,16 +87,17 @@ export default function Certificates() {
                       key={cert.id}
                       onClick={() => setActiveCertId(cert.id)}
                       suppressHydrationWarning
-                      className={`w-full text-left p-3 border transition-all relative flex flex-col group ${isActive
-                          ? 'border-cyan-500/50 bg-cyan-500/5 text-cyan-400 shadow-[0_0_15px_rgba(0,240,255,0.05)]'
-                          : 'border-white/5 bg-black/20 text-gray-400 hover:border-white/20 hover:text-white'
-                        }`}
+                      className={`w-full text-left p-3 border transition-all relative flex flex-col group ${
+                        isActive
+                          ? 'border-[#00f0ff] bg-[#00f0ff]/10 text-[#00f0ff] shadow-[0_0_15px_rgba(0,240,255,0.1)]'
+                          : 'border-[#00f0ff]/20 bg-[#050505]/50 text-slate-400 hover:border-[#00f0ff]/50 hover:text-white'
+                      }`}
                     >
                       {isActive && (
-                        <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-cyan-400" />
+                        <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#00f0ff]" />
                       )}
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-[9px] text-gray-500 font-mono">
+                        <span className="text-[9px] text-slate-500 font-mono tracking-widest uppercase">
                           {cert.date}
                         </span>
                       </div>
@@ -108,61 +110,75 @@ export default function Certificates() {
               </div>
             </div>
 
-            {/* Right Side: Virtual Certificate Telemetry Viewport (Takes 2 columns) */}
-            <div className="lg:col-span-2 relative glass-panel p-6 border border-white/10 rounded-lg bg-black/85 shadow-[0_0_50px_rgba(0,240,255,0.02)] flex flex-col justify-between overflow-hidden min-h-[320px]">
+            {/* Right Side: Virtual Certificate Telemetry Viewport */}
+            <div className="lg:col-span-2 relative glass-panel flex flex-col justify-between overflow-hidden min-h-[320px] p-0">
+              
+              {/* Terminal Header */}
+              <div className="bg-black/50 border-b border-[#00f0ff]/20 px-4 py-2 flex items-center justify-between z-20 relative">
+                <div className="flex gap-2 items-center">
+                  <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
+                </div>
+                <div className="text-[10px] text-[#00f0ff]/70 font-semibold tracking-widest uppercase">
+                  cat {activeCert.id.toLowerCase().replace(/\s/g, '_')}.log
+                </div>
+                <div className="w-10 text-right text-[8px] text-emerald-400 tracking-widest">[ SECURE ]</div>
+              </div>
+
               {/* Scanline CRT Sweep Overlay */}
               <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.04)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_6s_ease-in-out_infinite]" />
-
-              <div className="absolute top-3 right-4 text-[8px] text-gray-600 font-mono tracking-widest select-none">[ SECURE_ACCESS_GRANTED ]</div>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeCert.id}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.2 }}
-                  className="space-y-5 z-10"
-                >
-                  {/* Status header */}
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <div>
-                      <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// CREDENTIAL_OBJECT</span>
-                      <h3 className="text-lg font-bold text-white tracking-wide">{activeCert.title}</h3>
+              
+              <div className="p-6 relative z-10 flex-1">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeCert.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.2 }}
+                    className="space-y-6"
+                  >
+                    {/* Status header */}
+                    <div className="flex items-center justify-between border-b border-[#00f0ff]/20 pb-4">
+                      <div>
+                        <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; CREDENTIAL_OBJECT</span>
+                        <h3 className="text-lg font-bold text-white tracking-wide uppercase mt-1">{activeCert.title}</h3>
+                      </div>
+                      <div className="flex items-center gap-2 px-2.5 py-1 border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-bold text-[9px] select-none rounded-sm tracking-widest">
+                        <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                        VERIFIED
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 px-2.5 py-1 border border-green-500/20 bg-green-500/5 text-green-400 font-bold text-[9px] select-none rounded-sm">
-                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                      VERIFIED
-                    </div>
-                  </div>
 
-                  {/* Metadata matrix */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// ISSUING_ORGANIZATION</span>
-                      <div className="text-cyan-300 font-semibold text-xs mt-0.5">{activeCert.issuer}</div>
+                    {/* Metadata matrix */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; ISSUING_ORGANIZATION</span>
+                        <div className="text-[#00f0ff] font-semibold text-xs mt-1 uppercase tracking-wide">{activeCert.issuer}</div>
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; DATE_ISSUED</span>
+                        <div className="text-slate-300 text-xs mt-1 uppercase tracking-wide">{activeCert.date}</div>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// DATE_ISSUED</span>
-                      <div className="text-gray-300 text-xs mt-0.5">{activeCert.date}</div>
-                    </div>
-                  </div>
 
-                  {/* Description details */}
-                  <div className="space-y-1.5">
-                    <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// CREDENTIAL_DESCR</span>
-                    <p className="text-xs text-gray-400 leading-relaxed max-w-2xl bg-black/40 p-3 border border-white/5 rounded-sm">
-                      {activeCert.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+                    {/* Description details */}
+                    <div className="space-y-2">
+                      <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; CREDENTIAL_DESCR</span>
+                      <p className="text-xs text-slate-400 leading-relaxed max-w-2xl bg-[#050505]/80 p-4 border border-[#00f0ff]/20 rounded-sm">
+                        {activeCert.desc}
+                      </p>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
 
               {/* Action and verification stream footer */}
-              <div className="border-t border-white/10 pt-4 mt-6 flex flex-wrap gap-4 items-center justify-between z-10">
-                <div className="text-[8px] text-gray-500 flex flex-col gap-0.5 select-none">
-                  <span className="font-bold text-gray-600">ENCRYPTION: SH256 // TLS_1.3</span>
-                  <span className="text-cyan-500/70 font-semibold">
+              <div className="bg-black/50 border-t border-[#00f0ff]/20 px-6 py-4 flex flex-wrap gap-4 items-center justify-between z-10">
+                <div className="text-[8px] text-slate-500 flex flex-col gap-0.5 select-none tracking-widest uppercase">
+                  <span className="font-bold">ENCRYPTION: SH256 // TLS_1.3</span>
+                  <span className="text-[#00f0ff] font-semibold">
                     [ VERIFICATION_ROUTE_SECURE: PASS ]
                   </span>
                 </div>
@@ -170,15 +186,14 @@ export default function Certificates() {
                   href={activeCert.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 border border-cyan-500 bg-cyan-500/10 text-cyan-400 font-bold text-xs uppercase tracking-wider hover:bg-cyan-500/20 shadow-[0_0_15px_rgba(0,240,255,0.15)] transition-all select-none rounded-sm"
+                  className="px-6 py-2.5 border border-[#00f0ff]/50 bg-[#00f0ff]/10 text-[#00f0ff] font-bold text-xs uppercase tracking-widest hover:bg-[#00f0ff]/20 hover:border-[#00f0ff] transition-all select-none rounded-sm"
                 >
-                  [ VIEW_CREDENTIAL_DATA ]
+                  [ VIEW_SOURCE ]
                 </a>
               </div>
-
+              
             </div>
           </div>
-
         </div>
       </FadeIn>
     </div>

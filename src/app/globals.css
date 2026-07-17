@@ -7,7 +7,7 @@
 }
 
 @theme inline {
-  --color-background: #030303;
+  --color-background: #050505;
   --color-foreground: #ededed;
   --color-neon-cyan: #00f0ff;
   --color-neon-blue: #0070f3;
@@ -18,6 +18,9 @@
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 /* 1. Animated Aurora Mesh (Layered at the very back) */
@@ -28,16 +31,16 @@ body::before {
   left: -50%;
   width: 200%;
   height: 200%;
-  z-index: -3; /* Pushed back to make room for noise layer */
+  z-index: -3;
   background:
-    radial-gradient(circle at 30% 30%, rgba(0, 240, 255, 0.06) 0%, transparent 40%),  
-    radial-gradient(circle at 70% 40%, rgba(0, 112, 243, 0.06) 0%, transparent 50%),  
-    radial-gradient(circle at 40% 70%, rgba(128, 0, 255, 0.05) 0%, transparent 50%);  
+    radial-gradient(circle at 30% 30%, rgba(0, 240, 255, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 70% 40%, rgba(0, 112, 243, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(255, 0, 85, 0.02) 0%, transparent 50%);
   animation: aurora-drift 25s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
-/* 2. Deep-tech structural grid */
+/* 2. Deep-tech structural grid matching Hero */
 body::after {
   content: "";
   position: fixed;
@@ -46,23 +49,22 @@ body::after {
   width: 100vw;
   height: 100vh;
   z-index: -2;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(0, 240, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 240, 255, 0.15) 1px, transparent 1px);
+  background-size: 50px 50px;
   pointer-events: none;
 }
 
-/* 3. Noise / Film Grain Texture (Feature 9) */
+/* 3. Noise / Film Grain Texture */
 html::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -1; /* Layered ABOVE aurora and grid, but BELOW content */
+  z-index: -1;
   pointer-events: none;
-  /* Inline SVG fractal noise */
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.04; /* Very subtle opacity so it adds texture without muddying the screen */
+  opacity: 0.03;
 }
 
 @keyframes aurora-drift {
@@ -72,9 +74,11 @@ html::before {
   100% { transform: translate(0, 0) scale(1); }
 }
 
-/* Custom Neon & Glass Utilities */
+/* Custom Neon & Glass Utilities Unified with Hero */
 .glass-panel {
-  @apply bg-black/40 backdrop-blur-md border border-white/10;
+  @apply bg-[#0a0f12]/95 backdrop-blur-xl border border-[#00f0ff]/30;
+  box-shadow: 0 0 30px rgba(0,240,255,0.05), inset 0 0 20px rgba(0,240,255,0.05);
+  border-radius: 0.375rem; /* rounded-md */
 }
 
 .glow-text {
@@ -87,53 +91,7 @@ html::before {
 
 .glow-border-hover:hover {
   box-shadow: 0 0 20px rgba(0, 240, 255, 0.2), inset 0 0 10px rgba(0, 240, 255, 0.1);
-  border-color: rgba(0, 240, 255, 0.5);
-}
-
-/* Gradient (Holographic) Border (IMPROVED MASK VERSION) */
-@property --border-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@keyframes border-spin {
-  from { --border-angle: 0deg; }
-  to { --border-angle: 360deg; }
-}
-
-.gradient-border {
-  @apply bg-black/40 backdrop-blur-md;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.gradient-border::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid transparent;
-  background: conic-gradient(from var(--border-angle), #00f0ff, #0070f3, #8000ff, #00f0ff) border-box;
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) padding-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  animation: border-spin 4s linear infinite;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.gradient-border:hover {
-  border-color: transparent;
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2), inset 0 0 10px rgba(0, 240, 255, 0.1);
-}
-
-.gradient-border:hover::after {
-  opacity: 1;
+  border-color: rgba(0, 240, 255, 0.8);
 }
 
 /* Glitch Text Effect */
@@ -142,8 +100,7 @@ html::before {
   display: inline-block;
 }
 
-.glitch-text::before,
-.glitch-text::after {
+.glitch-text::before, .glitch-text::after {
   content: attr(data-text);
   position: absolute;
   top: 0;
@@ -169,6 +126,11 @@ html::before {
   left: -2px;
   text-shadow: 2px 0 rgba(0, 112, 243, 0.8);
   animation: glitch-anim-2 3.5s infinite linear alternate-reverse; 
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 @keyframes glitch-anim-1 {

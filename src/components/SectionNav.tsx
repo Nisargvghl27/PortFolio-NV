@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 const sections = [
-  { id: 'hero', label: 'START' },
+  { id: 'hero', label: '00. SYSTEM_INIT' },
   { id: 'systems', label: '01. DEPLOYED_SYSTEMS' },
   { id: 'metrics', label: '02. ALGORITHMIC_METRICS' },
   { id: 'academic', label: '03. ACADEMIC_CORE' },
@@ -62,10 +62,11 @@ export default function SectionNav() {
 
             {/* Glowing Dot */}
             <div
-              className={`rounded-full transition-all duration-300 ${isActive
+              className={`rounded-full transition-all duration-300 ${
+                isActive
                   ? 'w-2.5 h-2.5 bg-cyan-400 shadow-[0_0_12px_rgba(0,240,255,0.9)]'
                   : 'w-1.5 h-1.5 bg-white/20 group-hover:bg-cyan-500/50'
-                }`}
+              }`}
             />
           </button>
         )

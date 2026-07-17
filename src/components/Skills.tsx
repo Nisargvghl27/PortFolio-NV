@@ -6,12 +6,12 @@ import FadeIn from './FadeIn'
 
 // Categories for filter buttons
 const categories = [
-  { id: 'all', label: 'ALL' },
+  { id: 'all', label: 'ALL_MODULES' },
   { id: 'Languages', label: 'LANGUAGES' },
   { id: 'Frontend', label: 'FRONTEND' },
   { id: 'Backend', label: 'BACKEND' },
-  { id: 'CS_Core', label: 'CS CORE' },
-  { id: 'Tools_&_DevOps', label: 'DEVOPS & TOOLS' }
+  { id: 'CS_Core', label: 'CS_CORE' },
+  { id: 'Tools_&_DevOps', label: 'DEVOPS_&_TOOLS' }
 ]
 
 // Mapping of custom SVG icons for each skill
@@ -205,7 +205,6 @@ const skillsData: Skill[] = [
   { name: 'Dart', category: 'Languages', color: 'hover:text-[#0175C2] hover:border-[#0175C2]/50 hover:bg-[#0175C2]/5', level: '78%', latency: '18ms', status: 'READY', desc: 'Cross-platform app code base' },
   { name: 'C++', category: 'Languages', color: 'hover:text-[#00599C] hover:border-[#00599C]/50 hover:bg-[#00599C]/5', level: '80%', latency: '4ms', status: 'OPTIMIZED', desc: 'Performant systems & low-level structures' },
   { name: 'C', category: 'Languages', color: 'hover:text-[#A8B9CC] hover:border-[#A8B9CC]/50 hover:bg-[#A8B9CC]/5', level: '82%', latency: '3ms', status: 'READY', desc: 'Low-level imperative systems compilation' },
-  
   { name: 'HTML', category: 'Frontend', color: 'hover:text-[#E34F26] hover:border-[#E34F26]/50 hover:bg-[#E34F26]/5', level: '95%', latency: '1ms', status: 'READY', desc: 'Semantic document markup layouts' },
   { name: 'CSS', category: 'Frontend', color: 'hover:text-[#1572B6] hover:border-[#1572B6]/50 hover:bg-[#1572B6]/5', level: '93%', latency: '1ms', status: 'READY', desc: 'Styling, layout engines & variables' },
   { name: 'Next.js', category: 'Frontend', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '90%', latency: '12ms', status: 'OPTIMIZED', desc: 'Server-side rendering & app routing' },
@@ -213,7 +212,6 @@ const skillsData: Skill[] = [
   { name: 'Tailwind CSS', category: 'Frontend', color: 'hover:text-[#06B6D4] hover:border-[#06B6D4]/50 hover:bg-[#06B6D4]/5', level: '96%', latency: '2ms', status: 'READY', desc: 'Utility-first layout engines' },
   { name: 'Framer Motion', category: 'Frontend', color: 'hover:text-[#F024B6] hover:border-[#F024B6]/50 hover:bg-[#F024B6]/5', level: '88%', latency: '15ms', status: 'READY', desc: 'High-performance visual physics' },
   { name: 'Flutter', category: 'Frontend', color: 'hover:text-[#02569B] hover:border-[#02569B]/50 hover:bg-[#02569B]/5', level: '80%', latency: '22ms', status: 'READY', desc: 'Multi-platform user interfaces' },
-  
   { name: 'Node.js', category: 'Backend', color: 'hover:text-[#339933] hover:border-[#339933]/50 hover:bg-[#339933]/5', level: '88%', latency: '14ms', status: 'READY', desc: 'Asynchronous event-driven runtimes' },
   { name: 'Express.js', category: 'Backend', color: 'hover:text-gray-300 hover:border-gray-500/50 hover:bg-gray-500/5', level: '88%', latency: '10ms', status: 'READY', desc: 'REST server request management' },
   { name: 'PostgreSQL', category: 'Backend', color: 'hover:text-[#4169E1] hover:border-[#4169E1]/50 hover:bg-[#4169E1]/5', level: '84%', latency: '28ms', status: 'OPTIMIZED', desc: 'Relational data structures & queries' },
@@ -222,13 +220,11 @@ const skillsData: Skill[] = [
   { name: 'Firebase', category: 'Backend', color: 'hover:text-[#FFCA28] hover:border-[#FFCA28]/50 hover:bg-[#FFCA28]/5', level: '88%', latency: '12ms', status: 'READY', desc: 'Realtime database & serverless platform' },
   { name: 'MongoDB', category: 'Backend', color: 'hover:text-[#47A248] hover:border-[#47A248]/50 hover:bg-[#47A248]/5', level: '86%', latency: '15ms', status: 'READY', desc: 'NoSQL document-oriented database engine' },
   { name: 'MySQL', category: 'Backend', color: 'hover:text-[#4479A1] hover:border-[#4479A1]/50 hover:bg-[#4479A1]/5', level: '85%', latency: '22ms', status: 'READY', desc: 'Structured query language database system' },
-  
-  { name: 'Data Structures', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '90%', latency: '2ms', status: 'READY', desc: 'Core memory organizations & complexity analysis' },
-  { name: 'Algorithms', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '88%', latency: '5ms', status: 'READY', desc: 'Sorting, searching & graph computations' },
-  { name: 'Computer Networks', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '82%', latency: '15ms', status: 'READY', desc: 'TCP/IP, routing & HTTP protocols' },
-  { name: 'Operating Systems', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '84%', latency: '10ms', status: 'READY', desc: 'Threads, processes, memory paging & kernel schedulers' },
-  { name: 'Database Management', category: 'CS_Core', color: 'hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/5', level: '88%', latency: '8ms', status: 'READY', desc: 'Relational design, indexing & NoSQL stores' },
-
+  { name: 'Data Structures', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '90%', latency: '2ms', status: 'READY', desc: 'Core memory organizations & complexity analysis' },
+  { name: 'Algorithms', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '88%', latency: '5ms', status: 'READY', desc: 'Sorting, searching & graph computations' },
+  { name: 'Computer Networks', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '82%', latency: '15ms', status: 'READY', desc: 'TCP/IP, routing & HTTP protocols' },
+  { name: 'Operating Systems', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '84%', latency: '10ms', status: 'READY', desc: 'Threads, processes, memory paging & kernel schedulers' },
+  { name: 'Database Management', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '88%', latency: '8ms', status: 'READY', desc: 'Relational design, indexing & NoSQL stores' },
   { name: 'Git', category: 'Tools_&_DevOps', color: 'hover:text-[#F05032] hover:border-[#F05032]/50 hover:bg-[#F05032]/5', level: '90%', latency: '4ms', status: 'READY', desc: 'Decentralized version control' },
   { name: 'GitHub', category: 'Tools_&_DevOps', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '92%', latency: '5ms', status: 'READY', desc: 'Workflows & repository operations' },
   { name: 'Vercel', category: 'Tools_&_DevOps', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '95%', latency: '8ms', status: 'READY', desc: 'Global edge deployment networks' }
@@ -247,8 +243,8 @@ export default function Skills() {
       <FadeIn delay={0.1} direction="up">
         <div className="space-y-6">
           
-          {/* 1. Centered Terminal Filter Bar (Restore Previous Arrangement) */}
-          <div className="flex flex-wrap gap-2.5 justify-center border-b border-white/10 pb-5">
+          {/* 1. Centered Terminal Filter Bar */}
+          <div className="flex flex-wrap gap-2.5 justify-center border-b border-[#00f0ff]/20 pb-5">
             {categories.map((cat) => {
               const isActive = activeCategory === cat.id
               return (
@@ -256,16 +252,16 @@ export default function Skills() {
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
                   suppressHydrationWarning
-                  className={`relative px-4 py-2 border transition-all text-xs font-bold uppercase tracking-wider select-none ${
+                  className={`relative px-4 py-2 border transition-all text-xs font-bold uppercase tracking-widest select-none ${
                     isActive
-                      ? 'border-cyan-500 bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)]'
-                      : 'border-white/10 text-gray-500 hover:text-white hover:border-white/30'
+                      ? 'border-[#00f0ff] bg-[#00f0ff]/10 text-[#00f0ff] shadow-[0_0_20px_rgba(0,240,255,0.2)]'
+                      : 'border-[#00f0ff]/20 text-slate-500 hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5'
                   }`}
                 >
                   {isActive && (
                     <>
-                      <span className="absolute -top-1 -left-1 w-1.5 h-1.5 border-t-2 border-l-2 border-cyan-400" />
-                      <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border-b-2 border-r-2 border-cyan-400" />
+                      <span className="absolute -top-1 -left-1 w-1.5 h-1.5 border-t-2 border-l-2 border-[#00f0ff]" />
+                      <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border-b-2 border-r-2 border-[#00f0ff]" />
                     </>
                   )}
                   [ {cat.label} ]
@@ -274,26 +270,26 @@ export default function Skills() {
             })}
           </div>
 
-          {/* 2. Main Deck Grid - Stretched height box sizes preserved */}
+          {/* 2. Main Deck Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
             
-            {/* Left Card: Skill tag deck (Centered tags, no left card header - Restore Previous Arrangement) */}
-            <div className="lg:col-span-2 relative glass-panel p-8 border border-white/10 rounded-lg overflow-hidden bg-black/60 shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col justify-center min-h-[340px]">
-              {/* Background grid */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-
+            {/* Left Card: Skill tag deck */}
+            <div className="lg:col-span-2 relative glass-panel p-8 flex flex-col justify-center min-h-[340px]">
+              {/* Background grid matching Hero */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#00f0ff08_1px,transparent_1px),linear-gradient(to_bottom,#00f0ff08_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none rounded-md" />
+              
               {/* Intersect symbols */}
-              <span className="absolute top-2 left-2 text-cyan-500/40 text-xs font-bold pointer-events-none select-none">+</span>
-              <span className="absolute top-2 right-2 text-cyan-500/40 text-xs font-bold pointer-events-none select-none">+</span>
-              <span className="absolute bottom-2 left-2 text-cyan-500/40 text-xs font-bold pointer-events-none select-none">+</span>
-              <span className="absolute bottom-2 right-2 text-cyan-500/40 text-xs font-bold pointer-events-none select-none">+</span>
-
+              <span className="absolute top-2 left-2 text-[#00f0ff]/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute top-2 right-2 text-[#00f0ff]/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute bottom-2 left-2 text-[#00f0ff]/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute bottom-2 right-2 text-[#00f0ff]/40 text-xs font-bold pointer-events-none select-none">+</span>
+              
               {/* Ambient center cyan shadow glow */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-cyan-500/5 blur-3xl pointer-events-none" />
-
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#00f0ff]/10 blur-3xl pointer-events-none" />
+              
               {/* Centered flow of tags */}
               <motion.div 
-                layout 
+                layout
                 className="flex flex-wrap gap-4 justify-center items-center max-w-3xl mx-auto relative z-10"
               >
                 <AnimatePresence mode="popLayout">
@@ -307,13 +303,13 @@ export default function Skills() {
                       key={skill.name}
                       onMouseEnter={() => setHoveredSkill(skill)}
                       onMouseLeave={() => setHoveredSkill(null)}
-                      className={`group relative flex items-center gap-2 bg-black/40 border border-white/10 text-gray-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color}`}
+                      className={`group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 text-slate-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color}`}
                     >
-                      <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
-                      <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-white/20 group-hover:border-cyan-400 group-hover:w-1.5 group-hover:h-1.5 transition-all" />
-
+                      <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                      <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                      
                       {skillIcons[skill.name] && (
-                        <span className="flex items-center justify-center w-4 h-4 text-gray-400 group-hover:text-inherit transition-colors duration-300 shrink-0">
+                        <span className="flex items-center justify-center w-4 h-4 text-slate-400 group-hover:text-inherit transition-colors duration-300 shrink-0">
                           {skillIcons[skill.name]}
                         </span>
                       )}
@@ -327,21 +323,24 @@ export default function Skills() {
             </div>
 
             {/* Right Card: Live Diagnostics Deck (Takes 1 column) */}
-            <div className="lg:col-span-1 relative glass-panel p-5 border border-white/10 rounded-lg bg-black/85 shadow-[0_0_40px_rgba(0,240,255,0.03)] flex flex-col justify-between overflow-hidden min-h-[340px]">
+            <div className="lg:col-span-1 relative glass-panel flex flex-col justify-between overflow-hidden min-h-[340px] p-0">
               
-              {/* Scanline Sweep Overlay */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.06)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_5s_ease-in-out_infinite]" />
-
-              {/* Corner coordinates */}
-              <div className="absolute top-2 right-2 text-[8px] text-gray-600 font-mono tracking-widest z-10 select-none">[ COORD_X_09 ]</div>
-              
-              <div className="relative z-10">
-                {/* HUD Title */}
-                <div className="flex items-center gap-2 border-b border-white/10 pb-3 mb-4 select-none">
-                  <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping" />
-                  <span className="text-[10px] uppercase tracking-wider text-cyan-400 font-bold">SYSTEM_DIAGNOSTICS v3.2</span>
+              {/* Terminal Header */}
+              <div className="bg-black/50 border-b border-[#00f0ff]/20 px-4 py-2.5 flex items-center justify-between z-20 relative">
+                <div className="flex gap-2 items-center">
+                  <div className="w-2 h-2 bg-[#00f0ff] animate-ping rounded-full opacity-75" />
+                  <div className="w-2 h-2 bg-[#00f0ff] rounded-full absolute" />
                 </div>
+                <div className="text-[10px] text-[#00f0ff]/70 font-semibold tracking-widest uppercase">
+                  sys_diag_v3.2
+                </div>
+                <div className="w-4" />
+              </div>
 
+              {/* Scanline Sweep Overlay */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.06)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_5s_ease-in-out_infinite] z-0" />
+              
+              <div className="relative z-10 p-5 flex-1 flex flex-col justify-center">
                 <AnimatePresence mode="wait">
                   {hoveredSkill ? (
                     <motion.div
@@ -350,46 +349,46 @@ export default function Skills() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.18 }}
-                      className="space-y-3 text-xs text-gray-400 font-mono"
+                      className="space-y-4 text-xs text-slate-400 font-mono"
                     >
                       {/* Brand Label Accent Header */}
                       <div className="flex items-center justify-between">
                         <div>
-                          <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// TECHNAME</span>
+                          <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; TECH_MODULE</span>
                           <div className="text-sm font-bold text-white tracking-widest uppercase">{hoveredSkill.name}</div>
                         </div>
-                        <span className="text-[9px] text-cyan-400/80 px-2 py-0.5 border border-cyan-500/20 bg-cyan-500/5 select-none">[ ACTIVE ]</span>
+                        <span className="text-[9px] text-[#00f0ff] px-2 py-0.5 border border-[#00f0ff]/30 bg-[#00f0ff]/10 select-none tracking-widest">[ ACTIVE ]</span>
                       </div>
-
+                      
                       <div className="grid grid-cols-2 gap-2.5">
                         <div>
-                          <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// CLASSIFY</span>
-                          <div className="text-cyan-300 font-semibold text-[11px] truncate">{hoveredSkill.category}</div>
+                          <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; CLASSIFY</span>
+                          <div className="text-[#00f0ff] font-semibold text-[11px] truncate tracking-wide">{hoveredSkill.category}</div>
                         </div>
                         <div>
-                          <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// LATENCY</span>
-                          <div className="text-green-400 text-[11px]">{hoveredSkill.latency}</div>
+                          <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; LATENCY</span>
+                          <div className="text-emerald-400 text-[11px] tracking-wide">{hoveredSkill.latency}</div>
                         </div>
                       </div>
 
                       <div className="space-y-1">
-                        <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// familiarity_bar</span>
+                        <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; MEMORY_ALLOC</span>
                         <div className="flex items-center gap-2">
-                          <div className="flex-1 bg-white/5 h-2 rounded-sm overflow-hidden border border-white/10">
+                          <div className="flex-1 bg-[#050505] h-2 rounded-sm overflow-hidden border border-[#00f0ff]/20">
                             <motion.div
                               initial={{ width: 0 }}
                               animate={{ width: hoveredSkill.level }}
                               transition={{ duration: 0.4, ease: 'easeOut' }}
-                              className="bg-gradient-to-r from-cyan-500 to-cyan-400 h-full shadow-[0_0_8px_rgba(0,240,255,0.4)]"
+                              className="bg-gradient-to-r from-[#00f0ff]/50 to-[#00f0ff] h-full shadow-[0_0_8px_rgba(0,240,255,0.4)]"
                             />
                           </div>
-                          <span className="text-[10px] text-cyan-400 font-bold">{hoveredSkill.level}</span>
+                          <span className="text-[10px] text-[#00f0ff] font-bold">{hoveredSkill.level}</span>
                         </div>
                       </div>
 
                       {/* Live SVG Signal Pulse Animation */}
-                      <div className="relative h-6 w-full bg-white/5 border border-white/10 rounded-sm overflow-hidden flex items-center justify-center">
-                        <svg className="absolute inset-0 w-full h-full text-cyan-500/30" viewBox="0 0 100 20" preserveAspectRatio="none">
+                      <div className="relative h-6 w-full bg-[#00f0ff]/5 border border-[#00f0ff]/20 rounded-sm overflow-hidden flex items-center justify-center">
+                        <svg className="absolute inset-0 w-full h-full text-[#00f0ff]/40" viewBox="0 0 100 20" preserveAspectRatio="none">
                           <motion.path
                             d="M0 10 Q 25 10, 50 10 T 100 10"
                             fill="none"
@@ -409,14 +408,14 @@ export default function Skills() {
                             }}
                           />
                         </svg>
-                        <span className="relative text-[8px] font-bold text-cyan-400 tracking-widest z-10 animate-pulse select-none">
+                        <span className="relative text-[8px] font-bold text-[#00f0ff] tracking-widest z-10 animate-pulse select-none">
                           TELEMETRY STREAMING LIVE
                         </span>
                       </div>
 
-                      <div className="border-t border-white/5 pt-2 mt-1.5">
-                        <span className="text-[9px] text-gray-600 font-bold uppercase tracking-wider">// DESCR_DATA</span>
-                        <p className="text-[10px] leading-relaxed text-gray-400 italic">
+                      <div className="border-t border-[#00f0ff]/20 pt-2 mt-1.5">
+                        <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; DESCR_DATA</span>
+                        <p className="text-[10px] leading-relaxed text-slate-400 italic">
                           {hoveredSkill.desc}
                         </p>
                       </div>
@@ -430,26 +429,26 @@ export default function Skills() {
                       className="py-6 flex flex-col items-center justify-center text-center font-mono space-y-4"
                     >
                       {/* Rotating concentric radar grid */}
-                      <div className="relative w-28 h-28 mx-auto flex items-center justify-center border border-white/5 rounded-full overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,240,255,0.02)]">
+                      <div className="relative w-28 h-28 mx-auto flex items-center justify-center border border-[#00f0ff]/20 rounded-full overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,240,255,0.02)]">
                         {/* Sweeping line */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-cyan-500/15 to-transparent rounded-full animate-[spin_3s_linear_infinite]" />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#00f0ff]/15 to-transparent rounded-full animate-[spin_3s_linear_infinite]" />
                         {/* Crosshairs */}
-                        <div className="absolute w-full h-[1px] bg-white/5" />
-                        <div className="absolute h-full w-[1px] bg-white/5" />
+                        <div className="absolute w-full h-[1px] bg-[#00f0ff]/20" />
+                        <div className="absolute h-full w-[1px] bg-[#00f0ff]/20" />
                         {/* Concentric rings */}
-                        <div className="absolute w-20 h-20 border border-white/5 rounded-full" />
-                        <div className="absolute w-10 h-10 border border-cyan-500/10 rounded-full" />
+                        <div className="absolute w-20 h-20 border border-[#00f0ff]/10 rounded-full" />
+                        <div className="absolute w-10 h-10 border border-[#00f0ff]/20 rounded-full" />
                         {/* Pulsing core node */}
-                        <span className="w-2 h-2 bg-cyan-500 rounded-full animate-ping absolute" />
-                        <span className="w-2 h-2 bg-cyan-500 rounded-full shadow-[0_0_8px_rgba(0,240,255,0.8)]" />
+                        <span className="w-2 h-2 bg-[#00f0ff] rounded-full animate-ping absolute" />
+                        <span className="w-2 h-2 bg-[#00f0ff] rounded-full shadow-[0_0_8px_rgba(0,240,255,0.8)]" />
                       </div>
-
+                      
                       <div className="space-y-1 px-2 select-none">
-                        <div className="uppercase tracking-widest font-bold text-cyan-500/40 text-[9px] animate-pulse">
+                        <div className="uppercase tracking-widest font-bold text-[#00f0ff]/60 text-[9px] animate-pulse">
                           [ AWAITING_TELEMETRY ]
                         </div>
-                        <p className="text-[9px] text-gray-500 leading-normal max-w-[200px] mx-auto uppercase">
-                          Hover over any tech card to stream parameters.
+                        <p className="text-[9px] text-slate-500 leading-normal max-w-[200px] mx-auto uppercase tracking-wide">
+                          Hover over any tech module to establish uplink.
                         </p>
                       </div>
                     </motion.div>
@@ -458,22 +457,21 @@ export default function Skills() {
               </div>
 
               {/* Bottom Rolling System Log */}
-              <div className="border-t border-white/10 pt-2.5 text-[8px] text-gray-500 flex flex-col gap-0.5 select-none z-10 relative">
-                <div className="flex justify-between text-gray-600 font-bold uppercase tracking-wider">
-                  <span>LOG: SYSTEM_DESTRUCT_BYPASS</span>
-                  <span>STATUS: SECURE</span>
+              <div className="bg-black/50 border-t border-[#00f0ff]/20 p-2.5 text-[8px] text-slate-500 flex flex-col gap-0.5 select-none z-10 relative">
+                <div className="flex justify-between text-slate-500 font-bold uppercase tracking-widest">
+                  <span>LOG: NODE_STATUS</span>
+                  <span>SECURE</span>
                 </div>
-                <div className="text-cyan-500/70 font-semibold truncate uppercase">
+                <div className="text-[#00f0ff]/80 font-semibold truncate uppercase tracking-wide">
                   {hoveredSkill 
                     ? `[ TSC: 100% | LATENCY: ${hoveredSkill.latency} | PKT: OK ]`
-                    : '[ STANDBY // DECK_MONITOR_ON_STANDBY_MODE ]'
+                    : '[ STANDBY // DECK_MONITOR_READY ]'
                   }
                 </div>
               </div>
-
             </div>
+            
           </div>
-
         </div>
       </FadeIn>
     </div>

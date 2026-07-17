@@ -62,9 +62,9 @@ const dockItems = [
 // Framer Motion Animation Variants for Page Load Stagger
 const containerVariants = {
   hidden: { opacity: 0, y: 60, scale: 0.95 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
+  visible: {
+    opacity: 1,
+    y: 0,
     scale: 1,
     transition: {
       type: "spring" as const,
@@ -78,9 +78,9 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.7 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
+  visible: {
+    opacity: 1,
+    y: 0,
     scale: 1,
     transition: { type: "spring" as const, stiffness: 140, damping: 12 }
   }
@@ -116,6 +116,7 @@ function DockIcon({
 
   // Dynamic width and height of the icon button container (scales from 40px to 56px)
   const widthTransform = useTransform(distance, [-150, 0, 150], [40, 56, 40])
+  
   // Dynamic internal SVG size (scales from 16px to 22px)
   const iconSizeTransform = useTransform(distance, [-150, 0, 150], [16, 22, 16])
 
@@ -264,6 +265,7 @@ function DockIcon({
 
 export default function FloatingDock() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const mouseX = useMotionValue(Infinity)
   const pathname = usePathname()
 
@@ -273,28 +275,83 @@ export default function FloatingDock() {
   }
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex justify-center w-full max-w-fit px-4 pointer-events-none">
-      <motion.div 
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        onMouseMove={(e) => mouseX.set(e.clientX)}
-        onMouseLeave={() => mouseX.set(Infinity)}
-        className="glass-panel px-3.5 rounded-2xl flex items-center gap-3 bg-black/60 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] pointer-events-auto h-16"
-      >
-        {dockItems.map((item, idx) => (
-          <DockIcon 
-            key={item.label}
-            mouseX={mouseX}
-            label={item.label}
-            href={item.href}
-            icon={item.icon}
-            hoveredIndex={hoveredIndex}
-            idx={idx}
-            setHoveredIndex={setHoveredIndex}
-          />
-        ))}
-      </motion.div>
-    </div>
+    <>
+      {/* --- DESKTOP DOCK --- */}
+      <div className="hidden md:flex fixed bottom-6 left-1/2 -translate-x-1/2 z-50 justify-center w-full max-w-fit px-4 pointer-events-none">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          onMouseMove={(e) => mouseX.set(e.clientX)}
+          onMouseLeave={() => mouseX.set(Infinity)}
+          className="glass-panel px-3.5 rounded-2xl flex items-center gap-3 bg-black/60 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] pointer-events-auto h-16"
+        >
+          {dockItems.map((item, idx) => (
+            <DockIcon 
+              key={item.label}
+              mouseX={mouseX}
+              label={item.label}
+              href={item.href}
+              icon={item.icon}
+              hoveredIndex={hoveredIndex}
+              idx={idx}
+              setHoveredIndex={setHoveredIndex}
+            />
+          ))}
+        </motion.div>
+      </div>
+
+      {/* --- MOBILE DOCK (HAMBURGER MENU) --- */}
+      <div className="md:hidden fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              className="glass-panel mb-4 rounded-full bg-black/80 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] flex flex-col gap-2 p-2"
+            >
+              {dockItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  title={item.label}
+                  className="flex items-center justify-center p-3 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors"
+                >
+                  <div className="[&>svg]:w-5 [&>svg]:h-5">
+                    {item.icon}
+                  </div>
+                </a>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <motion.button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          whileTap={{ scale: 0.9 }}
+          className="glass-panel w-14 h-14 rounded-full flex items-center justify-center bg-black/80 backdrop-blur-lg border border-white/10 text-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)] hover:border-cyan-500/50 transition-all z-50"
+        >
+          {isMobileMenuOpen ? (
+            // Close (X) Icon
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          ) : (
+            // Hamburger (3 Line) Icon
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          )}
+        </motion.button>
+      </div>
+    </>
   )
 }
