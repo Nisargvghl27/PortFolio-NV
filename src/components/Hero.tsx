@@ -8,7 +8,7 @@ function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
   const [displayText, setDisplayText] = useState('');
 
   useEffect(() => {
-    const CHARS = '!<>-_\\/[]{}—=+*^?#';
+    const CHARS = '!ABCDEFGHIJKLMNOPQRSTUVWXYZ<>-_\\/[ABCDEFGHIJKLMNOPQRSTUVWXYZ]{}—=+*^?#';
     let frame = 0;
     let interval: NodeJS.Timeout;
 
@@ -45,18 +45,25 @@ function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
 }
 
 // --- CYBER BUTTON COMPONENT ---
-function CyberButton({ children, primary = false, onClick }: { children: React.ReactNode; primary?: boolean; onClick?: () => void }) {
-  return (
-    <motion.button
-      whileHover="hover"
-      whileTap="tap"
-      onClick={onClick}
-      suppressHydrationWarning
-      className={`relative group px-6 py-3 md:px-8 md:py-4 font-mono text-xs md:text-sm font-bold tracking-widest uppercase overflow-hidden transition-colors ${primary
-          ? 'text-black bg-[#00f0ff] shadow-[0_0_15px_rgba(0,240,255,0.4)] hover:shadow-[0_0_25px_rgba(0,240,255,0.6)]'
-          : 'text-[#00f0ff] bg-black/40 border border-[#00f0ff]/50 hover:bg-[#00f0ff]/10 backdrop-blur-sm'
-        }`}
-    >
+function CyberButton({ 
+  children, 
+  primary = false, 
+  onClick, 
+  href 
+}: { 
+  children: React.ReactNode; 
+  primary?: boolean; 
+  onClick?: () => void;
+  href?: string;
+}) {
+  const baseClasses = `relative group px-6 py-3 md:px-8 md:py-4 font-mono text-xs md:text-sm font-bold tracking-widest uppercase overflow-hidden transition-colors ${
+    primary
+      ? 'text-black bg-[#00f0ff] shadow-[0_0_15px_rgba(0,240,255,0.4)] hover:shadow-[0_0_25px_rgba(0,240,255,0.6)]'
+      : 'text-[#00f0ff] bg-black/40 border border-[#00f0ff]/50 hover:bg-[#00f0ff]/10 backdrop-blur-sm'
+  }`;
+
+  const innerContent = (
+    <>
       {/* Corner targeting brackets that appear on hover */}
       <span className={`absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-[#00f0ff]'} opacity-0 group-hover:opacity-100`} />
       <span className={`absolute top-1 right-1 w-2 h-2 border-t-2 border-r-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-[#00f0ff]'} opacity-0 group-hover:opacity-100`} />
@@ -69,8 +76,7 @@ function CyberButton({ children, primary = false, onClick }: { children: React.R
           hover: { x: ['-150%', '250%'] }
         }}
         transition={{ duration: 0.5, ease: 'easeInOut' }}
-        className={`absolute inset-0 w-3/4 h-full -skew-x-12 z-0 ${primary ? 'bg-white/40' : 'bg-[#00f0ff]/20'
-          }`}
+        className={`absolute inset-0 w-3/4 h-full -skew-x-12 z-0 ${primary ? 'bg-white/40' : 'bg-[#00f0ff]/20'}`}
         style={{ left: '-150%' }}
       />
 
@@ -99,8 +105,37 @@ function CyberButton({ children, primary = false, onClick }: { children: React.R
           className="inline-block w-2 h-3.5 bg-current translate-y-[2px]"
         />
       </span>
+    </>
+  );
+
+  // Render an Anchor tag if an href is provided
+  if (href) {
+    return (
+      <motion.a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        whileHover="hover"
+        whileTap="tap"
+        className={baseClasses}
+      >
+        {innerContent}
+      </motion.a>
+    );
+  }
+
+  // Otherwise, render a standard Button
+  return (
+    <motion.button
+      whileHover="hover"
+      whileTap="tap"
+      onClick={onClick}
+      suppressHydrationWarning
+      className={baseClasses}
+    >
+      {innerContent}
     </motion.button>
-  )
+  );
 }
 
 // --- MAIN HERO COMPONENT ---
@@ -222,7 +257,8 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAADCAYAAABS3WWCAAAAEUlEQVQImWNgYGD4z8DAwMgAAz8B/80B3P8AAAAASUVORK5CYII=')] opacity-30 mix-blend-overlay" />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="lg:col-span-7 flex flex-col items-start text-left">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="lg:col-span-7 flex flex-col items-start text-left">
         <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
           <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00f0ff]/5 border border-[#00f0ff]/40 shadow-[0_0_10px_rgba(0,240,255,0.2)]">
             <span className="text-[10px] text-[#00f0ff] font-mono uppercase tracking-[0.2em] font-bold flex items-center gap-2">
@@ -272,7 +308,8 @@ export default function Hero() {
         </motion.p>
 
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto font-mono text-xs sm:text-sm font-bold uppercase tracking-widest">
-          <CyberButton primary={true} onClick={() => scrollToSection('resume')}>
+          {/* UPDATED: Passing `href` instead of `onClick` automatically renders an <a> tag! */}
+          <CyberButton primary={true} href="/resume.pdf">
             <ScrambleText text="[ DOWNLOAD_RESUME ]" delay={1100} />
           </CyberButton>
 
