@@ -82,7 +82,7 @@ export default function HeroCore() {
         when: "beforeChildren"
       }
     }
-  }
+  } as const
 
   const itemVariants = {
     hidden: { opacity: 0, y: 15 },
@@ -91,7 +91,7 @@ export default function HeroCore() {
       y: 0, 
       transition: { duration: 0.4, ease: "easeOut" } 
     }
-  }
+  } as const
 
   return (
     <section
