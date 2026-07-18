@@ -31,11 +31,25 @@ model Certificate {
   createdAt DateTime @default(now())
 }
 
+model Skill {
+  id       String   @id @default(uuid())
+  name     String
+  category String
+  color    String
+  level    String
+  latency  String
+  status   String
+  desc     String
+  order    Int      @default(0)
+}
+
 model Message {
   id        String   @id @default(uuid())
   name      String
   email     String
   message   String
+  isRead    Boolean  @default(false)
+  isReplied Boolean  @default(false)
   createdAt DateTime @default(now())
 }
 
