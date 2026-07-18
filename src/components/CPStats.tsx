@@ -1,6 +1,4 @@
-'use client'
-
-import { useEffect, useState } from 'react'
+// Pure display component — data is pre-fetched server-side in page.tsx
 
 interface CodeforcesStats {
   handle: string
@@ -10,34 +8,12 @@ interface CodeforcesStats {
   maxRank: string
 }
 
-export default function CPStats({ handle }: { handle: string }) {
-  const [stats, setStats] = useState<CodeforcesStats | null>(null)
-  const [loading, setLoading] = useState(true)
+interface CPStatsProps {
+  stats: CodeforcesStats | null
+  handle: string
+}
 
-  useEffect(() => {
-    async function fetchCFStats() {
-      try {
-        const res = await fetch(`https://codeforces.com/api/user.info?handles=${handle}`)
-        const data = await res.json()
-        if (data.status === 'OK' && data.result.length > 0) {
-          const user = data.result[0]
-          setStats({
-            handle: user.handle,
-            rating: user.rating || 0,
-            maxRating: user.maxRating || 0,
-            rank: user.rank || 'unranked',
-            maxRank: user.maxRank || 'unranked'
-          })
-        }
-      } catch (err) {
-        console.error('Failed fetching Codeforces telemetry:', err)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchCFStats()
-  }, [handle])
-
+export default function CPStats({ stats, handle }: CPStatsProps) {
   return (
     <div className="glass-panel relative overflow-hidden flex flex-col justify-between font-mono rounded-md min-h-[220px]">
       {/* Terminal Header Bar */}
@@ -53,18 +29,14 @@ export default function CPStats({ handle }: { handle: string }) {
       </div>
 
       <div className="p-6 flex-1 flex flex-col justify-center relative z-10">
-        {loading ? (
-          <div className="text-xs text-[#00f0ff]/60 animate-pulse tracking-widest uppercase">
-            &gt; Syncing_Codeforces_Telemetry...
-          </div>
-        ) : stats ? (
+        {stats ? (
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-[#00f0ff]/10 pb-2">
               <div>
                 <span className="text-[9px] text-slate-500 block tracking-widest uppercase">&gt; CF_HANDLE</span>
-                <a 
-                  href={`https://codeforces.com/profile/${stats.handle}`} 
-                  target="_blank" 
+                <a
+                  href={`https://codeforces.com/profile/${stats.handle}`}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-white text-sm font-bold tracking-wide hover:text-[#00f0ff] hover:underline transition-colors cursor-pointer"
                 >
@@ -104,11 +76,11 @@ export default function CPStats({ handle }: { handle: string }) {
       <div className="bg-black/30 border-t border-[#00f0ff]/10 px-4 py-2 text-[8px] text-slate-500 uppercase tracking-widest flex items-center justify-between">
         <span>PROT: HTTP_CF_API</span>
         <div className="flex items-center gap-3">
-          <span className="text-[#00f0ff]/60 font-bold hidden sm:inline-block">[ FREQ: Realtime ]</span>
+          <span className="text-[#00f0ff]/60 font-bold hidden sm:inline-block">[ FREQ: 1hr Cache ]</span>
           {stats && (
-            <a 
-              href={`https://codeforces.com/profile/${stats.handle}`} 
-              target="_blank" 
+            <a
+              href={`https://codeforces.com/profile/${stats.handle}`}
+              target="_blank"
               rel="noopener noreferrer"
               className="text-[#00f0ff] hover:text-white hover:bg-[#00f0ff]/20 px-2 py-1 border border-transparent hover:border-[#00f0ff]/50 transition-all cursor-pointer"
             >

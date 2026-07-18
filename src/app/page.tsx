@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import type { Project } from '@prisma/client'
 import Hero from '@/components/Hero'
 import ContactForm from '@/components/ContactForm'
 import FadeIn from '@/components/FadeIn'
@@ -8,11 +9,84 @@ import Education from '@/components/Education'
 import Skills from '@/components/Skills'
 import Certificates from '@/components/Certificates'
 import GitHubCalendar from '@/components/GitHubCalendar'
-import ProjectCard from '@/components/ProjectCard'
 import ScanlineDivider from '@/components/ScanlineDivider'
+import StickyProjects from '@/components/StickyProjects'
+
+// ─── Type definitions ────────────────────────────────────────────────────────
+
+interface CodeforcesStats {
+  handle: string
+  rating: number
+  maxRating: number
+  rank: string
+  maxRank: string
+}
+
+interface LeetCodeData {
+  totalSolved: number
+  easySolved: number
+  mediumSolved: number
+  hardSolved: number
+  ranking: number
+}
+
+// ─── Server-side data fetchers (cached for 1 hour at the edge) ───────────────
+
+async function fetchCodeforcesStats(handle: string): Promise<CodeforcesStats | null> {
+  try {
+    const res = await fetch(
+      `https://codeforces.com/api/user.info?handles=${handle}`,
+      { next: { revalidate: 3600 } } // cache for 1 hour
+    )
+    const data = await res.json()
+    if (data.status === 'OK' && data.result?.length > 0) {
+      const user = data.result[0]
+      return {
+        handle: user.handle,
+        rating: user.rating || 0,
+        maxRating: user.maxRating || 0,
+        rank: user.rank || 'unranked',
+        maxRank: user.maxRank || 'unranked',
+      }
+    }
+  } catch (err) {
+    console.error('Failed fetching Codeforces stats:', err)
+  }
+  return null
+}
+
+async function fetchLeetCodeStats(username: string): Promise<LeetCodeData | null> {
+  try {
+    const res = await fetch(
+      `https://leetcode-api-faisalshohag.vercel.app/${username}`,
+      { next: { revalidate: 3600 } } // cache for 1 hour
+    )
+    const data = await res.json()
+    if (data) {
+      return {
+        totalSolved: data.totalSolved || 0,
+        easySolved: data.easySolved || 0,
+        mediumSolved: data.mediumSolved || 0,
+        hardSolved: data.hardSolved || 0,
+        ranking: data.ranking || 0,
+      }
+    }
+  } catch (err) {
+    console.error('Failed fetching LeetCode stats:', err)
+  }
+  return null
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
 
 export default async function HomePage() {
-  let projects: any[] = []
+  let projects: Project[] = []
+
+  // All three fetches run in parallel — Prisma + Codeforces + LeetCode
+  const [cfStats, lcStats] = await Promise.all([
+    fetchCodeforcesStats('nisargvghl27'),
+    fetchLeetCodeStats('nisargvghl27'),
+  ])
 
   try {
     projects = await prisma.project.findMany({
@@ -30,29 +104,16 @@ export default async function HomePage() {
       </div>
 
       {/* Main Content Area - unified background handled globally */}
-      <main className="max-w-6xl mx-auto px-6 space-y-32 overflow-hidden pb-32">
+      <main className="max-w-6xl mx-auto px-6 space-y-32 overflow-clip pb-32">
 
         {/* Matrix Project Cards */}
-        <section id="systems" className="pt-20">
-          <FadeIn delay={0.2} direction="left">
-            <div className="flex items-center gap-4 mb-10">
-              <h2 className="text-2xl font-mono font-bold text-white uppercase tracking-widest"><span className="text-[#00f0ff]">01.</span> Deployed_Systems</h2>
-              <ScanlineDivider />
-            </div>
-          </FadeIn>
-
+        <section id="systems" className="relative">
           {projects.length === 0 ? (
-            <FadeIn delay={0.3} direction="up">
-              <p className="text-slate-500 font-mono italic">  No systems initialized yet...</p>
-            </FadeIn>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {projects.map((project, index) => (
-                <FadeIn key={project.id} delay={0.2 + (index * 0.1)} direction="up">
-                  <ProjectCard project={project} />
-                </FadeIn>
-              ))}
+            <div className="pt-20">
+              <p className="text-slate-500 font-mono italic max-w-6xl mx-auto px-6">  No systems initialized yet...</p>
             </div>
+          ) : (
+            <StickyProjects projects={projects} />
           )}
         </section>
 
@@ -65,13 +126,14 @@ export default async function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-              <CPStats handle="nisargvghl27" />
-              <LeetCodeStats username="nisargvghl27" />
+              <CPStats stats={cfStats} handle="nisargvghl27" />
+              <LeetCodeStats stats={lcStats} username="nisargvghl27" />
             </div>
 
             <GitHubCalendar />
           </FadeIn>
         </section>
+
 
         {/* Education Section */}
         <section id="academic">

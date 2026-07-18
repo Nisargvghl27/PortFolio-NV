@@ -118,7 +118,7 @@ function DockIcon({
   const widthTransform = useTransform(distance, [-150, 0, 150], [40, 56, 40])
   
   // Dynamic internal SVG size (scales from 16px to 22px)
-  const iconSizeTransform = useTransform(distance, [-150, 0, 150], [16, 22, 16])
+  const iconSizeTransform = useTransform(distance, [-150, 0, 150], [18, 24, 18])
 
   const width = useSpring(widthTransform, {
     mass: 0.1,
@@ -139,13 +139,13 @@ function DockIcon({
       const x = e.clientX - bounds.left - bounds.width / 2
       const y = e.clientY - bounds.top - bounds.height / 2
       // Move by 35% towards cursor position
-      setMagneticPosition({ x: x * 0.35, y: y * 0.35 })
+      setMagneticPosition({ x: x * 0.6, y: y * 0.6 })
     }
   }
 
   const handleMouseLeave = () => {
     setHoveredIndex(null)
-    setMagneticPosition({ x: 0, y: 0 })
+    setMagneticPosition({ x: 0.5, y: 0.5 })
   }
 
   // Bounces the icon when clicked + fires neon ripple wave
@@ -198,7 +198,7 @@ function DockIcon({
                 } 
               } 
             : hoveredIndex === idx 
-              ? { x: magneticPosition.x, y: magneticPosition.y - 6 } 
+              ? { x: magneticPosition.x, y: magneticPosition.y - 6  } 
               : { x: 0, y: 0 }
         }
         whileHover={{ 

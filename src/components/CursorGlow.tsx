@@ -5,19 +5,26 @@ import { useState, useEffect } from 'react'
 export default function CursorGlow() {
   const [position, setPosition] = useState({ x: -200, y: -200 })
   const [isMounted, setIsMounted] = useState(false)
+  const [isTouch, setIsTouch] = useState(false)
 
   useEffect(() => {
+    // Skip on touch/mobile devices — no mouse cursor exists
+    if (navigator.maxTouchPoints > 0 || window.matchMedia('(hover: none)').matches) {
+      setIsTouch(true)
+      return
+    }
+
     setIsMounted(true)
     const updatePosition = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY })
     }
 
     window.addEventListener('mousemove', updatePosition)
-
     return () => window.removeEventListener('mousemove', updatePosition)
   }, [])
 
-  if (!isMounted) return null
+  // Don't render on touch devices or before mount
+  if (isTouch || !isMounted) return null
 
   return (
     <div

@@ -1,10 +1,11 @@
 'use client'
 
 import { updateProject } from '@/app/actions/project'
+import type { Project } from '@prisma/client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-export default function EditProjectForm({ project }: { project: any }) {
+export default function EditProjectForm({ project }: { project: Project }) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const router = useRouter()
 

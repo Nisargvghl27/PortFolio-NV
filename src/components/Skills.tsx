@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FadeIn from './FadeIn'
 
@@ -232,11 +232,13 @@ const skillsData: Skill[] = [
 
 export default function Skills() {
   const [activeCategory, setActiveCategory] = useState('all')
-  const [hoveredSkill, setHoveredSkill] = useState<Skill | null>(null)
 
-  const filteredSkills = activeCategory === 'all'
-    ? skillsData
-    : skillsData.filter(skill => skill.category === activeCategory)
+  // Memoized filtered results to prevent re-filtering on non-relevant re-renders
+  const filteredSkills = useMemo(() => {
+    return activeCategory === 'all'
+      ? skillsData
+      : skillsData.filter(skill => skill.category === activeCategory)
+  }, [activeCategory])
 
   return (
     <div className="font-mono w-full max-w-6xl mx-auto relative px-4">
@@ -270,11 +272,11 @@ export default function Skills() {
             })}
           </div>
 
-          {/* 2. Main Deck Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          {/* 2. Main Deck */}
+          <div className="w-full">
             
-            {/* Left Card: Skill tag deck */}
-            <div className="lg:col-span-2 relative glass-panel p-8 flex flex-col justify-center min-h-[340px]">
+            {/* Skill tag deck */}
+            <div className="relative glass-panel p-8 flex flex-col justify-center min-h-[340px]">
               {/* Background grid matching Hero */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#00f0ff08_1px,transparent_1px),linear-gradient(to_bottom,#00f0ff08_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none rounded-md" />
               
@@ -290,7 +292,7 @@ export default function Skills() {
               {/* Centered flow of tags */}
               <motion.div 
                 layout
-                className="flex flex-wrap gap-4 justify-center items-center max-w-3xl mx-auto relative z-10"
+                className="flex flex-wrap gap-4 justify-center items-center max-w-4xl mx-auto relative z-10"
               >
                 <AnimatePresence mode="popLayout">
                   {filteredSkills.map((skill) => (
@@ -301,8 +303,6 @@ export default function Skills() {
                       exit={{ opacity: 0, scale: 0.85, y: -10 }}
                       transition={{ type: 'spring', stiffness: 450, damping: 28 }}
                       key={skill.name}
-                      onMouseEnter={() => setHoveredSkill(skill)}
-                      onMouseLeave={() => setHoveredSkill(null)}
                       className={`group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 text-slate-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color}`}
                     >
                       <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
@@ -320,155 +320,6 @@ export default function Skills() {
                   ))}
                 </AnimatePresence>
               </motion.div>
-            </div>
-
-            {/* Right Card: Live Diagnostics Deck (Takes 1 column) */}
-            <div className="lg:col-span-1 relative glass-panel flex flex-col justify-between overflow-hidden min-h-[340px] p-0">
-              
-              {/* Terminal Header */}
-              <div className="bg-black/50 border-b border-[#00f0ff]/20 px-4 py-2.5 flex items-center justify-between z-20 relative">
-                <div className="flex gap-2 items-center">
-                  <div className="w-2 h-2 bg-[#00f0ff] animate-ping rounded-full opacity-75" />
-                  <div className="w-2 h-2 bg-[#00f0ff] rounded-full absolute" />
-                </div>
-                <div className="text-[10px] text-[#00f0ff]/70 font-semibold tracking-widest uppercase">
-                  sys_diag_v3.2
-                </div>
-                <div className="w-4" />
-              </div>
-
-              {/* Scanline Sweep Overlay */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.06)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_5s_ease-in-out_infinite] z-0" />
-              
-              <div className="relative z-10 p-5 flex-1 flex flex-col justify-center">
-                <AnimatePresence mode="wait">
-                  {hoveredSkill ? (
-                    <motion.div
-                      key={hoveredSkill.name}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.18 }}
-                      className="space-y-4 text-xs text-slate-400 font-mono"
-                    >
-                      {/* Brand Label Accent Header */}
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; TECH_MODULE</span>
-                          <div className="text-sm font-bold text-white tracking-widest uppercase">{hoveredSkill.name}</div>
-                        </div>
-                        <span className="text-[9px] text-[#00f0ff] px-2 py-0.5 border border-[#00f0ff]/30 bg-[#00f0ff]/10 select-none tracking-widest">[ ACTIVE ]</span>
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-2.5">
-                        <div>
-                          <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; CLASSIFY</span>
-                          <div className="text-[#00f0ff] font-semibold text-[11px] truncate tracking-wide">{hoveredSkill.category}</div>
-                        </div>
-                        <div>
-                          <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; LATENCY</span>
-                          <div className="text-emerald-400 text-[11px] tracking-wide">{hoveredSkill.latency}</div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; MEMORY_ALLOC</span>
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1 bg-[#050505] h-2 rounded-sm overflow-hidden border border-[#00f0ff]/20">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: hoveredSkill.level }}
-                              transition={{ duration: 0.4, ease: 'easeOut' }}
-                              className="bg-gradient-to-r from-[#00f0ff]/50 to-[#00f0ff] h-full shadow-[0_0_8px_rgba(0,240,255,0.4)]"
-                            />
-                          </div>
-                          <span className="text-[10px] text-[#00f0ff] font-bold">{hoveredSkill.level}</span>
-                        </div>
-                      </div>
-
-                      {/* Live SVG Signal Pulse Animation */}
-                      <div className="relative h-6 w-full bg-[#00f0ff]/5 border border-[#00f0ff]/20 rounded-sm overflow-hidden flex items-center justify-center">
-                        <svg className="absolute inset-0 w-full h-full text-[#00f0ff]/40" viewBox="0 0 100 20" preserveAspectRatio="none">
-                          <motion.path
-                            d="M0 10 Q 25 10, 50 10 T 100 10"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            animate={{
-                              d: [
-                                "M0 10 Q 15 2, 30 10 T 60 10 T 80 18 T 100 10",
-                                "M0 10 Q 15 18, 30 10 T 60 10 T 80 2 T 100 10",
-                                "M0 10 Q 15 2, 30 10 T 60 10 T 80 18 T 100 10"
-                              ]
-                            }}
-                            transition={{
-                              repeat: Infinity,
-                              duration: 1.2,
-                              ease: "linear"
-                            }}
-                          />
-                        </svg>
-                        <span className="relative text-[8px] font-bold text-[#00f0ff] tracking-widest z-10 animate-pulse select-none">
-                          TELEMETRY STREAMING LIVE
-                        </span>
-                      </div>
-
-                      <div className="border-t border-[#00f0ff]/20 pt-2 mt-1.5">
-                        <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">&gt; DESCR_DATA</span>
-                        <p className="text-[10px] leading-relaxed text-slate-400 italic">
-                          {hoveredSkill.desc}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="standby"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="py-6 flex flex-col items-center justify-center text-center font-mono space-y-4"
-                    >
-                      {/* Rotating concentric radar grid */}
-                      <div className="relative w-28 h-28 mx-auto flex items-center justify-center border border-[#00f0ff]/20 rounded-full overflow-hidden bg-black/40 shadow-[0_0_15px_rgba(0,240,255,0.02)]">
-                        {/* Sweeping line */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#00f0ff]/15 to-transparent rounded-full animate-[spin_3s_linear_infinite]" />
-                        {/* Crosshairs */}
-                        <div className="absolute w-full h-[1px] bg-[#00f0ff]/20" />
-                        <div className="absolute h-full w-[1px] bg-[#00f0ff]/20" />
-                        {/* Concentric rings */}
-                        <div className="absolute w-20 h-20 border border-[#00f0ff]/10 rounded-full" />
-                        <div className="absolute w-10 h-10 border border-[#00f0ff]/20 rounded-full" />
-                        {/* Pulsing core node */}
-                        <span className="w-2 h-2 bg-[#00f0ff] rounded-full animate-ping absolute" />
-                        <span className="w-2 h-2 bg-[#00f0ff] rounded-full shadow-[0_0_8px_rgba(0,240,255,0.8)]" />
-                      </div>
-                      
-                      <div className="space-y-1 px-2 select-none">
-                        <div className="uppercase tracking-widest font-bold text-[#00f0ff]/60 text-[9px] animate-pulse">
-                          [ AWAITING_TELEMETRY ]
-                        </div>
-                        <p className="text-[9px] text-slate-500 leading-normal max-w-[200px] mx-auto uppercase tracking-wide">
-                          Hover over any tech module to establish uplink.
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Bottom Rolling System Log */}
-              <div className="bg-black/50 border-t border-[#00f0ff]/20 p-2.5 text-[8px] text-slate-500 flex flex-col gap-0.5 select-none z-10 relative">
-                <div className="flex justify-between text-slate-500 font-bold uppercase tracking-widest">
-                  <span>LOG: NODE_STATUS</span>
-                  <span>SECURE</span>
-                </div>
-                <div className="text-[#00f0ff]/80 font-semibold truncate uppercase tracking-wide">
-                  {hoveredSkill 
-                    ? `[ TSC: 100% | LATENCY: ${hoveredSkill.latency} | PKT: OK ]`
-                    : '[ STANDBY // DECK_MONITOR_READY ]'
-                  }
-                </div>
-              </div>
             </div>
             
           </div>

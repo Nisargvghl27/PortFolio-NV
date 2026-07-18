@@ -4,9 +4,10 @@ import { Analytics } from '@vercel/analytics/react'
 import CursorGlow from '@/components/CursorGlow'
 import ScrollProgress from '@/components/ScrollProgress'
 import SectionNav from '@/components/SectionNav'
-import MatrixRain from '@/components/MatrixRain'
+import MatrixRainWrapper from '@/components/MatrixRainWrapper'
 import IntroScreen from '@/components/IntroScreen'
 import FloatingDock from '@/components/FloatingDock'
+
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://nisargvaghela.dev'),
@@ -50,8 +51,8 @@ export default function RootLayout({
         {/* Floating Table of Contents / Progress Pill */}
         <SectionNav />
 
-        {/* Secret Matrix Easter Egg */}
-        <MatrixRain />
+        {/* Secret Matrix Easter Egg — lazy loaded via client wrapper */}
+        <MatrixRainWrapper />
 
         {/* Floating Dock Social Panel */}
         <FloatingDock />
