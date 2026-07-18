@@ -278,7 +278,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                         </div>
 
                         {/* Progress Indicator */}
-                        <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex gap-3 z-20">
+                        <div className="absolute bottom-6 md:bottom-20 left-0 right-0 mx-auto max-w-7xl px-6 flex gap-3 z-20 justify-start">
                             {projects.map((_, i) => (
                                 <div
                                     key={i}
