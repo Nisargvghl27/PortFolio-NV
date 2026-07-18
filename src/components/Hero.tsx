@@ -260,7 +260,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAADCAYAAABS3WWCAAAAEUlEQVQImWNgYGD4z8DAwMgAAz8B/80B3P8AAAAASUVORK5CYII=')] opacity-30 mix-blend-overlay" />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center pt-24 pb-12 md:pt-0 md:pb-0">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center pt-28 pb-12 md:pt-0 md:pb-0">
         <motion.div variants={containerVariants} initial="hidden" animate="visible" className="lg:col-span-7 flex flex-col items-start text-left">
           
           <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
