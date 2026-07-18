@@ -53,4 +53,5 @@ CREATE TABLE "Certificate" (
 
     CONSTRAINT "Certificate_pkey" PRIMARY KEY ("id")
 );
+-- Trigger Vercel Build
 */
