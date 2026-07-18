@@ -32,7 +32,7 @@ export default function Education() {
       <div className="relative border-l border-[#00f0ff]/30 ml-3 pl-8 py-2 space-y-8">
         {educationData.map((item, index) => (
           <FadeIn key={item.id} delay={0.1 + index * 0.15} direction="right">
-            <div className="relative group bg-[#0a0f12]/80 backdrop-blur-sm border border-[#00f0ff]/20 hover:border-[#00f0ff]/60 p-6 rounded-md transition-all duration-300 shadow-[0_0_20px_rgba(0,240,255,0.02)] hover:shadow-[0_0_20px_rgba(0,240,255,0.1)]">
+            <div className="relative group bg-[#0a0f12]/80 backdrop-blur-sm border border-[#00f0ff]/20 hover:border-[#00f0ff]/60 p-4 sm:p-6 rounded-md transition-all duration-300 shadow-[0_0_20px_rgba(0,240,255,0.02)] hover:shadow-[0_0_20px_rgba(0,240,255,0.1)]">
               
               {/* Glowing Timeline Dot */}
               <div className="absolute w-3 h-3 bg-[#00f0ff] -left-[38.5px] top-6 shadow-[0_0_12px_#00f0ff] group-hover:scale-125 transition-transform duration-300">

@@ -48,7 +48,7 @@ export default function CPStats({ stats, handle }: CPStatsProps) {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 xs:grid-cols-2 gap-4">
               <div>
                 <span className="text-[9px] text-slate-500 block tracking-widest uppercase">&gt; CURR_RATING</span>
                 <div className="text-2xl font-black text-[#00f0ff] tracking-tight glow-text mt-0.5">

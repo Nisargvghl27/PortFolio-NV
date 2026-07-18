@@ -37,9 +37,11 @@ export default function LeetCodeStats({ stats, username }: LeetCodeStatsProps) {
 
       <div className="p-6 flex-1 flex flex-col justify-center relative z-10">
         {stats ? (
-          <div className="grid grid-cols-5 gap-4 items-center">
+          // FIX: Changed from rigid grid to flex-col on mobile, grid on small screens and up
+          <div className="flex flex-col sm:grid sm:grid-cols-5 gap-4 sm:items-center">
             {/* Total Block */}
-            <div className="col-span-2 border-r border-[#00f0ff]/20 pr-2">
+            {/* FIX: Changed border-r to border-b on mobile so it divides horizontally */}
+            <div className="sm:col-span-2 border-b sm:border-b-0 sm:border-r border-[#00f0ff]/20 pb-3 sm:pb-0 sm:pr-2 mb-2 sm:mb-0">
               <span className="text-[9px] text-slate-500 block tracking-widest uppercase">&gt; TOTAL_SOLVED</span>
               <div className="text-3xl font-black text-white tracking-tighter mt-1 glow-text">
                 {stats.totalSolved}
@@ -50,7 +52,7 @@ export default function LeetCodeStats({ stats, username }: LeetCodeStatsProps) {
             </div>
 
             {/* Split Arrays */}
-            <div className="col-span-3 space-y-2.5 pl-2 text-[11px]">
+            <div className="sm:col-span-3 space-y-2.5 sm:pl-2 text-[11px]">
               <div>
                 <div className="flex justify-between text-emerald-400 font-bold uppercase text-[9px] mb-0.5 tracking-wider">
                   <span>EASY</span>
@@ -60,7 +62,6 @@ export default function LeetCodeStats({ stats, username }: LeetCodeStatsProps) {
                   <div className="h-full bg-emerald-400 shadow-[0_0_8px_#34d399]" style={{ width: `${Math.min((stats.easySolved / stats.totalSolved) * 100 || 0, 100)}%` }} />
                 </div>
               </div>
-
               <div>
                 <div className="flex justify-between text-amber-400 font-bold uppercase text-[9px] mb-0.5 tracking-wider">
                   <span>MEDIUM</span>
@@ -70,7 +71,6 @@ export default function LeetCodeStats({ stats, username }: LeetCodeStatsProps) {
                   <div className="h-full bg-amber-400 shadow-[0_0_8px_#fbbf24]" style={{ width: `${Math.min((stats.mediumSolved / stats.totalSolved) * 100 || 0, 100)}%` }} />
                 </div>
               </div>
-
               <div>
                 <div className="flex justify-between text-rose-500 font-bold uppercase text-[9px] mb-0.5 tracking-wider">
                   <span>HARD</span>

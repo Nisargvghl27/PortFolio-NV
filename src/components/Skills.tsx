@@ -276,7 +276,7 @@ export default function Skills() {
           <div className="w-full">
             
             {/* Skill tag deck */}
-            <div className="relative glass-panel p-8 flex flex-col justify-center min-h-[340px]">
+            <div className="relative glass-panel p-4 sm:p-8 flex flex-col justify-center min-h-[340px]">
               {/* Background grid matching Hero */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#00f0ff08_1px,transparent_1px),linear-gradient(to_bottom,#00f0ff08_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none rounded-md" />
               

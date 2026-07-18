@@ -171,7 +171,8 @@ export default async function HomePage() {
 
         {/* Contact Form Section */}
         <FadeIn delay={0.2} direction="scale">
-          <section id="contact" className="glass-panel p-8 md:p-12 relative overflow-hidden">
+          {/* FIX: Reduced mobile padding from p-8 to p-6 */}
+          <section id="contact" className="glass-panel p-6 md:p-12 relative overflow-hidden">
             {/* Cyberpunk corner accents matching Hero Panel */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00f0ff] to-transparent opacity-50"></div>
             <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-[#00f0ff]/40"></div>
@@ -183,7 +184,8 @@ export default async function HomePage() {
                 {/* Left Column: Direct Info */}
                 <div className="space-y-6">
                   <div>
-                    <h2 className="text-3xl font-mono font-black mb-3 text-white uppercase tracking-tighter shadow-sm">
+                    {/* FIX: Scaled text down to text-2xl on mobile to prevent ugly line breaks */}
+                    <h2 className="text-2xl md:text-3xl font-mono font-black mb-3 text-white uppercase tracking-tighter shadow-sm break-words">
                       Initialize_<span className="text-[#00f0ff]">Connection</span>
                     </h2>
                     <p className="text-slate-400 font-mono text-sm leading-relaxed tracking-wide">
@@ -293,7 +295,7 @@ export default async function HomePage() {
                 </div>
 
                 {/* Right Column: Contact Form */}
-                <div className="bg-[#050505]/80 border border-[#00f0ff]/30 p-8 rounded-md backdrop-blur-md relative">
+                <div className="bg-[#050505]/80 border border-[#00f0ff]/30 p-5 md:p-8 rounded-md backdrop-blur-md relative">
                   <div className="absolute top-0 right-0 w-8 h-8 bg-[#00f0ff]/10 rounded-bl-full pointer-events-none"></div>
                   <div className="flex items-center gap-2 mb-6">
                     <span className="w-2 h-2 bg-[#00f0ff] animate-pulse"></span>
