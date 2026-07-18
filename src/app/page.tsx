@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import type { Project } from '@prisma/client'
+import type { Project, Certificate, Skill } from '@prisma/client'
 import Hero from '@/components/Hero'
 import ContactForm from '@/components/ContactForm'
 import FadeIn from '@/components/FadeIn'
@@ -12,8 +12,7 @@ import GitHubCalendar from '@/components/GitHubCalendar'
 import ScanlineDivider from '@/components/ScanlineDivider'
 import StickyProjects from '@/components/StickyProjects'
 
-// ─── Type definitions ────────────────────────────────────────────────────────
-
+// Type definitions
 interface CodeforcesStats {
   handle: string
   rating: number
@@ -30,8 +29,7 @@ interface LeetCodeData {
   ranking: number
 }
 
-// ─── Server-side data fetchers (cached for 1 hour at the edge) ───────────────
-
+// Server-side data fetchers (cached for 1 hour at the edge)
 async function fetchCodeforcesStats(handle: string): Promise<CodeforcesStats | null> {
   try {
     const res = await fetch(
@@ -39,6 +37,7 @@ async function fetchCodeforcesStats(handle: string): Promise<CodeforcesStats | n
       { next: { revalidate: 3600 } } // cache for 1 hour
     )
     const data = await res.json()
+
     if (data.status === 'OK' && data.result?.length > 0) {
       const user = data.result[0]
       return {
@@ -77,12 +76,13 @@ async function fetchLeetCodeStats(username: string): Promise<LeetCodeData | null
   return null
 }
 
-// ─── Page ────────────────────────────────────────────────────────────────────
-
+// Page
 export default async function HomePage() {
   let projects: Project[] = []
+  let certificates: Certificate[] = []
+  let skills: Skill[] = []
 
-  // All three fetches run in parallel — Prisma + Codeforces + LeetCode
+  // All fetches run in parallel: Prisma Projects + Prisma Certs + Codeforces + LeetCode
   const [cfStats, lcStats] = await Promise.all([
     fetchCodeforcesStats('nisargvghl27'),
     fetchLeetCodeStats('nisargvghl27'),
@@ -91,6 +91,18 @@ export default async function HomePage() {
   try {
     projects = await prisma.project.findMany({
       orderBy: { createdAt: 'desc' }
+    })
+    certificates = await prisma.certificate.findMany({
+      orderBy: [
+        { order: 'asc' },
+        { createdAt: 'desc' }
+      ]
+    })
+    skills = await prisma.skill.findMany({
+      orderBy: [
+        { order: 'asc' },
+        { name: 'asc' }
+      ]
     })
   } catch (error) {
     console.error("Database connection failed during build: ", error)
@@ -105,12 +117,12 @@ export default async function HomePage() {
 
       {/* Main Content Area - unified background handled globally */}
       <main className="max-w-6xl mx-auto px-6 space-y-32 overflow-clip pb-32">
-
+        
         {/* Matrix Project Cards */}
         <section id="systems" className="relative">
           {projects.length === 0 ? (
             <div className="pt-20">
-              <p className="text-slate-500 font-mono italic max-w-6xl mx-auto px-6">  No systems initialized yet...</p>
+              <p className="text-slate-500 font-mono italic max-w-6xl mx-auto px-6">{'// No systems initialized yet...'}</p>
             </div>
           ) : (
             <StickyProjects projects={projects} />
@@ -124,16 +136,13 @@ export default async function HomePage() {
               <h2 className="text-2xl font-mono font-bold text-white uppercase tracking-widest"><span className="text-[#00f0ff]">02.</span> Algorithmic_Metrics</h2>
               <ScanlineDivider />
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
               <CPStats stats={cfStats} handle="nisargvghl27" />
               <LeetCodeStats stats={lcStats} username="nisargvghl27" />
             </div>
-
             <GitHubCalendar />
           </FadeIn>
         </section>
-
 
         {/* Education Section */}
         <section id="academic">
@@ -142,7 +151,6 @@ export default async function HomePage() {
               <h2 className="text-2xl font-mono font-bold text-white uppercase tracking-widest"><span className="text-[#00f0ff]">03.</span> Academic_Core</h2>
               <ScanlineDivider />
             </div>
-
             <Education />
           </FadeIn>
         </section>
@@ -155,7 +163,7 @@ export default async function HomePage() {
               <ScanlineDivider />
             </div>
           </FadeIn>
-          <Skills />
+          <Skills skillsData={skills} />
         </section>
 
         {/* Certificates & Achievements Section */}
@@ -166,25 +174,23 @@ export default async function HomePage() {
               <ScanlineDivider />
             </div>
           </FadeIn>
-          <Certificates />
+          <Certificates certificatesData={certificates} />
         </section>
 
         {/* Contact Form Section */}
         <FadeIn delay={0.2} direction="scale">
-          {/* FIX: Reduced mobile padding from p-8 to p-6 */}
           <section id="contact" className="glass-panel p-6 md:p-12 relative overflow-hidden">
             {/* Cyberpunk corner accents matching Hero Panel */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00f0ff] to-transparent opacity-50"></div>
             <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-[#00f0ff]/40"></div>
             <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-[#00f0ff]/40"></div>
-
+            
             <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
+                
                 {/* Left Column: Direct Info */}
                 <div className="space-y-6">
                   <div>
-                    {/* FIX: Scaled text down to text-2xl on mobile to prevent ugly line breaks */}
                     <h2 className="text-2xl md:text-3xl font-mono font-black mb-3 text-white uppercase tracking-tighter shadow-sm break-words">
                       Initialize_<span className="text-[#00f0ff]">Connection</span>
                     </h2>
@@ -195,7 +201,7 @@ export default async function HomePage() {
 
                   <div className="space-y-4 pt-6 border-t border-[#00f0ff]/20 font-mono">
                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest block">&gt; DIRECT_CHANNELS</span>
-
+                    
                     {/* Email Channel */}
                     <div className="flex items-start gap-3 bg-[#00f0ff]/5 border border-[#00f0ff]/20 p-4 rounded-sm hover:border-[#00f0ff]/50 transition-colors group">
                       <span className="text-[#00f0ff] mt-1 shrink-0">
@@ -231,11 +237,10 @@ export default async function HomePage() {
                     <div className="bg-[#00f0ff]/5 border border-[#00f0ff]/20 p-4 rounded-sm hover:border-[#00f0ff]/50 transition-colors group">
                       <span className="text-[9px] text-[#00f0ff]/70 font-bold block uppercase tracking-widest mb-3">SOCIAL_ROUTING</span>
                       <div className="flex flex-wrap gap-3">
-
                         {/* LinkedIn */}
-                        <a
-                          href="https://linkedin.com/in/nisargvghl27"
-                          target="_blank"
+                        <a 
+                          href="https://linkedin.com/in/nisargvghl27" 
+                          target="_blank" 
                           rel="noopener noreferrer"
                           title="LinkedIn"
                           className="flex items-center justify-center w-10 h-10 rounded-sm border border-[#00f0ff]/20 text-slate-400 bg-black/20 hover:text-[#00f0ff] hover:border-[#00f0ff] hover:bg-[#00f0ff]/10 shadow-sm transition-all"
@@ -246,11 +251,10 @@ export default async function HomePage() {
                             <circle cx="4" cy="4" r="2" />
                           </svg>
                         </a>
-
                         {/* GitHub */}
-                        <a
-                          href="https://github.com/nisargvghl27"
-                          target="_blank"
+                        <a 
+                          href="https://github.com/nisargvghl27" 
+                          target="_blank" 
                           rel="noopener noreferrer"
                           title="GitHub"
                           className="flex items-center justify-center w-10 h-10 rounded-sm border border-[#00f0ff]/20 text-slate-400 bg-black/20 hover:text-[#00f0ff] hover:border-[#00f0ff] hover:bg-[#00f0ff]/10 shadow-sm transition-all"
@@ -260,11 +264,10 @@ export default async function HomePage() {
                             <path d="M9 18c-4.51 2-5-2-7-2" />
                           </svg>
                         </a>
-
                         {/* LeetCode */}
-                        <a
-                          href="https://leetcode.com/u/nisargvghl27/"
-                          target="_blank"
+                        <a 
+                          href="https://leetcode.com/u/nisargvghl27/" 
+                          target="_blank" 
                           rel="noopener noreferrer"
                           title="LeetCode"
                           className="flex items-center justify-center w-10 h-10 rounded-sm border border-[#00f0ff]/20 text-slate-400 bg-black/20 hover:text-[#00f0ff] hover:border-[#00f0ff] hover:bg-[#00f0ff]/10 shadow-sm transition-all"
@@ -273,11 +276,10 @@ export default async function HomePage() {
                             <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z" />
                           </svg>
                         </a>
-
                         {/* Instagram */}
-                        <a
-                          href="https://www.instagram.com/nisarg_vaghela9?igsh=MXh2bW1jNmZrYzRqYQ=="
-                          target="_blank"
+                        <a 
+                          href="https://www.instagram.com/nisarg_vaghela9?igsh=MXh2bW1jNmZrYzRqYQ==" 
+                          target="_blank" 
                           rel="noopener noreferrer"
                           title="Instagram"
                           className="flex items-center justify-center w-10 h-10 rounded-sm border border-[#00f0ff]/20 text-slate-400 bg-black/20 hover:text-[#00f0ff] hover:border-[#00f0ff] hover:bg-[#00f0ff]/10 shadow-sm transition-all"
@@ -288,9 +290,9 @@ export default async function HomePage() {
                             <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
                           </svg>
                         </a>
-
                       </div>
                     </div>
+
                   </div>
                 </div>
 

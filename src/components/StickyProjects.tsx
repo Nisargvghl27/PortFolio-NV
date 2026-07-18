@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import Image from 'next/image'
@@ -11,6 +12,49 @@ interface Project {
     githubLink: string | null
     liveLink: string | null
     imageUrl: string | null
+    projectType?: string
+}
+
+// Device Frame Helper Component
+function DeviceFrame({ type, children }: { type?: string, children: React.ReactNode }) {
+    if (type === 'website') {
+        return (
+            <div className="w-full h-full flex items-center justify-center p-4 sm:p-8 bg-[#0a0f12]/80">
+                <div className="w-full max-w-2xl relative">
+                    {/* Screen */}
+                    <div className="w-full aspect-[16/10] bg-[#0a0f12] rounded-t-lg md:rounded-t-xl border-t border-l border-r border-[#00f0ff]/30 p-1.5 md:p-2.5 relative shadow-[0_-5px_20px_rgba(0,240,255,0.05)]">
+                        <div className="w-full h-full relative overflow-hidden rounded-sm bg-black border border-[#00f0ff]/10">
+                            {children}
+                        </div>
+                    </div>
+                    {/* Keyboard Base */}
+                    <div className="w-[106%] -ml-[3%] h-3 md:h-4 bg-gradient-to-b from-[#1a2228] to-[#0a0f12] rounded-b-md md:rounded-b-xl border border-[#00f0ff]/30 border-t-[#00f0ff]/50 relative shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/5 h-1 md:h-1.5 bg-[#0a0f12] rounded-b-sm border-b border-l border-r border-[#00f0ff]/20"></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    
+    if (type === 'mobile') {
+        return (
+            <div className="w-full h-full flex items-center justify-center p-4 sm:p-8 bg-[#0a0f12]/80">
+                <div className="relative aspect-[9/19.5] h-full max-h-[300px] md:max-h-[400px] bg-[#0a0f12] rounded-[1.5rem] md:rounded-[2rem] border-2 border-[#00f0ff]/30 p-1.5 md:p-2.5 shadow-[0_0_30px_rgba(0,240,255,0.08)]">
+                    {/* Notch */}
+                    <div className="absolute top-1.5 md:top-2.5 left-1/2 -translate-x-1/2 w-1/3 h-4 bg-[#0a0f12] rounded-b-lg z-20 border-b border-l border-r border-[#00f0ff]/20"></div>
+                    {/* Screen */}
+                    <div className="w-full h-full relative overflow-hidden rounded-[1.2rem] md:rounded-[1.5rem] bg-black">
+                        {children}
+                    </div>
+                    {/* Home Indicator */}
+                    <div className="absolute bottom-1.5 md:bottom-2 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-[#00f0ff]/30 rounded-full z-20"></div>
+                </div>
+            </div>
+        )
+    }
+
+    // Default "other" plain rendering
+    return <div className="w-full h-full relative bg-[#0a0f12]">{children}</div>
 }
 
 export default function StickyProjects({ projects }: { projects: Project[] }) {
@@ -19,6 +63,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
         target: containerRef,
         offset: ["start start", "end end"]
     })
+
     const [activeIndex, setActiveIndex] = useState(0)
 
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
@@ -30,6 +75,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
     })
 
     if (!projects || projects.length === 0) return null
+
     const containerHeight = `${projects.length * 100}vh`
 
     return (
@@ -54,7 +100,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                         className="flex flex-col gap-6"
                     >
                         {/* Mobile Optimized Image Card */}
-                        <div className="w-full relative glass-panel rounded-md overflow-hidden aspect-video border border-[#00f0ff]/30 shadow-[0_0_30px_rgba(0,240,255,0.05),inset_0_0_20px_rgba(0,240,255,0.02)]">
+                        <div className="w-full relative glass-panel rounded-md overflow-hidden border border-[#00f0ff]/30 shadow-[0_0_30px_rgba(0,240,255,0.05),inset_0_0_20px_rgba(0,240,255,0.02)]">
                             <div className="hidden xs:flex bg-black/80 border-b border-[#00f0ff]/20 px-4 py-2 items-center justify-between absolute top-0 w-full z-30">
                                 <div className="flex gap-2 items-center">
                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
@@ -67,27 +113,29 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                                 <div className="w-10" />
                             </div>
                             
-                            {project.imageUrl ? (
-                                <div className="w-full h-full relative xs:pt-8 bg-[#0a0f12]">
-                                    <div className="relative w-full h-full">
-                                        <Image
-                                            src={project.imageUrl}
-                                            alt={project.title}
-                                            fill
-                                            sizes="100vw"
-                                            loading="lazy"
-                                            priority={false}
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                    <div className="absolute inset-0 bg-[#00f0ff]/10 mix-blend-overlay pointer-events-none" />
-                                    <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.1)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_6s_ease-in-out_infinite]" />
-                                </div>
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center xs:pt-8 bg-black/50">
-                                    <span className="text-[#00f0ff]/50 font-mono text-sm tracking-widest">[ NO_IMAGE_DATA ]</span>
-                                </div>
-                            )}
+                            <div className="w-full xs:pt-8 aspect-video">
+                                <DeviceFrame type={project.projectType}>
+                                    {project.imageUrl ? (
+                                        <>
+                                            <Image
+                                                src={project.imageUrl}
+                                                alt={project.title}
+                                                fill
+                                                sizes="100vw"
+                                                loading="lazy"
+                                                priority={false}
+                                                className="object-cover"
+                                            />
+                                            <div className="absolute inset-0 bg-[#00f0ff]/10 mix-blend-overlay pointer-events-none" />
+                                            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.1)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_6s_ease-in-out_infinite]" />
+                                        </>
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center bg-black/50">
+                                            <span className="text-[#00f0ff]/50 font-mono text-sm tracking-widest">[ NO_IMAGE_DATA ]</span>
+                                        </div>
+                                    )}
+                                </DeviceFrame>
+                            </div>
                         </div>
 
                         {/* Mobile Details */}
@@ -186,6 +234,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
             <div className="hidden lg:block">
                 <div ref={containerRef} style={{ height: containerHeight }} className="relative w-full">
                     <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+                        
                         {/* PINNED HEADER */}
                         <div className="absolute top-24 md:top-20 left-0 w-full z-40">
                             <motion.div
@@ -249,7 +298,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
 
 function ProjectImage({ project }: { project: Project }) {
     return (
-        <div className="w-full lg:w-1/2 relative glass-panel rounded-md overflow-hidden aspect-video max-h-[30vh] md:max-h-none border border-[#00f0ff]/30 shadow-[0_0_30px_rgba(0,240,255,0.05),inset_0_0_20px_rgba(0,240,255,0.02)]">
+        <div className="w-full lg:w-1/2 relative glass-panel rounded-md overflow-hidden border border-[#00f0ff]/30 shadow-[0_0_30px_rgba(0,240,255,0.05),inset_0_0_20px_rgba(0,240,255,0.02)]">
             <div className="hidden xs:flex bg-black/80 border-b border-[#00f0ff]/20 px-4 py-2 items-center justify-between absolute top-0 w-full z-30">
                 <div className="flex gap-2 items-center">
                     <div className="w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-[#ff0055] transition-colors" />
@@ -261,26 +310,29 @@ function ProjectImage({ project }: { project: Project }) {
                 </div>
                 <div className="w-10" />
             </div>
-            {project.imageUrl ? (
-                <div className="w-full h-full relative xs:pt-8 bg-[#0a0f12]">
-                    <div className="relative w-full h-full">
-                        <Image
-                            src={project.imageUrl}
-                            alt={project.title}
-                            fill
-                            sizes="(max-width: 1024px) 100vw, 50vw"
-                            loading="lazy"
-                            className="object-cover"
-                        />
-                    </div>
-                    <div className="absolute inset-0 bg-[#00f0ff]/10 mix-blend-overlay pointer-events-none" />
-                    <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.1)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_6s_ease-in-out_infinite]" />
-                </div>
-            ) : (
-                <div className="w-full h-full flex items-center justify-center xs:pt-8 bg-black/50">
-                    <span className="text-[#00f0ff]/50 font-mono text-sm tracking-widest">[ NO_IMAGE_DATA ]</span>
-                </div>
-            )}
+
+            <div className="w-full xs:pt-8 aspect-video lg:aspect-auto lg:h-[45vh]">
+                <DeviceFrame type={project.projectType}>
+                    {project.imageUrl ? (
+                        <>
+                            <Image
+                                src={project.imageUrl}
+                                alt={project.title}
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                loading="lazy"
+                                className="object-cover"
+                            />
+                            <div className="absolute inset-0 bg-[#00f0ff]/10 mix-blend-overlay pointer-events-none" />
+                            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.1)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_6s_ease-in-out_infinite]" />
+                        </>
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-black/50">
+                            <span className="text-[#00f0ff]/50 font-mono text-sm tracking-widest">[ NO_IMAGE_DATA ]</span>
+                        </div>
+                    )}
+                </DeviceFrame>
+            </div>
         </div>
     )
 }
@@ -296,6 +348,7 @@ function ProjectDetails({ project }: { project: Project }) {
             <p className="text-slate-300 leading-relaxed mb-4 md:mb-8 text-xs md:text-base tracking-wide border-l-2 border-[#00f0ff]/50 pl-3 md:pl-4 bg-gradient-to-r from-[#00f0ff]/5 to-transparent py-2 md:py-3 max-h-[18vh] md:max-h-none overflow-y-auto custom-scrollbar">
                 {project.description}
             </p>
+            
             <div className="mb-5 md:mb-10">
                 <span className="text-slate-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase mb-2 md:mb-3 block">TARGET_ARCHITECTURE</span>
                 <div className="flex flex-wrap gap-1.5 md:gap-2.5">

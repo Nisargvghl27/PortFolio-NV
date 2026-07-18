@@ -9,6 +9,7 @@ export default function AddProjectForm() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setStatus('submitting')
+    
     const formData = new FormData(event.currentTarget)
     try {
       await addProject(formData)
@@ -28,6 +29,14 @@ export default function AddProjectForm() {
       <div>
         <label className="block text-xs text-cyan-500 mb-2"> string title;</label>
         <input name="title" type="text" required suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500" />
+      </div>
+      <div>
+        <label className="block text-xs text-cyan-500 mb-2"> select project_type;</label>
+        <select name="projectType" required suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500 appearance-none">
+          <option value="other">Other</option>
+          <option value="website">Website</option>
+          <option value="mobile">Mobile App</option>
+        </select>
       </div>
       <div>
         <label className="block text-xs text-cyan-500 mb-2"> text description;</label>
@@ -51,6 +60,7 @@ export default function AddProjectForm() {
         <label className="block text-xs text-cyan-500 mb-2"> url image_url;</label>
         <input name="imageUrl" type="url" placeholder="https://... (Optional)" suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500" />
       </div>
+      
       <button type="submit" disabled={status === 'submitting'} suppressHydrationWarning className="w-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 py-3 hover:bg-cyan-500/20 font-bold transition-all">
         {status === 'submitting' ? '[ COMPILING... ]' : status === 'success' ? '[ DEPLOYMENT SUCCESSFUL ]' : '[ EXECUTE_DEPLOYMENT ]'}
       </button>

@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FadeIn from './FadeIn'
+import type { Skill } from '@prisma/client'
 
 // Categories for filter buttons
 const categories = [
@@ -188,49 +189,7 @@ const skillIcons: Record<string, React.ReactNode> = {
   )
 }
 
-interface Skill {
-  name: string
-  category: string
-  color: string
-  level: string
-  latency: string
-  status: string
-  desc: string
-}
-
-const skillsData: Skill[] = [
-  { name: 'TypeScript', category: 'Languages', color: 'hover:text-[#3178C6] hover:border-[#3178C6]/50 hover:bg-[#3178C6]/5', level: '92%', latency: '8ms', status: 'READY', desc: 'Type-safe JavaScript compilation' },
-  { name: 'JavaScript', category: 'Languages', color: 'hover:text-[#F7DF1E] hover:border-[#F7DF1E]/50 hover:bg-[#F7DF1E]/5', level: '95%', latency: '6ms', status: 'READY', desc: 'ECMAScript core logic & scripting' },
-  { name: 'Python', category: 'Languages', color: 'hover:text-[#3776AB] hover:border-[#3776AB]/50 hover:bg-[#3776AB]/5', level: '85%', latency: '24ms', status: 'OPTIMIZED', desc: 'Automation, analytics & backend' },
-  { name: 'Dart', category: 'Languages', color: 'hover:text-[#0175C2] hover:border-[#0175C2]/50 hover:bg-[#0175C2]/5', level: '78%', latency: '18ms', status: 'READY', desc: 'Cross-platform app code base' },
-  { name: 'C++', category: 'Languages', color: 'hover:text-[#00599C] hover:border-[#00599C]/50 hover:bg-[#00599C]/5', level: '80%', latency: '4ms', status: 'OPTIMIZED', desc: 'Performant systems & low-level structures' },
-  { name: 'C', category: 'Languages', color: 'hover:text-[#A8B9CC] hover:border-[#A8B9CC]/50 hover:bg-[#A8B9CC]/5', level: '82%', latency: '3ms', status: 'READY', desc: 'Low-level imperative systems compilation' },
-  { name: 'HTML', category: 'Frontend', color: 'hover:text-[#E34F26] hover:border-[#E34F26]/50 hover:bg-[#E34F26]/5', level: '95%', latency: '1ms', status: 'READY', desc: 'Semantic document markup layouts' },
-  { name: 'CSS', category: 'Frontend', color: 'hover:text-[#1572B6] hover:border-[#1572B6]/50 hover:bg-[#1572B6]/5', level: '93%', latency: '1ms', status: 'READY', desc: 'Styling, layout engines & variables' },
-  { name: 'Next.js', category: 'Frontend', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '90%', latency: '12ms', status: 'OPTIMIZED', desc: 'Server-side rendering & app routing' },
-  { name: 'React', category: 'Frontend', color: 'hover:text-[#61DAFB] hover:border-[#61DAFB]/50 hover:bg-[#61DAFB]/5', level: '94%', latency: '8ms', status: 'READY', desc: 'Component architectures & state layers' },
-  { name: 'Tailwind CSS', category: 'Frontend', color: 'hover:text-[#06B6D4] hover:border-[#06B6D4]/50 hover:bg-[#06B6D4]/5', level: '96%', latency: '2ms', status: 'READY', desc: 'Utility-first layout engines' },
-  { name: 'Framer Motion', category: 'Frontend', color: 'hover:text-[#F024B6] hover:border-[#F024B6]/50 hover:bg-[#F024B6]/5', level: '88%', latency: '15ms', status: 'READY', desc: 'High-performance visual physics' },
-  { name: 'Flutter', category: 'Frontend', color: 'hover:text-[#02569B] hover:border-[#02569B]/50 hover:bg-[#02569B]/5', level: '80%', latency: '22ms', status: 'READY', desc: 'Multi-platform user interfaces' },
-  { name: 'Node.js', category: 'Backend', color: 'hover:text-[#339933] hover:border-[#339933]/50 hover:bg-[#339933]/5', level: '88%', latency: '14ms', status: 'READY', desc: 'Asynchronous event-driven runtimes' },
-  { name: 'Express.js', category: 'Backend', color: 'hover:text-gray-300 hover:border-gray-500/50 hover:bg-gray-500/5', level: '88%', latency: '10ms', status: 'READY', desc: 'REST server request management' },
-  { name: 'PostgreSQL', category: 'Backend', color: 'hover:text-[#4169E1] hover:border-[#4169E1]/50 hover:bg-[#4169E1]/5', level: '84%', latency: '28ms', status: 'OPTIMIZED', desc: 'Relational data structures & queries' },
-  { name: 'Prisma', category: 'Backend', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '90%', latency: '5ms', status: 'READY', desc: 'ORM data schema declaration' },
-  { name: 'Supabase', category: 'Backend', color: 'hover:text-[#3ECF8E] hover:border-[#3ECF8E]/50 hover:bg-[#3ECF8E]/5', level: '85%', latency: '16ms', status: 'READY', desc: 'Serverless datastore & security' },
-  { name: 'Firebase', category: 'Backend', color: 'hover:text-[#FFCA28] hover:border-[#FFCA28]/50 hover:bg-[#FFCA28]/5', level: '88%', latency: '12ms', status: 'READY', desc: 'Realtime database & serverless platform' },
-  { name: 'MongoDB', category: 'Backend', color: 'hover:text-[#47A248] hover:border-[#47A248]/50 hover:bg-[#47A248]/5', level: '86%', latency: '15ms', status: 'READY', desc: 'NoSQL document-oriented database engine' },
-  { name: 'MySQL', category: 'Backend', color: 'hover:text-[#4479A1] hover:border-[#4479A1]/50 hover:bg-[#4479A1]/5', level: '85%', latency: '22ms', status: 'READY', desc: 'Structured query language database system' },
-  { name: 'Data Structures', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '90%', latency: '2ms', status: 'READY', desc: 'Core memory organizations & complexity analysis' },
-  { name: 'Algorithms', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '88%', latency: '5ms', status: 'READY', desc: 'Sorting, searching & graph computations' },
-  { name: 'Computer Networks', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '82%', latency: '15ms', status: 'READY', desc: 'TCP/IP, routing & HTTP protocols' },
-  { name: 'Operating Systems', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '84%', latency: '10ms', status: 'READY', desc: 'Threads, processes, memory paging & kernel schedulers' },
-  { name: 'Database Management', category: 'CS_Core', color: 'hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5', level: '88%', latency: '8ms', status: 'READY', desc: 'Relational design, indexing & NoSQL stores' },
-  { name: 'Git', category: 'Tools_&_DevOps', color: 'hover:text-[#F05032] hover:border-[#F05032]/50 hover:bg-[#F05032]/5', level: '90%', latency: '4ms', status: 'READY', desc: 'Decentralized version control' },
-  { name: 'GitHub', category: 'Tools_&_DevOps', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '92%', latency: '5ms', status: 'READY', desc: 'Workflows & repository operations' },
-  { name: 'Vercel', category: 'Tools_&_DevOps', color: 'hover:text-white hover:border-white/50 hover:bg-white/5', level: '95%', latency: '8ms', status: 'READY', desc: 'Global edge deployment networks' }
-]
-
-export default function Skills() {
+export default function Skills({ skillsData }: { skillsData: Skill[] }) {
   const [activeCategory, setActiveCategory] = useState('all')
   const [isMobile, setIsMobile] = useState(false)
 
@@ -244,10 +203,11 @@ export default function Skills() {
 
   // Memoized filtered results to prevent re-filtering on non-relevant re-renders
   const filteredSkills = useMemo(() => {
+    if (!skillsData || skillsData.length === 0) return []
     return activeCategory === 'all'
       ? skillsData
       : skillsData.filter(skill => skill.category === activeCategory)
-  }, [activeCategory])
+  }, [activeCategory, skillsData])
 
   return (
     <div className="font-mono w-full max-w-6xl mx-auto relative px-4">
@@ -299,7 +259,11 @@ export default function Skills() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#00f0ff]/10 blur-3xl pointer-events-none" />
               
               {/* Conditional Rendering: Plain CSS for Mobile, Framer Motion for Desktop */}
-              {isMobile ? (
+              {(!skillsData || skillsData.length === 0) ? (
+                <div className="text-center text-slate-500 italic relative z-10 w-full py-10">
+                  [ NO_MODULES_FOUND ]
+                </div>
+              ) : isMobile ? (
                 <div className="flex flex-wrap gap-4 justify-center items-center max-w-4xl mx-auto relative z-10">
                   {filteredSkills.map((skill) => (
                     <span

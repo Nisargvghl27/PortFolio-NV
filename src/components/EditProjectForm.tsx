@@ -12,6 +12,7 @@ export default function EditProjectForm({ project }: { project: Project }) {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setStatus('submitting')
+    
     const formData = new FormData(event.currentTarget)
     try {
       await updateProject(formData)
@@ -35,6 +36,14 @@ export default function EditProjectForm({ project }: { project: Project }) {
       <div>
         <label className="block text-xs text-yellow-500 mb-2"> string title;</label>
         <input name="title" type="text" defaultValue={project.title} required suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
+      </div>
+      <div>
+        <label className="block text-xs text-yellow-500 mb-2"> select project_type;</label>
+        <select name="projectType" defaultValue={project.projectType || 'other'} required suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500 appearance-none">
+          <option value="other">Other</option>
+          <option value="website">Website</option>
+          <option value="mobile">Mobile App</option>
+        </select>
       </div>
       <div>
         <label className="block text-xs text-yellow-500 mb-2"> text description;</label>

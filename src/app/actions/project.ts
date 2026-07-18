@@ -10,6 +10,7 @@ export async function addProject(formData: FormData) {
   const githubLink = formData.get('githubLink') as string
   const liveLink = formData.get('liveLink') as string
   const imageUrl = formData.get('imageUrl') as string
+  const projectType = formData.get('projectType') as string
   
   const techStackInput = formData.get('techStack') as string
   const techStack = techStackInput
@@ -28,6 +29,7 @@ export async function addProject(formData: FormData) {
       githubLink: githubLink || null,
       liveLink: liveLink || null,
       imageUrl: imageUrl || null,
+      projectType: projectType || 'other',
       featured: false,
     },
   })
@@ -62,6 +64,7 @@ export async function updateProject(formData: FormData) {
   const githubLink = formData.get('githubLink') as string
   const liveLink = formData.get('liveLink') as string
   const imageUrl = formData.get('imageUrl') as string
+  const projectType = formData.get('projectType') as string
   
   const techStackInput = formData.get('techStack') as string
   const techStack = techStackInput
@@ -81,6 +84,7 @@ export async function updateProject(formData: FormData) {
       githubLink: githubLink || null,
       liveLink: liveLink || null,
       imageUrl: imageUrl || null,
+      projectType: projectType || 'other',
     },
   })
 

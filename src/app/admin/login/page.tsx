@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function AdminLogin() {
   const [password, setPassword] = useState('')
@@ -24,8 +25,18 @@ export default function AdminLogin() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-[#030303] font-mono">
-      <form onSubmit={handleLogin} className="glass-panel p-8 w-full max-w-sm space-y-6 border border-white/10">
+    <main className="relative min-h-screen flex items-center justify-center bg-[#030303] font-mono">
+      <Link 
+        href="/" 
+        className="absolute top-6 left-6 z-10 flex items-center gap-2 text-[#00f0ff]/60 hover:text-[#00f0ff] font-mono text-xs uppercase tracking-widest transition-colors border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 px-3 py-1.5 rounded-sm"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to Home
+      </Link>
+
+      <form onSubmit={handleLogin} className="glass-panel p-8 w-full max-w-sm space-y-6 border border-white/10" suppressHydrationWarning>
         <h1 className="text-xl text-cyan-400 text-center tracking-widest">[ SYSTEM_ACCESS ]</h1>
         <input 
           type="password" 
@@ -33,8 +44,9 @@ export default function AdminLogin() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="> ENTER_ROOT_PASSWORD"
           className="w-full bg-black/50 border border-white/10 p-3 text-center text-white focus:outline-none focus:border-cyan-500 transition-all placeholder:text-gray-700"
+          suppressHydrationWarning
         />
-        <button type="submit" className="w-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 py-3 hover:bg-cyan-500/20 transition-all">
+        <button type="submit" className="w-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/50 py-3 hover:bg-cyan-500/20 transition-all" suppressHydrationWarning>
           [ AUTHENTICATE ]
         </button>
       </form>

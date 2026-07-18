@@ -100,8 +100,7 @@ html::before {
   display: inline-block;
 }
 
-.glitch-text::before,
-.glitch-text::after {
+.glitch-text::before, .glitch-text::after {
   content: attr(data-text);
   position: absolute;
   top: 0;
@@ -160,7 +159,7 @@ html::before {
 
 .animate-skill-pulse:hover {
   animation: skill-pulse 1.5s ease-in-out infinite;
-  z-index: 20; /* Brings the tag to the front so the glow doesn't hide behind neighbors */
+  z-index: 20;
 }
 
 /* CONTACT FORM NEON FOCUS PULSE */
@@ -212,7 +211,7 @@ html::before {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1px solid #22d3ee; /* Tailwind cyan-400 */
+  border: 1px solid #22d3ee;
   animation: nav-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
@@ -222,9 +221,16 @@ html::before {
   body::before {
     animation-play-state: paused;
   }
-  
   /* Reduce opacity of the background grid on small screens */
   body::after {
     opacity: 0.3;
+  }
+  .glass-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(10, 15, 18, 0.98);
+  }
+  * {
+    will-change: auto !important;
   }
 }
