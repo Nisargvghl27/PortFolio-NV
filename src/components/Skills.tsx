@@ -189,6 +189,17 @@ const skillIcons: Record<string, React.ReactNode> = {
   )
 }
 
+function getHoverColor(colorString: string): string {
+  if (!colorString) return '#00f0ff'
+  const hexMatch = colorString.match(/#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/)
+  if (hexMatch) return `#${hexMatch[1]}`
+  
+  if (colorString.includes('white')) return '#ffffff'
+  if (colorString.includes('gray-300')) return '#d1d5db'
+  if (colorString.includes('slate-400')) return '#94a3b8'
+  return '#00f0ff'
+}
+
 export default function Skills({ skillsData }: { skillsData: Skill[] }) {
   const [activeCategory, setActiveCategory] = useState('all')
   const [isMobile, setIsMobile] = useState(false)
@@ -265,43 +276,16 @@ export default function Skills({ skillsData }: { skillsData: Skill[] }) {
                 </div>
               ) : isMobile ? (
                 <div className="flex flex-wrap gap-4 justify-center items-center max-w-4xl mx-auto relative z-10">
-                  {filteredSkills.map((skill) => (
-                    <span
-                      key={skill.name}
-                      className={`group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 text-slate-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color} animate-skill-pulse`}
-                    >
-                      <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
-                      <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
-                      
-                      {skillIcons[skill.name] && (
-                        <span className="flex items-center justify-center w-4 h-4 text-slate-400 group-hover:text-inherit transition-colors duration-300 shrink-0">
-                          {skillIcons[skill.name]}
-                        </span>
-                      )}
-                      <span className="relative tracking-wider font-semibold">
-                        {skill.name}
-                      </span>
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                <motion.div 
-                  layout
-                  className="flex flex-wrap gap-4 justify-center items-center max-w-4xl mx-auto relative z-10"
-                >
-                  <AnimatePresence mode="popLayout">
-                    {filteredSkills.map((skill) => (
-                      <motion.span
-                        layout
-                        initial={{ opacity: 0, scale: 0.85, y: 10 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.85, y: -10 }}
-                        transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+                  {filteredSkills.map((skill) => {
+                    const hoverColor = getHoverColor(skill.color)
+                    return (
+                      <span
                         key={skill.name}
-                        className={`group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 text-slate-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color} animate-skill-pulse`}
+                        style={{ '--hover-color': hoverColor } as React.CSSProperties}
+                        className="group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 hover:border-[var(--hover-color)]/50 hover:bg-[var(--hover-color)]/5 text-slate-300 hover:text-[var(--hover-color)] text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm animate-skill-pulse"
                       >
-                        <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
-                        <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                        <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                        <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#00f0ff]/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
                         
                         {skillIcons[skill.name] && (
                           <span className="flex items-center justify-center w-4 h-4 text-slate-400 group-hover:text-inherit transition-colors duration-300 shrink-0">
@@ -311,8 +295,43 @@ export default function Skills({ skillsData }: { skillsData: Skill[] }) {
                         <span className="relative tracking-wider font-semibold">
                           {skill.name}
                         </span>
-                      </motion.span>
-                    ))}
+                      </span>
+                    )
+                  })}
+                </div>
+              ) : (
+                <motion.div 
+                  layout
+                  className="flex flex-wrap gap-4 justify-center items-center max-w-4xl mx-auto relative z-10"
+                >
+                  <AnimatePresence mode="popLayout">
+                    {filteredSkills.map((skill) => {
+                      const hoverColor = getHoverColor(skill.color)
+                      return (
+                        <motion.span
+                          layout
+                          initial={{ opacity: 0, scale: 0.85, y: 10 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.85, y: -10 }}
+                          transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+                          key={skill.name}
+                          style={{ '--hover-color': hoverColor } as React.CSSProperties}
+                          className="group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 hover:border-[var(--hover-color)]/50 hover:bg-[var(--hover-color)]/5 text-slate-300 hover:text-[var(--hover-color)] text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm animate-skill-pulse"
+                        >
+                          <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                          <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#00f0ff]/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                          
+                          {skillIcons[skill.name] && (
+                            <span className="flex items-center justify-center w-4 h-4 text-slate-400 group-hover:text-inherit transition-colors duration-300 shrink-0">
+                              {skillIcons[skill.name]}
+                            </span>
+                          )}
+                          <span className="relative tracking-wider font-semibold">
+                            {skill.name}
+                          </span>
+                        </motion.span>
+                      )
+                    })}
                   </AnimatePresence>
                 </motion.div>
               )}
