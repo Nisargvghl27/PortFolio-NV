@@ -35,8 +35,7 @@ export default function Education() {
             <div className="relative group bg-[#0a0f12]/80 backdrop-blur-sm border border-[#00f0ff]/20 hover:border-[#00f0ff]/60 p-4 sm:p-6 rounded-md transition-all duration-300 shadow-[0_0_20px_rgba(0,240,255,0.02)] hover:shadow-[0_0_20px_rgba(0,240,255,0.1)]">
               
               {/* Glowing Timeline Dot */}
-              <div className="absolute w-3 h-3 bg-[#00f0ff] -left-[38.5px] top-6 shadow-[0_0_12px_#00f0ff] group-hover:scale-125 transition-transform duration-300">
-                <span className="absolute inset-0 rounded-full bg-[#00f0ff] animate-ping opacity-75" />
+              <div className="absolute w-3 h-3 bg-[#00f0ff] rounded-full -left-[38.5px] top-6 shadow-[0_0_12px_#00f0ff] group-hover:scale-125 transition-transform duration-300 animate-timeline-ping">
               </div>
               
               {/* Corner accent details */}

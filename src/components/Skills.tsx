@@ -303,7 +303,8 @@ export default function Skills() {
                       exit={{ opacity: 0, scale: 0.85, y: -10 }}
                       transition={{ type: 'spring', stiffness: 450, damping: 28 }}
                       key={skill.name}
-                      className={`group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 text-slate-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color}`}
+                      // ADDED animate-skill-pulse here
+                      className={`group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 text-slate-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color} animate-skill-pulse`}
                     >
                       <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
                       <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />

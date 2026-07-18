@@ -2,6 +2,7 @@
 
 import { sendContactMessage } from '@/app/actions/contact'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 export default function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle')
@@ -31,7 +32,7 @@ export default function ContactForm() {
           required 
           suppressHydrationWarning
           // Keeps exact original padding/size for desktop, shrinks only on mobile
-          className="w-full bg-[#00f0ff]/5 border border-[#00f0ff]/30 p-3 max-md:p-2.5 max-md:text-sm text-white focus:outline-none focus:border-[#00f0ff] focus:bg-[#00f0ff]/10 transition-all shadow-[inset_0_0_10px_rgba(0,240,255,0.05)]" 
+          className="w-full bg-[#00f0ff]/5 border border-[#00f0ff]/30 p-3 max-md:p-2.5 max-md:text-sm text-white focus:outline-none focus:border-[#00f0ff] focus:bg-[#00f0ff]/10 transition-colors shadow-[inset_0_0_10px_rgba(0,240,255,0.05)] focus-pulse-anim" 
         />
       </div>
       
@@ -42,7 +43,7 @@ export default function ContactForm() {
           type="email" 
           required 
           suppressHydrationWarning
-          className="w-full bg-[#00f0ff]/5 border border-[#00f0ff]/30 p-3 max-md:p-2.5 max-md:text-sm text-white focus:outline-none focus:border-[#00f0ff] focus:bg-[#00f0ff]/10 transition-all shadow-[inset_0_0_10px_rgba(0,240,255,0.05)]" 
+          className="w-full bg-[#00f0ff]/5 border border-[#00f0ff]/30 p-3 max-md:p-2.5 max-md:text-sm text-white focus:outline-none focus:border-[#00f0ff] focus:bg-[#00f0ff]/10 transition-colors shadow-[inset_0_0_10px_rgba(0,240,255,0.05)] focus-pulse-anim" 
         />
       </div>
       
@@ -53,26 +54,38 @@ export default function ContactForm() {
           rows={4} 
           required 
           suppressHydrationWarning
-          className="w-full bg-[#00f0ff]/5 border border-[#00f0ff]/30 p-3 max-md:p-2.5 max-md:text-sm text-white focus:outline-none focus:border-[#00f0ff] focus:bg-[#00f0ff]/10 transition-all custom-scrollbar shadow-[inset_0_0_10px_rgba(0,240,255,0.05)]"
+          className="w-full bg-[#00f0ff]/5 border border-[#00f0ff]/30 p-3 max-md:p-2.5 max-md:text-sm text-white focus:outline-none focus:border-[#00f0ff] focus:bg-[#00f0ff]/10 transition-colors custom-scrollbar shadow-[inset_0_0_10px_rgba(0,240,255,0.05)] focus-pulse-anim"
         ></textarea>
       </div>
       
       <div className="pt-2">
-        <button 
+        <motion.button 
           type="submit" 
-          disabled={status === 'sending'} 
+          disabled={status === 'sending'}
           suppressHydrationWarning
+          initial="rest"
+          whileHover="hover"
           // Original px-8 py-4 remains the default, mobile shrinks to max-md:px-4 max-md:py-3
-          className="relative group w-full px-8 py-4 max-md:px-4 max-md:py-3 bg-transparent text-[#00f0ff] transition-all hover:bg-[#00f0ff]/10 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="relative group w-full overflow-hidden px-8 py-4 max-md:px-4 max-md:py-3 bg-transparent text-[#00f0ff] transition-all hover:bg-[#00f0ff]/10 disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ clipPath: 'polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))' }}
         >
+          {/* Diagonal Sweep Animation */}
+          <motion.div
+            variants={{
+              rest: { x: "-150%" },
+              hover: { x: "150%" }
+            }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[#00f0ff]/20 to-transparent -skew-x-12 z-0"
+          />
+
           <div className="absolute inset-0 border border-[#00f0ff]/50 group-hover:border-[#00f0ff] transition-all" style={{ clipPath: 'polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))' }} />
           
           {/* Leaves desktop text completely untouched, adds max-md:text-xs just for narrow screens */}
           <span className="relative z-10 font-bold tracking-widest max-md:text-xs">
             {status === 'sending' ? '[ TRANSMITTING... ]' : status === 'success' ? '[ TRANSMISSION_SUCCESS ]' : '[ EXECUTE_TRANSMISSION ]'}
           </span>
-        </button>
+        </motion.button>
       </div>
     </form>
   )

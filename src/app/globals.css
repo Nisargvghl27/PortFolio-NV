@@ -113,19 +113,19 @@ html::before {
   color: transparent;
   pointer-events: none;
   z-index: -1;
-  clip-path: inset(100% 0 0 0); 
+  clip-path: inset(100% 0 0 0);
 }
 
 .glitch-text::before {
   left: 2px;
   text-shadow: -1px 0 rgba(0, 240, 255, 0.8);
-  animation: glitch-anim-1 3s infinite linear alternate-reverse; 
+  animation: glitch-anim-1 3s infinite linear alternate-reverse;
 }
 
 .glitch-text::after {
   left: -2px;
   text-shadow: 2px 0 rgba(0, 112, 243, 0.8);
-  animation: glitch-anim-2 3.5s infinite linear alternate-reverse; 
+  animation: glitch-anim-2 3.5s infinite linear alternate-reverse;
 }
 
 @keyframes shimmer {
@@ -149,4 +149,68 @@ html::before {
   90% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 2px); }
   95% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, -2px); }
   98%, 100% { clip-path: inset(100% 0 0 0); transform: translate(0); }
+}
+
+/* SKILL TAG HOVER PULSE */
+@keyframes skill-pulse {
+  0%, 100% { box-shadow: 0 0 0px 0px currentColor; }
+  50% { box-shadow: 0 0 12px 1px currentColor; }
+}
+
+.animate-skill-pulse:hover {
+  animation: skill-pulse 1.5s ease-in-out infinite;
+  z-index: 20; /* Brings the tag to the front so the glow doesn't hide behind neighbors */
+}
+
+/* CONTACT FORM NEON FOCUS PULSE */
+@keyframes focus-pulse {
+  0% { box-shadow: inset 0 0 10px rgba(0,240,255,0.05), 0 0 0px rgba(0,240,255,0); }
+  40% { box-shadow: inset 0 0 10px rgba(0,240,255,0.05), 0 0 15px rgba(0,240,255,0.4); }
+  100% { box-shadow: inset 0 0 10px rgba(0,240,255,0.05), 0 0 8px rgba(0,240,255,0.2); }
+}
+
+.focus-pulse-anim:focus {
+  animation: focus-pulse 0.6s forwards ease-out;
+}
+
+/* 6. TIMELINE DOT PING ANIMATION */
+@keyframes timeline-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.animate-timeline-ping::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--color-neon-cyan);
+  animation: timeline-ping 3s ease-out infinite;
+}
+
+/* 8. SECTION NAV DOT PING ANIMATION */
+@keyframes nav-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+.animate-nav-ping::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid #22d3ee; /* Tailwind cyan-400 */
+  animation: nav-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }

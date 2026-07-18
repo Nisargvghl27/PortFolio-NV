@@ -86,6 +86,34 @@ const itemVariants = {
   }
 }
 
+// Variants for Mobile Dock Container to handle staggering
+const mobileContainerVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20, 
+    scale: 0.9,
+    transition: { type: "spring", stiffness: 200, damping: 20 }
+  },
+  visible: {
+    opacity: 1, 
+    y: 0, 
+    scale: 1,
+    transition: { 
+      type: "spring", 
+      stiffness: 200, 
+      damping: 20, 
+      staggerChildren: 0.05, 
+      delayChildren: 0.05 
+    }
+  }
+}
+
+// Variants for Individual Mobile Dock Items
+const mobileItemVariants = {
+  hidden: { opacity: 0, scale: 0.8, y: 10 },
+  visible: { opacity: 1, scale: 1, y: 0 }
+}
+
 function DockIcon({
   mouseX,
   label,
@@ -306,15 +334,16 @@ export default function FloatingDock() {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.9 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              variants={mobileContainerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
               className="glass-panel mb-4 rounded-full bg-black/80 backdrop-blur-lg border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.8)] flex flex-col gap-2 p-2"
             >
               {dockItems.map((item) => (
-                <a
+                <motion.a
                   key={item.label}
+                  variants={mobileItemVariants}
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -325,7 +354,7 @@ export default function FloatingDock() {
                   <div className="[&>svg]:w-5 [&>svg]:h-5">
                     {item.icon}
                   </div>
-                </a>
+                </motion.a>
               ))}
             </motion.div>
           )}

@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { motion } from 'framer-motion'
 
 // Dynamically import the calendar module and strictly disable SSR
 const ReactGitHubCalendar = dynamic(
@@ -49,8 +50,14 @@ export default function GitHubCalendar() {
           </span>
         </div>
 
-        {/* Calendar Wrapper rendering modern architecture themes */}
-        <div className="w-full overflow-x-auto custom-scrollbar pt-2 flex justify-center bg-black/30 p-4 border border-[#00f0ff]/10 rounded-sm">
+        {/* Calendar Wrapper rendering modern architecture themes with Scan Reveal Animation */}
+        <motion.div 
+          initial={{ clipPath: 'inset(0 0 100% 0)', opacity: 0 }}
+          whileInView={{ clipPath: 'inset(0 0 0% 0)', opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="w-full overflow-x-auto custom-scrollbar pt-2 flex justify-center bg-black/30 p-4 border border-[#00f0ff]/10 rounded-sm"
+        >
           <ReactGitHubCalendar 
             username={username}
             blockSize={11}
@@ -61,7 +68,7 @@ export default function GitHubCalendar() {
               dark: ['#0a0f12', '#00f0ff22', '#00f0ff55', '#00f0ff99', '#00f0ff']
             }}
           />
-        </div>
+        </motion.div>
       </div>
 
       {/* Footer Meta Stream with Link */}

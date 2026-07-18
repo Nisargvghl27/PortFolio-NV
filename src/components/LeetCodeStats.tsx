@@ -1,5 +1,8 @@
-// Pure display component — data is pre-fetched server-side in page.tsx
+'use client'
 
+import { motion } from 'framer-motion'
+
+// Pure display component - data is pre-fetched server-side in page.tsx
 interface LeetCodeData {
   totalSolved: number
   easySolved: number
@@ -14,6 +17,11 @@ interface LeetCodeStatsProps {
 }
 
 export default function LeetCodeStats({ stats, username }: LeetCodeStatsProps) {
+  // Pre-calculate target percentages
+  const easyPercent = stats && stats.totalSolved ? Math.min((stats.easySolved / stats.totalSolved) * 100, 100) : 0
+  const mediumPercent = stats && stats.totalSolved ? Math.min((stats.mediumSolved / stats.totalSolved) * 100, 100) : 0
+  const hardPercent = stats && stats.totalSolved ? Math.min((stats.hardSolved / stats.totalSolved) * 100, 100) : 0
+
   return (
     <div className="glass-panel relative overflow-hidden flex flex-col justify-between font-mono rounded-md min-h-[220px]">
       {/* Terminal Header Bar */}
@@ -37,10 +45,8 @@ export default function LeetCodeStats({ stats, username }: LeetCodeStatsProps) {
 
       <div className="p-6 flex-1 flex flex-col justify-center relative z-10">
         {stats ? (
-          // FIX: Changed from rigid grid to flex-col on mobile, grid on small screens and up
           <div className="flex flex-col sm:grid sm:grid-cols-5 gap-4 sm:items-center">
             {/* Total Block */}
-            {/* FIX: Changed border-r to border-b on mobile so it divides horizontally */}
             <div className="sm:col-span-2 border-b sm:border-b-0 sm:border-r border-[#00f0ff]/20 pb-3 sm:pb-0 sm:pr-2 mb-2 sm:mb-0">
               <span className="text-[9px] text-slate-500 block tracking-widest uppercase">&gt; TOTAL_SOLVED</span>
               <div className="text-3xl font-black text-white tracking-tighter mt-1 glow-text">
@@ -59,25 +65,48 @@ export default function LeetCodeStats({ stats, username }: LeetCodeStatsProps) {
                   <span>{stats.easySolved}</span>
                 </div>
                 <div className="h-1 bg-black rounded-full border border-emerald-500/20 overflow-hidden">
-                  <div className="h-full bg-emerald-400 shadow-[0_0_8px_#34d399]" style={{ width: `${Math.min((stats.easySolved / stats.totalSolved) * 100 || 0, 100)}%` }} />
+                  <motion.div 
+                    initial={{ clipPath: 'inset(0 100% 0 0)' }}
+                    whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0, ease: "easeOut" }}
+                    className="h-full bg-emerald-400 shadow-[0_0_8px_#34d399]" 
+                    style={{ width: `${easyPercent}%` }} 
+                  />
                 </div>
               </div>
+
               <div>
                 <div className="flex justify-between text-amber-400 font-bold uppercase text-[9px] mb-0.5 tracking-wider">
                   <span>MEDIUM</span>
                   <span>{stats.mediumSolved}</span>
                 </div>
                 <div className="h-1 bg-black rounded-full border border-amber-500/20 overflow-hidden">
-                  <div className="h-full bg-amber-400 shadow-[0_0_8px_#fbbf24]" style={{ width: `${Math.min((stats.mediumSolved / stats.totalSolved) * 100 || 0, 100)}%` }} />
+                  <motion.div 
+                    initial={{ clipPath: 'inset(0 100% 0 0)' }}
+                    whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                    className="h-full bg-amber-400 shadow-[0_0_8px_#fbbf24]" 
+                    style={{ width: `${mediumPercent}%` }} 
+                  />
                 </div>
               </div>
+
               <div>
                 <div className="flex justify-between text-rose-500 font-bold uppercase text-[9px] mb-0.5 tracking-wider">
                   <span>HARD</span>
                   <span>{stats.hardSolved}</span>
                 </div>
                 <div className="h-1 bg-black rounded-full border border-rose-500/20 overflow-hidden">
-                  <div className="h-full bg-rose-500 shadow-[0_0_8px_#f43f5e]" style={{ width: `${Math.min((stats.hardSolved / stats.totalSolved) * 100 || 0, 100)}%` }} />
+                  <motion.div 
+                    initial={{ clipPath: 'inset(0 100% 0 0)' }}
+                    whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+                    className="h-full bg-rose-500 shadow-[0_0_8px_#f43f5e]" 
+                    style={{ width: `${hardPercent}%` }} 
+                  />
                 </div>
               </div>
             </div>
