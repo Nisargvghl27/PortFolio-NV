@@ -92,14 +92,14 @@ const mobileContainerVariants = {
     opacity: 0, 
     y: 20, 
     scale: 0.9,
-    transition: { type: "spring", stiffness: 200, damping: 20 }
+    transition: { type: "spring" as const, stiffness: 200, damping: 20 }
   },
   visible: {
     opacity: 1, 
     y: 0, 
     scale: 1,
     transition: { 
-      type: "spring", 
+      type: "spring" as const, 
       stiffness: 200, 
       damping: 20, 
       staggerChildren: 0.05, 
