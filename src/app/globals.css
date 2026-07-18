@@ -217,20 +217,72 @@ html::before {
 
 /* --- MOBILE PERFORMANCE OPTIMIZATIONS --- */
 @media (max-width: 768px) {
-  /* Pause continuous GPU-heavy transforms on the aurora */
+  /* 1. Pause continuous GPU-heavy aurora transform */
   body::before {
     animation-play-state: paused;
   }
-  /* Reduce opacity of the background grid on small screens */
+
+  /* 2. Reduce background grid opacity */
   body::after {
-    opacity: 0.3;
+    opacity: 0.15;
   }
+
+  /* 3. Kill backdrop-blur — #1 GPU cost on mobile */
   .glass-panel {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background-color: rgba(10, 15, 18, 0.98);
   }
+
+  /* 4. Prevent browser from promoting random elements to GPU layers */
   * {
     will-change: auto !important;
+  }
+
+  /* 5. Kill the glitch-text pseudo-element animations entirely on mobile.
+        These run 2 simultaneous clip-path+transform loops forever. */
+  .glitch-text::before,
+  .glitch-text::after {
+    display: none;
+  }
+
+  /* 6. Kill ScanlineDivider shimmer — fires on every section header continuously */
+  .animate-\[shimmer_3s_infinite_linear\] {
+    animation: none;
+    display: none;
+  }
+
+  /* 7. Kill timeline dot ping loop — fires every 3s on each education dot */
+  .animate-timeline-ping::after {
+    animation: none;
+    display: none;
+  }
+
+  /* 8. Kill section nav ping loop — fires every 2s */
+  .animate-nav-ping::after {
+    animation: none;
+    display: none;
+  }
+
+  /* 9. Kill skill tag hover pulse — saves repaint on filter change */
+  .animate-skill-pulse:hover {
+    animation: none;
+  }
+
+  /* 10. content-visibility: auto — browser skips rendering offscreen sections.
+         This is the single biggest scroll performance win. */
+  section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 600px;
+  }
+
+  /* 11. Reduce box-shadow complexity on mobile */
+  .glass-panel {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+  }
+
+  /* 12. Remove glow-text shadow on mobile (text-shadow forces software rendering) */
+  .glow-text {
+    text-shadow: none;
   }
 }

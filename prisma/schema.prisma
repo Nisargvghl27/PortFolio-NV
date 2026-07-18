@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Project {
@@ -31,30 +32,26 @@ model Certificate {
   createdAt DateTime @default(now())
 }
 
-model Skill {
-  id       String   @id @default(uuid())
-  name     String
-  category String
-  color    String
-  level    String
-  latency  String
-  status   String
-  desc     String
-  order    Int      @default(0)
-}
-
 model Message {
   id        String   @id @default(uuid())
   name      String
   email     String
   message   String
-  isRead    Boolean  @default(false)
-  isReplied Boolean  @default(false)
   createdAt DateTime @default(now())
 }
 
 /*
 -- Migration SQL --
-ALTER TABLE "Message" ADD COLUMN "isRead" BOOLEAN NOT NULL DEFAULT false;
-ALTER TABLE "Message" ADD COLUMN "isReplied" BOOLEAN NOT NULL DEFAULT false;
+CREATE TABLE "Certificate" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "issuer" TEXT NOT NULL,
+    "date" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
+    "desc" TEXT NOT NULL,
+    "order" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Certificate_pkey" PRIMARY KEY ("id")
+);
 */
