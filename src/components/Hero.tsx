@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -8,9 +7,10 @@ function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
   const [displayText, setDisplayText] = useState('');
 
   useEffect(() => {
-    // FIX 1: Removed `navigator.maxTouchPoints > 0` to allow the scramble effect on mobile devices.
-    // We only skip if the user explicitly prefers reduced motion for accessibility.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Check for mobile devices or reduced motion preference to skip heavy RAF calculations
+    const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || navigator.maxTouchPoints > 0);
+    
+    if (isMobile || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setDisplayText(text);
       return;
     }
@@ -36,6 +36,7 @@ function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
               return char;
             }
           }
+
           return CHARS[Math.floor(Math.random() * CHARS.length)];
         }).join('');
 
@@ -50,6 +51,7 @@ function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
     };
 
     animationFrameId = requestAnimationFrame(animate);
+
     return () => cancelAnimationFrame(animationFrameId);
   }, [text, delay]);
 
@@ -193,6 +195,7 @@ export default function Hero() {
         setDisplayText(nextText);
       }, speed);
     }
+
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, roleIndex, hasStartedTyping]);
 
@@ -232,6 +235,7 @@ export default function Hero() {
       await new Promise(resolve => setTimeout(resolve, Math.random() * 200 + 100));
       setHistory(prev => [...prev, { id: crypto.randomUUID(), type: 'output', text: scriptLines[i] }]);
     }
+
     setIsTerminalRunning(false);
   };
 
@@ -253,10 +257,10 @@ export default function Hero() {
   return (
     <section className="relative flex flex-col items-center justify-center w-full min-h-screen bg-transparent text-white m-0 p-0 selection:bg-[#00f0ff] selection:text-black font-sans">
       
-      {/* FIX 2: Adjusted ambient background glows with minimum fixed pixel widths for mobile sizes */}
+      {/* Background ambient glows (halved opacity and reduced blur on mobile) */}
       <div className="fixed inset-0 w-full h-full pointer-events-none overflow-hidden -z-10">
-        <div className="absolute top-[0%] right-[-10%] w-[350px] h-[350px] md:w-[60vw] md:h-[60vw] bg-[#00f0ff] opacity-10 blur-[100px] md:blur-[150px] rounded-full" />
-        <div className="absolute bottom-[-5%] left-[-10%] w-[300px] h-[300px] md:w-[50vw] md:h-[50vw] bg-[#ff0055] opacity-[0.03] blur-[80px] md:blur-[120px] rounded-full" />
+        <div className="absolute top-[0%] right-[-10%] w-[350px] h-[350px] md:w-[60vw] md:h-[60vw] bg-[#00f0ff] opacity-5 md:opacity-10 blur-[60px] md:blur-[150px] rounded-full" />
+        <div className="absolute bottom-[-5%] left-[-10%] w-[300px] h-[300px] md:w-[50vw] md:h-[50vw] bg-[#ff0055] opacity-[0.015] md:opacity-[0.03] blur-[60px] md:blur-[120px] rounded-full" />
         <div className="absolute inset-0 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAADCAYAAABS3WWCAAAAEUlEQVQImWNgYGD4z8DAwMgAAz8B/80B3P8AAAAASUVORK5CYII=')] opacity-30 mix-blend-overlay" />
       </div>
 
@@ -272,7 +276,6 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* FIX 3: Adjusted base typography to scale from `text-4xl` so it doesn't break to a new line awkwardly on mobile screens */}
           <motion.h1 variants={itemVariants} className="font-mono font-black text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500 uppercase tracking-tighter mb-2" style={{ textShadow: '0px 0px 20px rgba(255,255,255,0.1)' }}>
             <ScrambleText text="NISARG" delay={300} /><br />
             <ScrambleText text="VAGHELA" delay={500} />
@@ -301,6 +304,7 @@ export default function Hero() {
               <ScrambleText text="[ ESTABLISH_UPLINK ]" delay={1200} />
             </CyberButton>
           </motion.div>
+
         </motion.div>
 
         <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.5, type: 'spring' }} className="lg:col-span-5 w-full mt-12 lg:mt-0 relative">
@@ -337,10 +341,10 @@ export default function Hero() {
                 ) : <span className="animate-pulse text-[#00f0ff]">&#9608;</span>}
               </div>
             </div>
+
           </div>
         </motion.div>
       </div>
-
       <style dangerouslySetInnerHTML={{ __html: `.custom-scrollbar::-webkit-scrollbar { width: 6px; } .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); } .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.2); border-radius: 3px; } .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 240, 255, 0.5); }` }} />
     </section>
   );

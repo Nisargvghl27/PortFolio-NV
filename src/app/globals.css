@@ -100,7 +100,8 @@ html::before {
   display: inline-block;
 }
 
-.glitch-text::before, .glitch-text::after {
+.glitch-text::before,
+.glitch-text::after {
   content: attr(data-text);
   position: absolute;
   top: 0;
@@ -213,4 +214,17 @@ html::before {
   border-radius: 50%;
   border: 1px solid #22d3ee; /* Tailwind cyan-400 */
   animation: nav-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* --- MOBILE PERFORMANCE OPTIMIZATIONS --- */
+@media (max-width: 768px) {
+  /* Pause continuous GPU-heavy transforms on the aurora */
+  body::before {
+    animation-play-state: paused;
+  }
+  
+  /* Reduce opacity of the background grid on small screens */
+  body::after {
+    opacity: 0.3;
+  }
 }

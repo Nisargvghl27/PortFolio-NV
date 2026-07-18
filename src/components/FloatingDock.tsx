@@ -101,9 +101,9 @@ const mobileContainerVariants = {
     transition: { 
       type: "spring" as const, 
       stiffness: 200, 
-      damping: 20, 
-      staggerChildren: 0.05, 
-      delayChildren: 0.05 
+      damping: 20,
+      staggerChildren: 0.05,
+      delayChildren: 0.05
     }
   }
 }
@@ -136,15 +136,17 @@ function DockIcon({
   const [showRipple, setShowRipple] = useState(false)
   const [magneticPosition, setMagneticPosition] = useState({ x: 0, y: 0 })
 
+  const isTouch = typeof window !== 'undefined' && navigator.maxTouchPoints > 0;
+
   // Calculate distance between mouse X and center of this icon
   const distance = useTransform(mouseX, (val: number) => {
+    if (isTouch) return 0; // Bypass math on touch devices
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 }
     return val - bounds.x - bounds.width / 2
   })
 
   // Dynamic width and height of the icon button container (scales from 40px to 56px)
   const widthTransform = useTransform(distance, [-150, 0, 150], [40, 56, 40])
-  
   // Dynamic internal SVG size (scales from 16px to 22px)
   const iconSizeTransform = useTransform(distance, [-150, 0, 150], [18, 24, 18])
 
@@ -162,6 +164,7 @@ function DockIcon({
 
   // Magnetic Pull Calculation when cursor moves inside the button
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (isTouch) return; // Prevent unnecessary recalculations on touch devices
     const bounds = ref.current?.getBoundingClientRect()
     if (bounds) {
       const x = e.clientX - bounds.left - bounds.width / 2
@@ -172,6 +175,7 @@ function DockIcon({
   }
 
   const handleMouseLeave = () => {
+    if (isTouch) return;
     setHoveredIndex(null)
     setMagneticPosition({ x: 0.5, y: 0.5 })
   }
@@ -188,12 +192,12 @@ function DockIcon({
     <motion.div
       variants={itemVariants}
       className="relative flex items-center justify-center h-full"
-      onMouseEnter={() => setHoveredIndex(idx)}
+      onMouseEnter={() => !isTouch && setHoveredIndex(idx)}
       onMouseLeave={handleMouseLeave}
     >
       {/* Blinking tooltips above icons on hover */}
       <AnimatePresence>
-        {hoveredIndex === idx && (
+        {hoveredIndex === idx && !isTouch && (
           <motion.div
             initial={{ opacity: 0, y: 10, scale: 0.85 }}
             animate={{ opacity: 1, y: -38, scale: 1 }}
@@ -213,7 +217,8 @@ function DockIcon({
         rel="noopener noreferrer"
         onClick={handleTap}
         onMouseMove={handleMouseMove}
-        style={{ width, height: width }}
+        // Force fixed width/height on mobile, otherwise utilize framer motion spring values
+        style={{ width: isTouch ? 40 : width, height: isTouch ? 40 : width }}
         animate={
           isBouncing 
             ? { 
@@ -225,20 +230,20 @@ function DockIcon({
                   times: [0, 0.15, 0.3, 0.45, 0.6, 0.72, 0.82, 0.92, 1] 
                 } 
               } 
-            : hoveredIndex === idx 
+            : hoveredIndex === idx && !isTouch
               ? { x: magneticPosition.x, y: magneticPosition.y - 6  } 
               : { x: 0, y: 0 }
         }
-        whileHover={{ 
+        whileHover={!isTouch ? { 
           borderColor: 'rgba(0, 240, 255, 0.6)',
           boxShadow: '0 8px 16px rgba(0, 240, 255, 0.25)',
-        }}
+        } : undefined}
         whileTap={{ scale: 0.92 }}
         transition={{ type: "spring", stiffness: 220, damping: 15 }}
         className="flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-cyan-400 transition-colors cursor-pointer relative"
       >
         {/* Soft neon background glow on hover */}
-        {hoveredIndex === idx && (
+        {hoveredIndex === idx && !isTouch && (
           <motion.div
             layoutId="dock-bg-glow"
             className="absolute inset-0 rounded-full bg-cyan-500/10 blur-sm pointer-events-none"
@@ -261,8 +266,8 @@ function DockIcon({
         
         {/* SVG Icon with subtle hover wiggle */}
         <motion.div 
-          style={{ width: iconSize, height: iconSize }} 
-          whileHover={{ rotate: [0, -10, 8, 0], transition: { duration: 0.4 } }}
+          style={{ width: isTouch ? 18 : iconSize, height: isTouch ? 18 : iconSize }}
+          whileHover={!isTouch ? { rotate: [0, -10, 8, 0], transition: { duration: 0.4 } } : undefined}
           className="flex items-center justify-center [&>svg]:w-full [&>svg]:h-full z-10"
         >
           {icon}
@@ -270,7 +275,7 @@ function DockIcon({
       </motion.a>
 
       {/* Shared Sliding Indicator Dot at the bottom with breathing/pulsing animation */}
-      {hoveredIndex === idx && (
+      {hoveredIndex === idx && !isTouch && (
         <motion.div
           layoutId="dock-indicator"
           animate={{ 

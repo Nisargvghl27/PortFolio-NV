@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FadeIn from './FadeIn'
 
@@ -232,6 +232,15 @@ const skillsData: Skill[] = [
 
 export default function Skills() {
   const [activeCategory, setActiveCategory] = useState('all')
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Hydration-safe mobile check
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // Memoized filtered results to prevent re-filtering on non-relevant re-renders
   const filteredSkills = useMemo(() => {
@@ -289,21 +298,12 @@ export default function Skills() {
               {/* Ambient center cyan shadow glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#00f0ff]/10 blur-3xl pointer-events-none" />
               
-              {/* Centered flow of tags */}
-              <motion.div 
-                layout
-                className="flex flex-wrap gap-4 justify-center items-center max-w-4xl mx-auto relative z-10"
-              >
-                <AnimatePresence mode="popLayout">
+              {/* Conditional Rendering: Plain CSS for Mobile, Framer Motion for Desktop */}
+              {isMobile ? (
+                <div className="flex flex-wrap gap-4 justify-center items-center max-w-4xl mx-auto relative z-10">
                   {filteredSkills.map((skill) => (
-                    <motion.span
-                      layout
-                      initial={{ opacity: 0, scale: 0.85, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.85, y: -10 }}
-                      transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+                    <span
                       key={skill.name}
-                      // ADDED animate-skill-pulse here
                       className={`group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 text-slate-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color} animate-skill-pulse`}
                     >
                       <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
@@ -317,12 +317,43 @@ export default function Skills() {
                       <span className="relative tracking-wider font-semibold">
                         {skill.name}
                       </span>
-                    </motion.span>
+                    </span>
                   ))}
-                </AnimatePresence>
-              </motion.div>
+                </div>
+              ) : (
+                <motion.div 
+                  layout
+                  className="flex flex-wrap gap-4 justify-center items-center max-w-4xl mx-auto relative z-10"
+                >
+                  <AnimatePresence mode="popLayout">
+                    {filteredSkills.map((skill) => (
+                      <motion.span
+                        layout
+                        initial={{ opacity: 0, scale: 0.85, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.85, y: -10 }}
+                        transition={{ type: 'spring', stiffness: 450, damping: 28 }}
+                        key={skill.name}
+                        className={`group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 text-slate-300 text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm ${skill.color} animate-skill-pulse`}
+                      >
+                        <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                        <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#00f0ff]/40 group-hover:border-[#00f0ff] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                        
+                        {skillIcons[skill.name] && (
+                          <span className="flex items-center justify-center w-4 h-4 text-slate-400 group-hover:text-inherit transition-colors duration-300 shrink-0">
+                            {skillIcons[skill.name]}
+                          </span>
+                        )}
+                        <span className="relative tracking-wider font-semibold">
+                          {skill.name}
+                        </span>
+                      </motion.span>
+                    ))}
+                  </AnimatePresence>
+                </motion.div>
+              )}
             </div>
-            
+
           </div>
         </div>
       </FadeIn>
