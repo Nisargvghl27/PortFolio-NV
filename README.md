@@ -4,10 +4,6 @@
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
   <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
-  <br /><br />
-  <a href="https://github.com/Nisargvghl27/PortFolio-NV/actions/workflows/lint.yml">
-    <img src="https://github.com/Nisargvghl27/PortFolio-NV/actions/workflows/lint.yml/badge.svg" alt="Lint Status" />
-  </a>
 </div>
 
 <br />
