@@ -7,7 +7,19 @@ import SectionNav from '@/components/SectionNav'
 import MatrixRainWrapper from '@/components/MatrixRainWrapper'
 import IntroScreen from '@/components/IntroScreen'
 import FloatingDock from '@/components/FloatingDock'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://nisargvaghela.dev'),
@@ -38,7 +50,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
-      <body suppressHydrationWarning className="font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
+      <body suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200`}>
 
         {/* Animated Boot Sequence (Only plays once per session) */}
         <IntroScreen />

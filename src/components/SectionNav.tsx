@@ -16,6 +16,8 @@ export default function SectionNav() {
   const [activeSection, setActiveSection] = useState('hero')
 
   useEffect(() => {
+    if (window.innerWidth < 768) return // Skip observer on mobile
+
     // Intersection Observer to track which section is currently in the middle of the viewport
     const observer = new IntersectionObserver(
       (entries) => {

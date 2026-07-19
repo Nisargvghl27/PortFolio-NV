@@ -1,8 +1,9 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion, useScroll, useSpring } from 'framer-motion'
 
-export default function ScrollProgress() {
+function ScrollProgressBar() {
   const { scrollYProgress } = useScroll()
   
   // Spring animation for a smoother filling effect
@@ -18,4 +19,19 @@ export default function ScrollProgress() {
       style={{ scaleX }}
     />
   )
+}
+
+export default function ScrollProgress() {
+  const [isMobile, setIsMobile] = useState(true) // Start with true/safe default
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  if (isMobile) return null
+
+  return <ScrollProgressBar />
 }
