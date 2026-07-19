@@ -259,14 +259,14 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
 
                         {/* CONTENT WRAPPER */}
                         <div className="w-full max-w-7xl mx-auto px-6 relative z-10 pt-28 md:pt-16">
-                            <AnimatePresence mode="wait">
+                            <AnimatePresence mode="popLayout">
                                 <motion.div
                                     key={activeIndex}
-                                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                                    initial={{ opacity: 0, y: 25, scale: 0.98 }}
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, y: -40, scale: 1.05 }}
+                                    exit={{ opacity: 0, y: -25, scale: 1.02 }}
                                     transition={{
-                                        duration: 0.6,
+                                        duration: 0.5,
                                         ease: [0.16, 1, 0.3, 1]
                                     }}
                                     className="w-full flex flex-col lg:flex-row gap-4 lg:gap-16 items-center"
