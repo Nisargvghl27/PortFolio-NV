@@ -36,7 +36,7 @@ export default function Footer() {
           </svg>
         </a>
         <a 
-          href="mailto:nisargvghl27@gmail.com" 
+          href="mailto:nisargvaghela103@gmail.com" 
           title="Email"
           className="hover:text-neon hover:scale-110 transition-all"
         >
