@@ -10,11 +10,13 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.42.2",
     "next": "16.2.10",
+    "next-cloudinary": "^6.17.5",
     "pg": "^8.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",

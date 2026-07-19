@@ -135,14 +135,14 @@ export default function IntroScreen() {
             className="absolute inset-0 opacity-[0.07] pointer-events-none"
             style={{
               backgroundImage:
-                'linear-gradient(to right, rgba(0,240,255,1) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,240,255,1) 1px, transparent 1px)',
+                'linear-gradient(to right, rgba(var(--theme-neon-rgb), 1) 1px, transparent 1px), linear-gradient(to bottom, rgba(var(--theme-neon-rgb), 1) 1px, transparent 1px)',
               backgroundSize: '48px 48px',
             }}
           />
 
           {/*   Radial ambient glow   */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#00f0ff] opacity-[0.04] blur-[120px] rounded-full" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-neon opacity-[0.04] blur-[120px] rounded-full" />
           </div>
 
           {/*   Top scanline sweep (Disabled on mobile for performance)  */}
@@ -168,7 +168,7 @@ export default function IntroScreen() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 + i * 0.07, duration: 0.4 }}
-              className={`absolute w-8 h-8 border-[#00f0ff]/60 ${cls}`}
+              className={`absolute w-8 h-8 border-neon/60 ${cls}`}
             />
           ))}
 
@@ -181,20 +181,20 @@ export default function IntroScreen() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15, duration: 0.4 }}
-                className="text-[10px] text-[#00f0ff]/70 tracking-[0.4em] uppercase mb-3 flex items-center justify-center gap-2"
+                className="text-[10px] text-neon/70 tracking-[0.4em] uppercase mb-3 flex items-center justify-center gap-2"
               >
-                <span className="w-1.5 h-1.5 bg-[#00f0ff] rounded-full animate-pulse" />
+                <span className="w-1.5 h-1.5 bg-neon rounded-full animate-pulse" />
                 SYSTEM_BOOT_v2.4.1
-                <span className="w-1.5 h-1.5 bg-[#00f0ff] rounded-full animate-pulse" />
+                <span className="w-1.5 h-1.5 bg-neon rounded-full animate-pulse" />
               </motion.div>
               
               <h1 className="font-black uppercase leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500"
-                style={{ fontSize: 'clamp(2.8rem, 10vw, 5rem)', textShadow: '0 0 40px rgba(0,240,255,0.2)' }}
+                style={{ fontSize: 'clamp(2.8rem, 10vw, 5rem)', textShadow: '0 0 40px rgba(var(--theme-neon-rgb), 0.2)' }}
               >
-                <span className="block text-white drop-shadow-[0_0_12px_rgba(0,240,255,0.5)]">
+                <span className="block text-white drop-shadow-[0_0_12px_rgba(var(--theme-neon-rgb), 0.5)]">
                   {titleLine1 || '\u00A0'}
                 </span>
-                <span className="block text-[#00f0ff] drop-shadow-[0_0_18px_rgba(0,240,255,0.7)]">
+                <span className="block text-neon drop-shadow-[0_0_18px_rgba(var(--theme-neon-rgb), 0.7)]">
                   {titleLine2 || '\u00A0'}
                 </span>
               </h1>
@@ -204,14 +204,14 @@ export default function IntroScreen() {
             <div className="w-full space-y-2">
               <div className="flex justify-between text-[10px] tracking-widest uppercase">
                 <span className="text-slate-500">LOADING_PORTFOLIO</span>
-                <span className="text-[#00f0ff] font-bold tabular-nums">
+                <span className="text-neon font-bold tabular-nums">
                   {Math.round(progress)}%
                 </span>
               </div>
-              <div className="w-full h-[3px] bg-white/5 border border-[#00f0ff]/10 overflow-hidden relative">
+              <div className="w-full h-[3px] bg-white/5 border border-neon/10 overflow-hidden relative">
                 {/* Base fill */}
                 <motion.div
-                  className="h-full bg-gradient-to-r from-[#00f0ff]/60 to-[#00f0ff]"
+                  className="h-full bg-gradient-to-r from-neon/60 to-neon"
                   style={{ width: `${progress}%` }}
                   transition={{ duration: 0.1 }}
                 />
@@ -233,7 +233,7 @@ export default function IntroScreen() {
                   transition={{ duration: 0.25, ease: 'easeOut' }}
                   className={`text-[11px] tracking-widest font-bold flex items-center gap-2 ${line.color}`}
                 >
-                  <span className="text-[#00f0ff]/40 shrink-0">&gt;</span>
+                  <span className="text-neon/40 shrink-0">&gt;</span>
                   {line.text}
                   {i === visibleLines - 1 && visibleLines < BOOT_LINES.length && (
                     <span className="animate-pulse ml-1">_</span>
@@ -252,7 +252,7 @@ export default function IntroScreen() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.4 }}
-            className="absolute bottom-0 left-0 right-0 border-t border-[#00f0ff]/10 bg-black/40 px-6 py-2 flex items-center justify-between text-[9px] text-slate-600 tracking-widest uppercase"
+            className="absolute bottom-0 left-0 right-0 border-t border-neon/10 bg-black/40 px-6 py-2 flex items-center justify-between text-[9px] text-slate-600 tracking-widest uppercase"
           >
             <span>NIT_SURAT // FULL_STACK_ENG</span>
             <span className="flex items-center gap-2">
@@ -267,7 +267,7 @@ export default function IntroScreen() {
               initial={{ opacity: 0.6 }}
               animate={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="absolute inset-0 bg-[#00f0ff]/5 pointer-events-none z-20"
+              className="absolute inset-0 bg-neon/5 pointer-events-none z-20"
             />
           )}
         </motion.div>

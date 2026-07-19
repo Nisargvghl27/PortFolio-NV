@@ -16,7 +16,7 @@ export default function SectionNav() {
   const [activeSection, setActiveSection] = useState('hero')
 
   useEffect(() => {
-    if (window.innerWidth < 768) return // Skip observer on mobile
+    if (window.innerWidth < 768) return
 
     // Intersection Observer to track which section is currently in the middle of the viewport
     const observer = new IntersectionObserver(
@@ -59,7 +59,7 @@ export default function SectionNav() {
             aria-label={`Scroll to ${label}`}
           >
             {/* Hover Tooltip */}
-            <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 bg-black/80 border border-cyan-500/30 text-cyan-400 text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap uppercase tracking-wider shadow-[0_0_10px_rgba(0,240,255,0.1)]">
+            <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-2 py-1 bg-black/80 border border-cyan-500/30 text-cyan-400 text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap uppercase tracking-wider shadow-[0_0_10px_rgba(var(--theme-neon-rgb), 0.1)]">
               {label}
             </span>
             
@@ -67,7 +67,7 @@ export default function SectionNav() {
             <div
               className={`relative rounded-full transition-all duration-300 ${
                 isActive
-                  ? 'w-2.5 h-2.5 bg-cyan-400 shadow-[0_0_12px_rgba(0,240,255,0.9)] animate-nav-ping'
+                  ? 'w-2.5 h-2.5 bg-cyan-400 shadow-[0_0_12px_rgba(var(--theme-neon-rgb), 0.9)] animate-nav-ping'
                   : 'w-1.5 h-1.5 bg-white/20 group-hover:bg-cyan-500/50'
               }`}
             />

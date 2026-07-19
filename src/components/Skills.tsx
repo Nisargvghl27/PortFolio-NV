@@ -226,7 +226,7 @@ export default function Skills({ skillsData }: { skillsData: Skill[] }) {
         <div className="space-y-6">
           
           {/* 1. Centered Terminal Filter Bar */}
-          <div className="flex flex-wrap gap-2.5 justify-center border-b border-[#00f0ff]/20 pb-5">
+          <div className="flex flex-wrap gap-2.5 justify-center border-b border-neon/20 pb-5">
             {categories.map((cat) => {
               const isActive = activeCategory === cat.id
               return (
@@ -236,14 +236,14 @@ export default function Skills({ skillsData }: { skillsData: Skill[] }) {
                   suppressHydrationWarning
                   className={`relative px-4 py-2 border transition-all text-xs font-bold uppercase tracking-widest select-none ${
                     isActive
-                      ? 'border-[#00f0ff] bg-[#00f0ff]/10 text-[#00f0ff] shadow-[0_0_20px_rgba(0,240,255,0.2)]'
-                      : 'border-[#00f0ff]/20 text-slate-500 hover:text-[#00f0ff] hover:border-[#00f0ff]/50 hover:bg-[#00f0ff]/5'
+                      ? 'border-neon bg-neon/10 text-neon shadow-[0_0_20px_rgba(var(--theme-neon-rgb), 0.2)]'
+                      : 'border-neon/20 text-slate-500 hover:text-neon hover:border-neon/50 hover:bg-neon/5'
                   }`}
                 >
                   {isActive && (
                     <>
-                      <span className="absolute -top-1 -left-1 w-1.5 h-1.5 border-t-2 border-l-2 border-[#00f0ff]" />
-                      <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border-b-2 border-r-2 border-[#00f0ff]" />
+                      <span className="absolute -top-1 -left-1 w-1.5 h-1.5 border-t-2 border-l-2 border-neon" />
+                      <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border-b-2 border-r-2 border-neon" />
                     </>
                   )}
                   [ {cat.label} ]
@@ -261,13 +261,13 @@ export default function Skills({ skillsData }: { skillsData: Skill[] }) {
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#00f0ff08_1px,transparent_1px),linear-gradient(to_bottom,#00f0ff08_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none rounded-md" />
               
               {/* Intersect symbols */}
-              <span className="absolute top-2 left-2 text-[#00f0ff]/40 text-xs font-bold pointer-events-none select-none">+</span>
-              <span className="absolute top-2 right-2 text-[#00f0ff]/40 text-xs font-bold pointer-events-none select-none">+</span>
-              <span className="absolute bottom-2 left-2 text-[#00f0ff]/40 text-xs font-bold pointer-events-none select-none">+</span>
-              <span className="absolute bottom-2 right-2 text-[#00f0ff]/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute top-2 left-2 text-neon/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute top-2 right-2 text-neon/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute bottom-2 left-2 text-neon/40 text-xs font-bold pointer-events-none select-none">+</span>
+              <span className="absolute bottom-2 right-2 text-neon/40 text-xs font-bold pointer-events-none select-none">+</span>
               
               {/* Ambient center cyan shadow glow */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#00f0ff]/10 blur-3xl pointer-events-none" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-neon/10 blur-3xl pointer-events-none" />
               
               {/* Conditional Rendering: Plain CSS for Mobile, Framer Motion for Desktop */}
               {(!skillsData || skillsData.length === 0) ? (
@@ -282,10 +282,10 @@ export default function Skills({ skillsData }: { skillsData: Skill[] }) {
                       <span
                         key={skill.name}
                         style={{ '--hover-color': hoverColor } as React.CSSProperties}
-                        className="group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 hover:border-[var(--hover-color)]/50 hover:bg-[var(--hover-color)]/5 text-slate-300 hover:text-[var(--hover-color)] text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm animate-skill-pulse"
+                        className="group relative flex items-center gap-2 bg-[#050505]/60 border border-neon/20 hover:border-[var(--hover-color)]/50 hover:bg-[var(--hover-color)]/5 text-slate-300 hover:text-[var(--hover-color)] text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm animate-skill-pulse"
                       >
-                        <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
-                        <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#00f0ff]/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                        <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-neon/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                        <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-neon/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
                         
                         {skillIcons[skill.name] && (
                           <span className="flex items-center justify-center w-4 h-4 text-slate-400 group-hover:text-inherit transition-colors duration-300 shrink-0">
@@ -316,10 +316,10 @@ export default function Skills({ skillsData }: { skillsData: Skill[] }) {
                           transition={{ type: 'spring', stiffness: 450, damping: 28 }}
                           key={skill.name}
                           style={{ '--hover-color': hoverColor } as React.CSSProperties}
-                          className="group relative flex items-center gap-2 bg-[#050505]/60 border border-[#00f0ff]/20 hover:border-[var(--hover-color)]/50 hover:bg-[var(--hover-color)]/5 text-slate-300 hover:text-[var(--hover-color)] text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm animate-skill-pulse"
+                          className="group relative flex items-center gap-2 bg-[#050505]/60 border border-neon/20 hover:border-[var(--hover-color)]/50 hover:bg-[var(--hover-color)]/5 text-slate-300 hover:text-[var(--hover-color)] text-xs px-4 py-2 font-mono transition-all duration-300 cursor-default select-none rounded-sm shadow-sm animate-skill-pulse"
                         >
-                          <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#00f0ff]/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
-                          <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#00f0ff]/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                          <span className="absolute top-0 left-0 w-1 h-1 border-t border-l border-neon/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
+                          <span className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-neon/40 group-hover:border-[var(--hover-color)] group-hover:w-1.5 group-hover:h-1.5 transition-all" />
                           
                           {skillIcons[skill.name] && (
                             <span className="flex items-center justify-center w-4 h-4 text-slate-400 group-hover:text-inherit transition-colors duration-300 shrink-0">

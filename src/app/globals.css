@@ -8,10 +8,29 @@
 @theme inline {
   --color-background: #050505;
   --color-foreground: #ededed;
-  --color-neon-cyan: #00f0ff;
-  --color-neon-blue: #0070f3;
+  --color-neon: var(--theme-neon);
+  --color-neon-cyan: var(--theme-neon);
+  --color-neon-blue: var(--theme-neon-secondary);
   --font-mono: var(--font-jetbrains-mono);
   --font-sans: var(--font-inter);
+}
+
+:root, body[data-theme="cyan"] {
+  --theme-neon: #00f0ff;
+  --theme-neon-rgb: 0, 240, 255;
+  --theme-neon-secondary: #0070f3;
+  --theme-neon-secondary-rgb: 0, 112, 243;
+  --theme-neon-dim: rgba(0, 240, 255, 0.2);
+  --theme-neon-glow: rgba(0, 240, 255, 0.6);
+}
+
+body[data-theme="violet"] {
+  --theme-neon: #b026ff;
+  --theme-neon-rgb: 176, 38, 255;
+  --theme-neon-secondary: #6b21a8;
+  --theme-neon-secondary-rgb: 107, 33, 168;
+  --theme-neon-dim: rgba(176, 38, 255, 0.2);
+  --theme-neon-glow: rgba(176, 38, 255, 0.6);
 }
 
 body {
@@ -32,8 +51,8 @@ body::before {
   height: 200%;
   z-index: -3;
   background:
-    radial-gradient(circle at 30% 30%, rgba(0, 240, 255, 0.03) 0%, transparent 40%),
-    radial-gradient(circle at 70% 40%, rgba(0, 112, 243, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 30% 30%, rgba(var(--theme-neon-rgb), 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 70% 40%, rgba(var(--theme-neon-secondary-rgb), 0.03) 0%, transparent 50%),
     radial-gradient(circle at 40% 70%, rgba(255, 0, 85, 0.02) 0%, transparent 50%);
   animation: aurora-drift 25s ease-in-out infinite alternate;
   pointer-events: none;
@@ -49,8 +68,8 @@ body::after {
   height: 100vh;
   z-index: -2;
   background-image:
-    linear-gradient(to right, rgba(0, 240, 255, 0.15) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 240, 255, 0.15) 1px, transparent 1px);
+    linear-gradient(to right, rgba(var(--theme-neon-rgb), 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--theme-neon-rgb), 0.15) 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
 }
@@ -75,13 +94,13 @@ html::before {
 
 /* Custom Neon & Glass Utilities Unified with Hero */
 .glass-panel {
-  @apply bg-[#0a0f12]/95 backdrop-blur-xl border border-[#00f0ff]/30;
-  box-shadow: 0 0 30px rgba(0,240,255,0.05), inset 0 0 20px rgba(0,240,255,0.05);
+  @apply bg-[#0a0f12]/95 backdrop-blur-xl border border-[var(--theme-neon)]/30;
+  box-shadow: 0 0 30px rgba(var(--theme-neon-rgb), 0.05), inset 0 0 20px rgba(var(--theme-neon-rgb), 0.05);
   border-radius: 0.375rem; /* rounded-md */
 }
 
 .glow-text {
-  text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+  text-shadow: 0 0 12px rgba(var(--theme-neon-rgb), 0.6);
 }
 
 .glow-border-hover {
@@ -89,8 +108,8 @@ html::before {
 }
 
 .glow-border-hover:hover {
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.2), inset 0 0 10px rgba(0, 240, 255, 0.1);
-  border-color: rgba(0, 240, 255, 0.8);
+  box-shadow: 0 0 20px rgba(var(--theme-neon-rgb), 0.2), inset 0 0 10px rgba(var(--theme-neon-rgb), 0.1);
+  border-color: rgba(var(--theme-neon-rgb), 0.8);
 }
 
 /* Glitch Text Effect */
@@ -117,13 +136,13 @@ html::before {
 
 .glitch-text::before {
   left: 2px;
-  text-shadow: -1px 0 rgba(0, 240, 255, 0.8);
+  text-shadow: -1px 0 rgba(var(--theme-neon-rgb), 0.8);
   animation: glitch-anim-1 3s infinite linear alternate-reverse;
 }
 
 .glitch-text::after {
   left: -2px;
-  text-shadow: 2px 0 rgba(0, 112, 243, 0.8);
+  text-shadow: 2px 0 rgba(var(--theme-neon-secondary-rgb), 0.8);
   animation: glitch-anim-2 3.5s infinite linear alternate-reverse;
 }
 
@@ -163,9 +182,9 @@ html::before {
 
 /* CONTACT FORM NEON FOCUS PULSE */
 @keyframes focus-pulse {
-  0% { box-shadow: inset 0 0 10px rgba(0,240,255,0.05), 0 0 0px rgba(0,240,255,0); }
-  40% { box-shadow: inset 0 0 10px rgba(0,240,255,0.05), 0 0 15px rgba(0,240,255,0.4); }
-  100% { box-shadow: inset 0 0 10px rgba(0,240,255,0.05), 0 0 8px rgba(0,240,255,0.2); }
+  0% { box-shadow: inset 0 0 10px rgba(var(--theme-neon-rgb), 0.05), 0 0 0px rgba(var(--theme-neon-rgb), 0); }
+  40% { box-shadow: inset 0 0 10px rgba(var(--theme-neon-rgb), 0.05), 0 0 15px rgba(var(--theme-neon-rgb), 0.4); }
+  100% { box-shadow: inset 0 0 10px rgba(var(--theme-neon-rgb), 0.05), 0 0 8px rgba(var(--theme-neon-rgb), 0.2); }
 }
 
 .focus-pulse-anim:focus {
@@ -226,7 +245,7 @@ html::before {
     opacity: 0.15;
   }
 
-  /* 3. Kill backdrop-blur — #1 GPU cost on mobile */
+  /* 3. Kill backdrop-blur   #1 GPU cost on mobile */
   .glass-panel {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -245,30 +264,30 @@ html::before {
     display: none;
   }
 
-  /* 6. Kill ScanlineDivider shimmer — fires on every section header continuously */
+  /* 6. Kill ScanlineDivider shimmer   fires on every section header continuously */
   .animate-\[shimmer_3s_infinite_linear\] {
     animation: none;
     display: none;
   }
 
-  /* 7. Kill timeline dot ping loop — fires every 3s on each education dot */
+  /* 7. Kill timeline dot ping loop   fires every 3s on each education dot */
   .animate-timeline-ping::after {
     animation: none;
     display: none;
   }
 
-  /* 8. Kill section nav ping loop — fires every 2s */
+  /* 8. Kill section nav ping loop   fires every 2s */
   .animate-nav-ping::after {
     animation: none;
     display: none;
   }
 
-  /* 9. Kill skill tag hover pulse — saves repaint on filter change */
+  /* 9. Kill skill tag hover pulse   saves repaint on filter change */
   .animate-skill-pulse:hover {
     animation: none;
   }
 
-  /* 10. content-visibility: auto — browser skips rendering offscreen sections.
+  /* 10. content-visibility: auto   browser skips rendering offscreen sections.
          This is the single biggest scroll performance win. */
   section {
     content-visibility: auto;

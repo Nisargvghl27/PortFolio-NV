@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 const dockItems = [
   {
     label: './github',
+    ariaLabel: 'Visit my GitHub profile',
     href: 'https://github.com/nisargvghl27',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -17,6 +18,7 @@ const dockItems = [
   },
   {
     label: './linkedin',
+    ariaLabel: 'Visit my LinkedIn profile',
     href: 'https://linkedin.com/in/nisargvghl27',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -28,6 +30,7 @@ const dockItems = [
   },
   {
     label: './codeforces',
+    ariaLabel: 'Visit my Codeforces profile',
     href: 'https://codeforces.com/profile/nisargvghl27',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -37,6 +40,7 @@ const dockItems = [
   },
   {
     label: './leetcode',
+    ariaLabel: 'Visit my LeetCode profile',
     href: 'https://leetcode.com/u/nisargvghl27/',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -46,6 +50,7 @@ const dockItems = [
   },
   {
     label: './resume',
+    ariaLabel: 'Download my Resume',
     href: '/resume.pdf',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -117,6 +122,7 @@ const mobileItemVariants = {
 function DockIcon({
   mouseX,
   label,
+  ariaLabel,
   href,
   icon,
   hoveredIndex,
@@ -125,6 +131,7 @@ function DockIcon({
 }: {
   mouseX: any
   label: string
+  ariaLabel: string
   href: string
   icon: React.ReactNode
   hoveredIndex: number | null
@@ -147,6 +154,7 @@ function DockIcon({
 
   // Dynamic width and height of the icon button container (scales from 40px to 56px)
   const widthTransform = useTransform(distance, [-150, 0, 150], [40, 56, 40])
+  
   // Dynamic internal SVG size (scales from 16px to 22px)
   const iconSizeTransform = useTransform(distance, [-150, 0, 150], [18, 24, 18])
 
@@ -203,7 +211,7 @@ function DockIcon({
             animate={{ opacity: 1, y: -38, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.85 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="absolute left-1/2 -translate-x-1/2 px-2.5 py-1 bg-black/90 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] rounded whitespace-nowrap glow-text pointer-events-none z-10 shadow-[0_0_10px_rgba(0,240,255,0.2)]"
+            className="absolute left-1/2 -translate-x-1/2 px-2.5 py-1 bg-black/90 border border-cyan-500/30 text-cyan-400 font-mono text-[10px] rounded whitespace-nowrap glow-text pointer-events-none z-10 shadow-[0_0_10px_rgba(var(--theme-neon-rgb), 0.2)]"
           >
             {label}
           </motion.div>
@@ -215,6 +223,7 @@ function DockIcon({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={ariaLabel}
         onClick={handleTap}
         onMouseMove={handleMouseMove}
         // Force fixed width/height on mobile, otherwise utilize framer motion spring values
@@ -230,13 +239,13 @@ function DockIcon({
                   times: [0, 0.15, 0.3, 0.45, 0.6, 0.72, 0.82, 0.92, 1] 
                 } 
               } 
-            : hoveredIndex === idx && !isTouch
+            : hoveredIndex === idx && !isTouch 
               ? { x: magneticPosition.x, y: magneticPosition.y - 6  } 
               : { x: 0, y: 0 }
         }
         whileHover={!isTouch ? { 
-          borderColor: 'rgba(0, 240, 255, 0.6)',
-          boxShadow: '0 8px 16px rgba(0, 240, 255, 0.25)',
+          borderColor: 'rgba(var(--theme-neon-rgb), 0.6)',
+          boxShadow: '0 8px 16px rgba(var(--theme-neon-rgb), 0.25)',
         } : undefined}
         whileTap={{ scale: 0.92 }}
         transition={{ type: "spring", stiffness: 220, damping: 15 }}
@@ -324,6 +333,7 @@ export default function FloatingDock() {
               key={item.label}
               mouseX={mouseX}
               label={item.label}
+              ariaLabel={item.ariaLabel}
               href={item.href}
               icon={item.icon}
               hoveredIndex={hoveredIndex}
@@ -354,6 +364,7 @@ export default function FloatingDock() {
                   rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}
                   title={item.label}
+                  aria-label={item.ariaLabel}
                   className="flex items-center justify-center p-3 rounded-full text-gray-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors"
                 >
                   <div className="[&>svg]:w-5 [&>svg]:h-5">
@@ -367,8 +378,9 @@ export default function FloatingDock() {
 
         <motion.button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           whileTap={{ scale: 0.9 }}
-          className="glass-panel w-14 h-14 rounded-full flex items-center justify-center bg-black/80 backdrop-blur-lg border border-white/10 text-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.2)] hover:border-cyan-500/50 transition-all z-50"
+          className="glass-panel w-14 h-14 rounded-full flex items-center justify-center bg-black/80 backdrop-blur-lg border border-white/10 text-cyan-400 shadow-[0_0_20px_rgba(var(--theme-neon-rgb), 0.2)] hover:border-cyan-500/50 transition-all z-50"
         >
           {isMobileMenuOpen ? (
             // Close (X) Icon

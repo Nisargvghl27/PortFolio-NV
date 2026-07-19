@@ -12,6 +12,13 @@ export async function addProject(formData: FormData) {
   const imageUrl = formData.get('imageUrl') as string
   const projectType = formData.get('projectType') as string
   
+  const impactUsers = formData.get('impactUsers') as string
+  const impactUptime = formData.get('impactUptime') as string
+  const impactScore = formData.get('impactScore') as string
+  const impactStars = formData.get('impactStars') as string
+  
+  const order = parseInt(formData.get('order') as string) || 0
+
   const techStackInput = formData.get('techStack') as string
   const techStack = techStackInput
     ? techStackInput.split(',').map((tech) => tech.trim())
@@ -30,6 +37,11 @@ export async function addProject(formData: FormData) {
       liveLink: liveLink || null,
       imageUrl: imageUrl || null,
       projectType: projectType || 'other',
+      impactUsers: impactUsers || null,
+      impactUptime: impactUptime || null,
+      impactScore: impactScore || null,
+      impactStars: impactStars || null,
+      order,
       featured: false,
     },
   })
@@ -42,7 +54,7 @@ export async function addProject(formData: FormData) {
 // 2. Delete Project Action
 export async function deleteProject(formData: FormData) {
   const id = formData.get('id') as string
-
+  
   if (!id) {
     throw new Error('Project ID is required.')
   }
@@ -65,7 +77,14 @@ export async function updateProject(formData: FormData) {
   const liveLink = formData.get('liveLink') as string
   const imageUrl = formData.get('imageUrl') as string
   const projectType = formData.get('projectType') as string
-  
+
+  const impactUsers = formData.get('impactUsers') as string
+  const impactUptime = formData.get('impactUptime') as string
+  const impactScore = formData.get('impactScore') as string
+  const impactStars = formData.get('impactStars') as string
+
+  const order = parseInt(formData.get('order') as string) || 0
+
   const techStackInput = formData.get('techStack') as string
   const techStack = techStackInput
     ? techStackInput.split(',').map((tech) => tech.trim())
@@ -85,6 +104,11 @@ export async function updateProject(formData: FormData) {
       liveLink: liveLink || null,
       imageUrl: imageUrl || null,
       projectType: projectType || 'other',
+      impactUsers: impactUsers || null,
+      impactUptime: impactUptime || null,
+      impactScore: impactScore || null,
+      impactStars: impactStars || null,
+      order,
     },
   })
 

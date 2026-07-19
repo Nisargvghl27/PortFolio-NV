@@ -37,6 +37,7 @@ export default function EditProjectForm({ project }: { project: Project }) {
         <label className="block text-xs text-yellow-500 mb-2"> string title;</label>
         <input name="title" type="text" defaultValue={project.title} required suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
       </div>
+
       <div>
         <label className="block text-xs text-yellow-500 mb-2"> select project_type;</label>
         <select name="projectType" defaultValue={project.projectType || 'other'} required suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500 appearance-none">
@@ -45,14 +46,17 @@ export default function EditProjectForm({ project }: { project: Project }) {
           <option value="mobile">Mobile App</option>
         </select>
       </div>
+
       <div>
         <label className="block text-xs text-yellow-500 mb-2"> text description;</label>
         <textarea name="description" rows={4} defaultValue={project.description} required suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500"></textarea>
       </div>
+
       <div>
         <label className="block text-xs text-yellow-500 mb-2"> array tech_stack;</label>
         <input name="techStack" type="text" defaultValue={project.techStack.join(', ')} suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
       </div>
+
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-xs text-yellow-500 mb-2"> url github_repo;</label>
@@ -63,9 +67,37 @@ export default function EditProjectForm({ project }: { project: Project }) {
           <input name="liveLink" type="url" defaultValue={project.liveLink || ''} suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
         </div>
       </div>
+
       <div>
         <label className="block text-xs text-yellow-500 mb-2"> url image_url;</label>
         <input name="imageUrl" type="url" defaultValue={project.imageUrl || ''} suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs text-yellow-500 mb-2"> IMPACT_USERS (e.g. "500+")</label>
+          <input name="impactUsers" type="text" defaultValue={project.impactUsers || ''} placeholder="e.g. 500+ (Optional)" suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
+        </div>
+        <div>
+          <label className="block text-xs text-yellow-500 mb-2"> IMPACT_UPTIME (e.g. "99.9%")</label>
+          <input name="impactUptime" type="text" defaultValue={project.impactUptime || ''} placeholder="e.g. 99.9% (Optional)" suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs text-yellow-500 mb-2"> IMPACT_SCORE (e.g. "95/100")</label>
+          <input name="impactScore" type="text" defaultValue={project.impactScore || ''} placeholder="e.g. 95/100 (Optional)" suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
+        </div>
+        <div>
+          <label className="block text-xs text-yellow-500 mb-2"> IMPACT_STARS (e.g. "1.2k")</label>
+          <input name="impactStars" type="text" defaultValue={project.impactStars || ''} placeholder="e.g. 1.2k (Optional)" suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-xs text-yellow-500 mb-2"> int order;</label>
+        <input name="order" type="number" defaultValue={project.order} required suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-yellow-500" />
       </div>
       
       <div className="flex gap-4">

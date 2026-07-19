@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import Image from 'next/image'
+import DeviceFrame from './DeviceFrame'
 
 interface Project {
     id: string
@@ -12,49 +13,11 @@ interface Project {
     githubLink: string | null
     liveLink: string | null
     imageUrl: string | null
-    projectType?: string
-}
-
-// Device Frame Helper Component
-function DeviceFrame({ type, children }: { type?: string, children: React.ReactNode }) {
-    if (type === 'website') {
-        return (
-            <div className="w-full h-full flex items-center justify-center p-4 sm:p-8 bg-[#0a0f12]/80">
-                <div className="w-full max-w-2xl relative">
-                    {/* Screen */}
-                    <div className="w-full aspect-[16/10] bg-[#0a0f12] rounded-t-lg md:rounded-t-xl border-t border-l border-r border-[#00f0ff]/30 p-1.5 md:p-2.5 relative shadow-[0_-5px_20px_rgba(0,240,255,0.05)]">
-                        <div className="w-full h-full relative overflow-hidden rounded-sm bg-black border border-[#00f0ff]/10">
-                            {children}
-                        </div>
-                    </div>
-                    {/* Keyboard Base */}
-                    <div className="w-[106%] -ml-[3%] h-3 md:h-4 bg-gradient-to-b from-[#1a2228] to-[#0a0f12] rounded-b-md md:rounded-b-xl border border-[#00f0ff]/30 border-t-[#00f0ff]/50 relative shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/5 h-1 md:h-1.5 bg-[#0a0f12] rounded-b-sm border-b border-l border-r border-[#00f0ff]/20"></div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-    
-    if (type === 'mobile') {
-        return (
-            <div className="w-full h-full flex items-center justify-center p-4 sm:p-8 bg-[#0a0f12]/80">
-                <div className="relative aspect-[9/19.5] h-full max-h-[300px] md:max-h-[400px] bg-[#0a0f12] rounded-[1.5rem] md:rounded-[2rem] border-2 border-[#00f0ff]/30 p-1.5 md:p-2.5 shadow-[0_0_30px_rgba(0,240,255,0.08)]">
-                    {/* Notch */}
-                    <div className="absolute top-1.5 md:top-2.5 left-1/2 -translate-x-1/2 w-1/3 h-4 bg-[#0a0f12] rounded-b-lg z-20 border-b border-l border-r border-[#00f0ff]/20"></div>
-                    {/* Screen */}
-                    <div className="w-full h-full relative overflow-hidden rounded-[1.2rem] md:rounded-[1.5rem] bg-black">
-                        {children}
-                    </div>
-                    {/* Home Indicator */}
-                    <div className="absolute bottom-1.5 md:bottom-2 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-[#00f0ff]/30 rounded-full z-20"></div>
-                </div>
-            </div>
-        )
-    }
-
-    // Default "other" plain rendering
-    return <div className="w-full h-full relative bg-[#0a0f12]">{children}</div>
+    projectType?: string | null
+    impactUsers?: string | null
+    impactUptime?: string | null
+    impactScore?: string | null
+    impactStars?: string | null
 }
 
 export default function StickyProjects({ projects }: { projects: Project[] }) {
@@ -82,12 +45,13 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
         <>
             {/* --- MOBILE VIEW: Highly optimized, no scroll hijacking, simple vertical stack --- */}
             <div className="lg:hidden w-full max-w-7xl mx-auto px-6 relative z-10 pt-16 pb-12 flex flex-col gap-16">
+                
                 {/* Mobile Section Header */}
                 <div className="flex items-center gap-4 mb-4">
                     <h2 className="text-xl md:text-2xl font-mono font-bold text-white uppercase tracking-widest">
-                        <span className="text-[#00f0ff]">01.</span> Deployed_Systems
+                        <span className="text-neon">01.</span> Deployed_Systems
                     </h2>
-                    <div className="h-[1px] flex-1 bg-gradient-to-r from-[#00f0ff]/50 to-transparent" />
+                    <div className="h-[1px] flex-1 bg-gradient-to-r from-neon/50 to-transparent" />
                 </div>
 
                 {/* Mobile Cards Stack */}
@@ -100,14 +64,14 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                         className="flex flex-col gap-6"
                     >
                         {/* Mobile Optimized Image Card */}
-                        <div className="w-full relative glass-panel rounded-md overflow-hidden border border-[#00f0ff]/30 shadow-[0_0_30px_rgba(0,240,255,0.05),inset_0_0_20px_rgba(0,240,255,0.02)]">
-                            <div className="hidden xs:flex bg-black/80 border-b border-[#00f0ff]/20 px-4 py-2 items-center justify-between absolute top-0 w-full z-30">
+                        <div className="w-full relative glass-panel rounded-md overflow-hidden border border-neon/30 shadow-[0_0_30px_rgba(var(--theme-neon-rgb), 0.05),inset_0_0_20px_rgba(var(--theme-neon-rgb), 0.02)]">
+                            <div className="hidden xs:flex bg-black/80 border-b border-neon/20 px-4 py-2 items-center justify-between absolute top-0 w-full z-30">
                                 <div className="flex gap-2 items-center">
                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
                                 </div>
-                                <div className="text-[10px] text-[#00f0ff]/70 font-mono font-semibold tracking-widest uppercase">
+                                <div className="text-[10px] text-neon/70 font-mono font-semibold tracking-widest uppercase">
                                     sys_view - {project.title.substring(0, 8).toLowerCase()}.png
                                 </div>
                                 <div className="w-10" />
@@ -126,12 +90,12 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                                                 priority={false}
                                                 className="object-cover"
                                             />
-                                            <div className="absolute inset-0 bg-[#00f0ff]/10 mix-blend-overlay pointer-events-none" />
-                                            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.1)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_6s_ease-in-out_infinite]" />
+                                            <div className="absolute inset-0 bg-neon/10 mix-blend-overlay pointer-events-none" />
+                                            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(var(--theme-neon-rgb), 0.1)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_6s_ease-in-out_infinite]" />
                                         </>
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center bg-black/50">
-                                            <span className="text-[#00f0ff]/50 font-mono text-sm tracking-widest">[ NO_IMAGE_DATA ]</span>
+                                            <span className="text-neon/50 font-mono text-sm tracking-widest">[ NO_IMAGE_DATA ]</span>
                                         </div>
                                     )}
                                 </DeviceFrame>
@@ -140,22 +104,47 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
 
                         {/* Mobile Details */}
                         <div className="w-full font-mono flex flex-col">
-                            <span className="text-[#00f0ff] text-[10px] font-bold tracking-widest uppercase mb-1 block">&gt; PROJECT_IDENTIFIER</span>
+                            <span className="text-neon text-[10px] font-bold tracking-widest uppercase mb-1 block">&gt; PROJECT_IDENTIFIER</span>
                             <h3 className="text-2xl xs:text-3xl font-black mb-3 text-white tracking-tight uppercase glow-text">
                                 {project.title}
-                                <span className="ml-2 animate-pulse text-[#00f0ff]">_</span>
+                                <span className="ml-2 animate-pulse text-neon">_</span>
                             </h3>
-                            <p className="text-slate-300 leading-relaxed mb-4 text-xs tracking-wide border-l-2 border-[#00f0ff]/50 pl-3 bg-gradient-to-r from-[#00f0ff]/5 to-transparent py-2 custom-scrollbar">
+                            <p className="text-slate-300 leading-relaxed mb-4 text-xs tracking-wide border-l-2 border-neon/50 pl-3 bg-gradient-to-r from-neon/5 to-transparent py-2 custom-scrollbar">
                                 {project.description}
                             </p>
                             
+                            {(project.impactUsers || project.impactUptime || project.impactScore || project.impactStars) && (
+                              <div className="flex flex-wrap gap-2 mb-5 font-mono">
+                                {project.impactUsers && (
+                                  <span className="text-[9px] border border-emerald-500/30 bg-emerald-500/5 text-emerald-400 px-2 py-1 uppercase tracking-widest">
+                                    USERS: {project.impactUsers}
+                                  </span>
+                                )}
+                                {project.impactUptime && (
+                                  <span className="text-[9px] border border-neon/30 bg-neon/5 text-neon px-2 py-1 uppercase tracking-widest">
+                                    UPTIME: {project.impactUptime}
+                                  </span>
+                                )}
+                                {project.impactScore && (
+                                  <span className="text-[9px] border border-violet-500/30 bg-violet-500/5 text-violet-400 px-2 py-1 uppercase tracking-widest">
+                                    SCORE: {project.impactScore}
+                                  </span>
+                                )}
+                                {project.impactStars && (
+                                  <span className="text-[9px] border border-amber-500/30 bg-amber-500/5 text-amber-400 px-2 py-1 uppercase tracking-widest">
+                                    STARS: {project.impactStars}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+
                             <div className="mb-5">
                                 <span className="text-slate-500 text-[9px] font-bold tracking-widest uppercase mb-2 block">TARGET_ARCHITECTURE</span>
                                 <div className="flex flex-wrap gap-1.5">
                                     {project.techStack.map((tech) => (
                                         <span
                                             key={tech}
-                                            className="bg-[#00f0ff]/5 border border-[#00f0ff]/30 text-[#00f0ff] text-[10px] px-2 py-1 uppercase tracking-widest shadow-[0_0_10px_rgba(0,240,255,0.05)]"
+                                            className="bg-neon/5 border border-neon/30 text-neon text-[10px] px-2 py-1 uppercase tracking-widest shadow-[0_0_10px_rgba(var(--theme-neon-rgb), 0.05)]"
                                         >
                                             {tech}
                                         </span>
@@ -174,22 +163,22 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                                         initial="rest"
                                         variants={{
                                             rest: { scale: 1 },
-                                            hover: { scale: 1.05, borderColor: "rgba(0, 240, 255, 1)", boxShadow: "0 0 20px rgba(0,240,255,0.4)" },
+                                            hover: { scale: 1.05, borderColor: "rgba(var(--theme-neon-rgb), 1)", boxShadow: "0 0 20px rgba(var(--theme-neon-rgb), 0.4)" },
                                             tap: { scale: 0.95 }
                                         }}
-                                        className="relative group overflow-hidden px-4 py-2.5 bg-[#00f0ff]/10 border border-[#00f0ff]/50 text-[#00f0ff] transition-all flex items-center gap-2 cursor-pointer"
+                                        className="relative group overflow-hidden px-4 py-2.5 bg-neon/10 border border-neon/50 text-neon transition-all flex items-center gap-2 cursor-pointer"
                                     >
                                         <motion.div
                                             variants={{ rest: { left: "-150%" }, hover: { left: "150%" } }}
                                             transition={{ duration: 0.4, ease: "easeInOut" }}
-                                            className="absolute top-0 bottom-0 w-[150%] bg-gradient-to-r from-transparent via-[#00f0ff]/40 to-transparent -skew-x-12 z-0"
+                                            className="absolute top-0 bottom-0 w-[150%] bg-gradient-to-r from-transparent via-neon/40 to-transparent -skew-x-12 z-0"
                                         />
                                         <span className="relative z-10 flex items-center group-hover:text-white transition-colors">
                                             [ LIVE_DEMO ]
                                             <motion.span
                                                 variants={{ rest: { opacity: 0, width: 0, marginLeft: 0 }, hover: { opacity: [1, 0, 1], width: "auto", marginLeft: "6px" } }}
                                                 transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                                                className="inline-block w-2.5 h-3.5 bg-[#00f0ff]"
+                                                className="inline-block w-2.5 h-3.5 bg-neon"
                                             />
                                         </span>
                                     </motion.a>
@@ -245,16 +234,16 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                             >
                                 <div className="flex items-center gap-4">
                                     <h2 className="text-xl md:text-2xl font-mono font-bold text-white uppercase tracking-widest">
-                                        <span className="text-[#00f0ff]">01.</span> Deployed_Systems
+                                        <span className="text-neon">01.</span> Deployed_Systems
                                     </h2>
-                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-[#00f0ff]/50 to-transparent" />
+                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-neon/50 to-transparent" />
                                 </div>
                             </motion.div>
                         </div>
 
                         {/* Ambient Glow */}
                         <div className="absolute inset-0 pointer-events-none z-0">
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#00f0ff] opacity-[0.02] blur-[120px] rounded-full" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-neon opacity-[0.02] blur-[120px] rounded-full" />
                         </div>
 
                         {/* CONTENT WRAPPER */}
@@ -283,8 +272,8 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                                 <div
                                     key={i}
                                     className={`h-1.5 transition-all duration-500 rounded-full ${i === activeIndex
-                                            ? 'w-10 bg-[#00f0ff] shadow-[0_0_15px_#00f0ff]'
-                                            : 'w-2 bg-[#00f0ff]/20'
+                                            ? 'w-10 bg-neon shadow-[0_0_15px_#00f0ff]'
+                                            : 'w-2 bg-neon/20'
                                         }`}
                                 />
                             ))}
@@ -298,19 +287,19 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
 
 function ProjectImage({ project }: { project: Project }) {
     return (
-        <div className="w-full lg:w-1/2 relative glass-panel rounded-md overflow-hidden border border-[#00f0ff]/30 shadow-[0_0_30px_rgba(0,240,255,0.05),inset_0_0_20px_rgba(0,240,255,0.02)]">
-            <div className="hidden xs:flex bg-black/80 border-b border-[#00f0ff]/20 px-4 py-2 items-center justify-between absolute top-0 w-full z-30">
+        <div className="w-full lg:w-1/2 relative glass-panel rounded-md overflow-hidden border border-neon/30 shadow-[0_0_30px_rgba(var(--theme-neon-rgb), 0.05),inset_0_0_20px_rgba(var(--theme-neon-rgb), 0.02)]">
+            <div className="hidden xs:flex bg-black/80 border-b border-neon/20 px-4 py-2 items-center justify-between absolute top-0 w-full z-30">
                 <div className="flex gap-2 items-center">
                     <div className="w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-[#ff0055] transition-colors" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-[#00f0ff] transition-colors" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-neon transition-colors" />
                     <div className="w-2.5 h-2.5 rounded-full bg-slate-600 hover:bg-emerald-400 transition-colors" />
                 </div>
-                <div className="text-[10px] text-[#00f0ff]/70 font-mono font-semibold tracking-widest uppercase">
+                <div className="text-[10px] text-neon/70 font-mono font-semibold tracking-widest uppercase">
                     sys_view - {project.title.substring(0, 8).toLowerCase()}.png
                 </div>
                 <div className="w-10" />
             </div>
-
+            
             <div className="w-full xs:pt-8 aspect-video lg:aspect-auto lg:h-[45vh]">
                 <DeviceFrame type={project.projectType}>
                     {project.imageUrl ? (
@@ -323,12 +312,12 @@ function ProjectImage({ project }: { project: Project }) {
                                 loading="lazy"
                                 className="object-cover"
                             />
-                            <div className="absolute inset-0 bg-[#00f0ff]/10 mix-blend-overlay pointer-events-none" />
-                            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(0,240,255,0.1)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_6s_ease-in-out_infinite]" />
+                            <div className="absolute inset-0 bg-neon/10 mix-blend-overlay pointer-events-none" />
+                            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_40%,rgba(var(--theme-neon-rgb), 0.1)_50%,transparent_60%)] bg-[size:100%_300%] pointer-events-none animate-[pulse_6s_ease-in-out_infinite]" />
                         </>
                     ) : (
                         <div className="w-full h-full flex items-center justify-center bg-black/50">
-                            <span className="text-[#00f0ff]/50 font-mono text-sm tracking-widest">[ NO_IMAGE_DATA ]</span>
+                            <span className="text-neon/50 font-mono text-sm tracking-widest">[ NO_IMAGE_DATA ]</span>
                         </div>
                     )}
                 </DeviceFrame>
@@ -340,14 +329,39 @@ function ProjectImage({ project }: { project: Project }) {
 function ProjectDetails({ project }: { project: Project }) {
     return (
         <div className="w-full lg:w-1/2 font-mono flex flex-col justify-center">
-            <span className="text-[#00f0ff] text-[10px] md:text-xs font-bold tracking-widest uppercase mb-1 md:mb-2 block">&gt; PROJECT_IDENTIFIER</span>
+            <span className="text-neon text-[10px] md:text-xs font-bold tracking-widest uppercase mb-1 md:mb-2 block">&gt; PROJECT_IDENTIFIER</span>
             <h3 className="text-2xl xs:text-3xl md:text-5xl font-black mb-3 md:mb-6 text-white tracking-tight uppercase glow-text">
                 {project.title}
-                <span className="ml-2 animate-pulse text-[#00f0ff]">_</span>
+                <span className="ml-2 animate-pulse text-neon">_</span>
             </h3>
-            <p className="text-slate-300 leading-relaxed mb-4 md:mb-8 text-xs md:text-base tracking-wide border-l-2 border-[#00f0ff]/50 pl-3 md:pl-4 bg-gradient-to-r from-[#00f0ff]/5 to-transparent py-2 md:py-3 max-h-[18vh] md:max-h-none overflow-y-auto custom-scrollbar">
+            <p className="text-slate-300 leading-relaxed mb-4 md:mb-8 text-xs md:text-base tracking-wide border-l-2 border-neon/50 pl-3 md:pl-4 bg-gradient-to-r from-neon/5 to-transparent py-2 md:py-3 max-h-[18vh] md:max-h-none overflow-y-auto custom-scrollbar">
                 {project.description}
             </p>
+
+            {(project.impactUsers || project.impactUptime || project.impactScore || project.impactStars) && (
+              <div className="flex flex-wrap gap-2 mb-5 font-mono">
+                {project.impactUsers && (
+                  <span className="text-[9px] border border-emerald-500/30 bg-emerald-500/5 text-emerald-400 px-2 py-1 uppercase tracking-widest">
+                    USERS: {project.impactUsers}
+                  </span>
+                )}
+                {project.impactUptime && (
+                  <span className="text-[9px] border border-neon/30 bg-neon/5 text-neon px-2 py-1 uppercase tracking-widest">
+                    UPTIME: {project.impactUptime}
+                  </span>
+                )}
+                {project.impactScore && (
+                  <span className="text-[9px] border border-violet-500/30 bg-violet-500/5 text-violet-400 px-2 py-1 uppercase tracking-widest">
+                    SCORE: {project.impactScore}
+                  </span>
+                )}
+                {project.impactStars && (
+                  <span className="text-[9px] border border-amber-500/30 bg-amber-500/5 text-amber-400 px-2 py-1 uppercase tracking-widest">
+                    STARS: {project.impactStars}
+                  </span>
+                )}
+              </div>
+            )}
             
             <div className="mb-5 md:mb-10">
                 <span className="text-slate-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase mb-2 md:mb-3 block">TARGET_ARCHITECTURE</span>
@@ -355,7 +369,7 @@ function ProjectDetails({ project }: { project: Project }) {
                     {project.techStack.map((tech) => (
                         <span
                             key={tech}
-                            className="bg-[#00f0ff]/5 border border-[#00f0ff]/30 text-[#00f0ff] text-[10px] md:text-xs px-2 py-1 md:px-3 md:py-1.5 uppercase tracking-widest shadow-[0_0_10px_rgba(0,240,255,0.05)]"
+                            className="bg-neon/5 border border-neon/30 text-neon text-[10px] md:text-xs px-2 py-1 md:px-3 md:py-1.5 uppercase tracking-widest shadow-[0_0_10px_rgba(var(--theme-neon-rgb), 0.05)]"
                         >
                             {tech}
                         </span>
@@ -373,22 +387,22 @@ function ProjectDetails({ project }: { project: Project }) {
                         initial="rest"
                         variants={{
                             rest: { scale: 1 },
-                            hover: { scale: 1.05, borderColor: "rgba(0, 240, 255, 1)", boxShadow: "0 0 20px rgba(0,240,255,0.4)" },
+                            hover: { scale: 1.05, borderColor: "rgba(var(--theme-neon-rgb), 1)", boxShadow: "0 0 20px rgba(var(--theme-neon-rgb), 0.4)" },
                             tap: { scale: 0.95 }
                         }}
-                        className="relative group overflow-hidden px-4 py-2.5 md:px-6 md:py-3 bg-[#00f0ff]/10 border border-[#00f0ff]/50 text-[#00f0ff] transition-all flex items-center gap-2 cursor-pointer"
+                        className="relative group overflow-hidden px-4 py-2.5 md:px-6 md:py-3 bg-neon/10 border border-neon/50 text-neon transition-all flex items-center gap-2 cursor-pointer"
                     >
                         <motion.div
                             variants={{ rest: { left: "-150%" }, hover: { left: "150%" } }}
                             transition={{ duration: 0.4, ease: "easeInOut" }}
-                            className="absolute top-0 bottom-0 w-[150%] bg-gradient-to-r from-transparent via-[#00f0ff]/40 to-transparent -skew-x-12 z-0"
+                            className="absolute top-0 bottom-0 w-[150%] bg-gradient-to-r from-transparent via-neon/40 to-transparent -skew-x-12 z-0"
                         />
                         <span className="relative z-10 flex items-center group-hover:text-white transition-colors">
                             [ LIVE_DEMO ]
                             <motion.span
                                 variants={{ rest: { opacity: 0, width: 0, marginLeft: 0 }, hover: { opacity: [1, 0, 1], width: "auto", marginLeft: "6px" } }}
                                 transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                                className="inline-block w-2.5 h-3.5 md:h-4 bg-[#00f0ff]"
+                                className="inline-block w-2.5 h-3.5 md:h-4 bg-neon"
                             />
                         </span>
                     </motion.a>

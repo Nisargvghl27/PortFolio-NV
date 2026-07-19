@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { SiteConfig } from '@prisma/client';
@@ -66,23 +67,23 @@ function CyberButton({
 }: { 
   children: React.ReactNode; 
   primary?: boolean; 
-  onClick?: () => void;
+  onClick?: () => void; 
   href?: string;
   download?: boolean;
 }) {
   const baseClasses = `relative group px-6 py-3 md:px-8 md:py-4 font-mono text-xs md:text-sm font-bold tracking-widest uppercase overflow-hidden transition-colors w-full sm:w-auto text-center ${
     primary 
-      ? 'text-black bg-[#00f0ff] shadow-[0_0_15px_rgba(0,240,255,0.4)] hover:shadow-[0_0_25px_rgba(0,240,255,0.6)]' 
-      : 'text-[#00f0ff] bg-black/40 border border-[#00f0ff]/30 hover:border-[#00f0ff] hover:bg-[#00f0ff]/10 backdrop-blur-sm'
+      ? 'text-black bg-neon shadow-[0_0_15px_rgba(var(--theme-neon-rgb), 0.4)] hover:shadow-[0_0_25px_rgba(var(--theme-neon-rgb), 0.6)]' 
+      : 'text-slate-400 bg-transparent border border-neon/30 hover:border-neon/70 hover:bg-neon/5 hover:text-neon'
   }`;
 
   const innerContent = (
     <>
       {/* Corner targeting brackets that appear on hover */}
-      <span className={`absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-[#00f0ff]'} opacity-0 group-hover:opacity-100`} />
-      <span className={`absolute top-1 right-1 w-2 h-2 border-t-2 border-r-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-[#00f0ff]'} opacity-0 group-hover:opacity-100`} />
-      <span className={`absolute bottom-1 left-1 w-2 h-2 border-b-2 border-l-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-[#00f0ff]'} opacity-0 group-hover:opacity-100`} />
-      <span className={`absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-[#00f0ff]'} opacity-0 group-hover:opacity-100`} />
+      <span className={`absolute top-1 left-1 w-2 h-2 border-t-2 border-l-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-neon'} opacity-0 group-hover:opacity-100`} />
+      <span className={`absolute top-1 right-1 w-2 h-2 border-t-2 border-r-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-neon'} opacity-0 group-hover:opacity-100`} />
+      <span className={`absolute bottom-1 left-1 w-2 h-2 border-b-2 border-l-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-neon'} opacity-0 group-hover:opacity-100`} />
+      <span className={`absolute bottom-1 right-1 w-2 h-2 border-b-2 border-r-2 transition-opacity duration-300 ${primary ? 'border-black' : 'border-neon'} opacity-0 group-hover:opacity-100`} />
       
       {/* Sweeping scanline effect */}
       <motion.div
@@ -90,13 +91,13 @@ function CyberButton({
           hover: { x: ['-150%', '250%'] }
         }}
         transition={{ duration: 0.5, ease: 'easeInOut' }}
-        className={`absolute inset-0 w-3/4 h-full -skew-x-12 z-0 ${primary ? 'bg-white/40' : 'bg-[#00f0ff]/20'}`}
+        className={`absolute inset-0 w-3/4 h-full -skew-x-12 z-0 ${primary ? 'bg-white/40' : 'bg-neon/20'}`}
         style={{ left: '-150%' }}
       />
       
       {/* Button Content & Terminal Cursor */}
       <span className="relative z-10 flex items-center justify-center gap-2">
-        <motion.span
+        <motion.span 
           variants={{
             hover: { x: -4, opacity: 1, display: 'inline-block' },
             rest: { x: 0, opacity: 0, display: 'none' }
@@ -107,7 +108,7 @@ function CyberButton({
           &gt;
         </motion.span>
         {children}
-        <motion.span
+        <motion.span 
           variants={{
             hover: { opacity: [0, 1, 0] },
             rest: { opacity: 0 }
@@ -157,7 +158,7 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
   const [roleIndex, setRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [hasStartedTyping, setHasStartedTyping] = useState(false);
-
+  
   // Terminal State
   const [history, setHistory] = useState<{ id: string; type: 'input' | 'output' | 'system'; text: string }[]>([
     { id: 'init', type: 'system', text: `Last login: ${new Date().toDateString()} on ttys001` }
@@ -167,9 +168,6 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const roles = ['Full Stack Developer', 'Competitive Programmer'];
-  
-  // Use the DB URL if it exists, otherwise fallback to local PDF
-  const activeResumeUrl = siteConfig?.resumeUrl || '/resume.pdf';
 
   // Initial delay so it doesn't type while the layout is scrambling
   useEffect(() => {
@@ -182,18 +180,21 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
   // Auto-run terminal logic
   useEffect(() => {
     const autoRunTimer = setTimeout(() => {
-      if (window.innerWidth >= 768 && !hasRun && !isTerminalRunning) {
-        runAboutMe();
+      // Execute only if desktop width (>=1024px) and sequence hasn't run yet
+      if (window.innerWidth >= 1024 && !hasRun && !isTerminalRunning) {
+        handleTerminalSequence();
       }
     }, 2000);
+    
+    // Clear timeout on unmount
     return () => clearTimeout(autoRunTimer);
   }, [hasRun, isTerminalRunning]);
 
   // Typing effect for the roles
   useEffect(() => {
     if (!hasStartedTyping) return;
-    let timeout: NodeJS.Timeout;
 
+    let timeout: NodeJS.Timeout;
     const currentRole = roles[roleIndex];
     const speed = 1000 / (currentRole.length || 1);
 
@@ -229,7 +230,7 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
   };
 
   // Terminal Execution Logic
-  const runAboutMe = async () => {
+  const handleTerminalSequence = async () => {
     if (isTerminalRunning || hasRun) return;
     setIsTerminalRunning(true);
     setHasRun(true);
@@ -257,6 +258,7 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
   const runClear = () => {
     if (isTerminalRunning) return;
     setHistory([{ id: crypto.randomUUID(), type: 'system', text: 'Terminal cleared.' }]);
+    setHasRun(false); // Reset hasRun so the button can be triggered again
   };
 
   const containerVariants = {
@@ -270,11 +272,11 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
   };
 
   return (
-    <section className="relative flex flex-col items-center justify-center w-full min-h-screen bg-transparent text-white m-0 p-0 selection:bg-[#00f0ff] selection:text-black font-sans">
+    <section className="relative flex flex-col items-center justify-center w-full min-h-screen bg-transparent text-white m-0 p-0 selection:bg-neon selection:text-black font-sans">
       
       {/* Background ambient glows (halved opacity and reduced blur on mobile) */}
       <div className="fixed inset-0 w-full h-full pointer-events-none overflow-hidden -z-10">
-        <div className="absolute top-[0%] right-[-10%] w-[350px] h-[350px] md:w-[60vw] md:h-[60vw] bg-[#00f0ff] opacity-5 md:opacity-10 blur-[60px] md:blur-[150px] rounded-full" />
+        <div className="absolute top-[0%] right-[-10%] w-[350px] h-[350px] md:w-[60vw] md:h-[60vw] bg-neon opacity-5 md:opacity-10 blur-[60px] md:blur-[150px] rounded-full" />
         <div className="absolute bottom-[-5%] left-[-10%] w-[300px] h-[300px] md:w-[50vw] md:h-[50vw] bg-[#ff0055] opacity-[0.015] md:opacity-[0.03] blur-[60px] md:blur-[120px] rounded-full" />
         <div className="absolute inset-0 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAADCAYAAABS3WWCAAAAEUlEQVQImWNgYGD4z8DAwMgAAz8B/80B3P8AAAAASUVORK5CYII=')] opacity-30 mix-blend-overlay" />
       </div>
@@ -283,9 +285,9 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
         <motion.div variants={containerVariants} initial="hidden" animate="visible" className="lg:col-span-7 flex flex-col items-start text-left">
           
           <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-[#00f0ff]/5 border border-[#00f0ff]/40 shadow-[0_0_10px_rgba(0,240,255,0.2)]">
-              <span className="text-[10px] text-[#00f0ff] font-mono uppercase tracking-[0.2em] font-bold flex items-center gap-2">
-                <span className="w-2 h-2 bg-[#00f0ff] animate-pulse" />
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-neon/5 border border-neon/40 shadow-[0_0_10px_rgba(var(--theme-neon-rgb), 0.2)]">
+              <span className="text-[10px] text-neon font-mono uppercase tracking-[0.2em] font-bold flex items-center gap-2">
+                <span className="w-2 h-2 bg-neon animate-pulse" />
                 <ScrambleText text="SYSTEM_ONLINE" delay={100} />
               </span>
             </div>
@@ -296,10 +298,10 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
             <ScrambleText text="VAGHELA" delay={500} />
           </motion.h1>
 
-          <motion.div variants={itemVariants} className="font-mono text-sm md:text-md text-[#00f0ff] mb-6 h-8 flex items-center bg-[#00f0ff]/5 px-4 py-1 border-l-2 border-[#00f0ff] tracking-[0.05em] overflow-hidden whitespace-nowrap w-full max-w-[fit-content]">
+          <motion.div variants={itemVariants} className="font-mono text-sm md:text-md text-neon mb-6 h-8 flex items-center bg-neon/5 px-4 py-1 border-l-2 border-neon tracking-[0.05em] overflow-hidden whitespace-nowrap w-full max-w-[fit-content]">
             <span className="text-slate-500 mr-3 shrink-0">&gt;&gt;</span>
             <span className="font-bold tracking-widest truncate">{displayText}</span>
-            <span className="ml-1 animate-pulse text-[#00f0ff] text-xl -mt-1 shadow-[0_0_8px_#00f0ff] shrink-0">&#9608;</span>
+            <span className="ml-1 animate-pulse text-neon text-xl -mt-1 shadow-[0_0_8px_#00f0ff] shrink-0">&#9608;</span>
           </motion.div>
 
           <motion.p
@@ -312,9 +314,9 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
           </motion.p>
 
           {siteConfig?.openToWork && (
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 rounded-sm font-mono text-xs text-emerald-400 mb-6 animate-pulse">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-              [ {siteConfig.openToWorkMsg} ]
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 font-mono text-xs text-emerald-400 mb-6 select-none">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
+              [ {siteConfig.openToWorkMsg || "AVAILABLE_FOR_INTERNSHIP"} ]
             </motion.div>
           )}
 
@@ -323,23 +325,24 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
               <ScrambleText text="[ ESTABLISH_UPLINK ]" delay={1100} />
             </CyberButton>
             
-            <CyberButton primary={false} href={activeResumeUrl} download>
-              <ScrambleText text="[ DOWNLOAD_CV ]" delay={1200} />
-            </CyberButton>
+            {siteConfig?.resumeUrl && (
+              <CyberButton primary={false} href={siteConfig.resumeUrl} download>
+                <ScrambleText text="[ DOWNLOAD_CV ]" delay={1200} />
+              </CyberButton>
+            )}
           </motion.div>
-
         </motion.div>
 
         <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.5, type: 'spring' }} className="lg:col-span-5 w-full mt-12 lg:mt-0 relative flex flex-col items-center">
-          <div className="absolute inset-0 bg-[#00f0ff]/5 blur-xl rounded-lg" />
+          <div className="absolute inset-0 bg-neon/5 blur-xl rounded-lg" />
           
-          <div className="relative w-full border border-[#00f0ff]/30 rounded-md bg-[#0a0f12]/95 backdrop-blur-xl shadow-[0_0_30px_rgba(0,240,255,0.05),inset_0_0_20px_rgba(0,240,255,0.05)] overflow-hidden font-mono text-sm flex flex-col h-[380px]">
-             
-            <div className="bg-black/50 border-b border-[#00f0ff]/20 px-4 py-2.5 flex items-center justify-between">
+          <div className="relative w-full border border-neon/30 rounded-md bg-[#0a0f12]/95 backdrop-blur-xl shadow-[0_0_30px_rgba(var(--theme-neon-rgb), 0.05),inset_0_0_20px_rgba(var(--theme-neon-rgb), 0.05)] overflow-hidden font-mono text-sm flex flex-col h-[380px]">
+            
+            <div className="bg-black/50 border-b border-neon/20 px-4 py-2.5 flex items-center justify-between">
               <div className="flex gap-2 items-center">
                 <div className="w-2.5 h-2.5 rounded-full bg-slate-600" /><div className="w-2.5 h-2.5 rounded-full bg-slate-600" /><div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
               </div>
-              <div className="text-[10px] text-[#00f0ff]/70 font-semibold tracking-widest uppercase">bash - root@nitsurat</div><div className="w-10" />
+              <div className="text-[10px] text-neon/70 font-semibold tracking-widest uppercase">bash - root@nitsurat</div><div className="w-10" />
             </div>
 
             <div ref={scrollContainerRef} className="p-5 flex-1 overflow-y-auto text-slate-300 custom-scrollbar">
@@ -347,21 +350,21 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
                 {history.map((line) => (
                   <motion.div key={line.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="mb-1.5">
                     {line.type === 'system' && <span className="text-slate-500 text-xs">{line.text}</span>}
-                    {line.type === 'input' && <div className="flex items-center gap-2 text-[#00f0ff]"><span className="font-bold shrink-0">root@sys:~#</span><span className="break-all">{line.text}</span></div>}
-                    {line.type === 'output' && <div className={`pl-2 break-words ${line.text.includes('[OK]') || line.text.includes('exit code') ? 'text-emerald-400' : line.text.startsWith('>') ? 'text-[#00f0ff] brightness-110' : 'text-slate-300'}`}>{line.text}</div>}
+                    {line.type === 'input' && <div className="flex items-center gap-2 text-neon"><span className="font-bold shrink-0">root@sys:~#</span><span className="break-all">{line.text}</span></div>}
+                    {line.type === 'output' && <div className={`pl-2 break-words ${line.text.includes('[OK]') || line.text.includes('exit code') ? 'text-emerald-400' : line.text.startsWith('>') ? 'text-neon brightness-110' : 'text-slate-300'}`}>{line.text}</div>}
                   </motion.div>
                 ))}
               </AnimatePresence>
               
               <div className="mt-4 flex flex-wrap items-center gap-3">
-                <span className="text-[#00f0ff] font-bold">root@sys:~#</span>
+                <span className="text-neon font-bold">root@sys:~#</span>
                 {!isTerminalRunning ? (
                   <div className="flex flex-wrap gap-2">
-                    <button suppressHydrationWarning onClick={runAboutMe} className="px-2 py-0.5 bg-[#00f0ff]/10 border border-[#00f0ff]/30 text-[#00f0ff] hover:bg-[#00f0ff]/20 hover:border-[#00f0ff] transition-all text-xs focus:outline-none">./about_me.sh</button>
+                    <button suppressHydrationWarning onClick={handleTerminalSequence} className="px-2 py-0.5 bg-neon/10 border border-neon/30 text-neon hover:bg-neon/20 hover:border-neon transition-all text-xs focus:outline-none">./about_me.sh</button>
                     <button suppressHydrationWarning onClick={runClear} className="px-2 py-0.5 bg-slate-800/50 border border-slate-700 text-slate-400 hover:text-white hover:border-slate-500 transition-all text-xs focus:outline-none">clear</button>
-                    <span className="animate-pulse text-[#00f0ff] ml-1">&#9608;</span>
+                    <span className="animate-pulse text-neon ml-1">&#9608;</span>
                   </div>
-                ) : <span className="animate-pulse text-[#00f0ff]">&#9608;</span>}
+                ) : <span className="animate-pulse text-neon">&#9608;</span>}
               </div>
             </div>
           </div>
@@ -377,10 +380,11 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
               [ CLICK TO INTERACT ]
             </motion.div>
           )}
-        </motion.div>
 
+        </motion.div>
       </div>
-      <style dangerouslySetInnerHTML={{ __html: `.custom-scrollbar::-webkit-scrollbar { width: 6px; } .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); } .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.2); border-radius: 3px; } .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 240, 255, 0.5); }` }} />
+
+      <style dangerouslySetInnerHTML={{ __html: `.custom-scrollbar::-webkit-scrollbar { width: 6px; } .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); } .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(var(--theme-neon-rgb), 0.2); border-radius: 3px; } .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(var(--theme-neon-rgb), 0.5); }` }} />
     </section>
   );
 }

@@ -28,7 +28,7 @@ export default function AdminLogin() {
     <main className="relative min-h-screen flex items-center justify-center bg-[#030303] font-mono">
       <Link 
         href="/" 
-        className="absolute top-6 left-6 z-10 flex items-center gap-2 text-[#00f0ff]/60 hover:text-[#00f0ff] font-mono text-xs uppercase tracking-widest transition-colors border border-[#00f0ff]/20 hover:border-[#00f0ff]/50 px-3 py-1.5 rounded-sm"
+        className="absolute top-6 left-6 z-10 flex items-center gap-2 text-neon/60 hover:text-neon font-mono text-xs uppercase tracking-widest transition-colors border border-neon/20 hover:border-neon/50 px-3 py-1.5 rounded-sm"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M19 12H5M12 19l-7-7 7-7" />

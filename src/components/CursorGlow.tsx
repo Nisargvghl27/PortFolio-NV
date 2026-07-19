@@ -30,7 +30,7 @@ export default function CursorGlow() {
     <div
       className="pointer-events-none fixed top-0 left-0 z-50 w-[200px] h-[200px] rounded-full blur-[40px] transition-opacity duration-300"
       style={{
-        background: 'rgba(0, 240, 255, 0.08)',
+        background: 'rgba(var(--theme-neon-rgb), 0.08)',
         transform: `translate(${position.x - 100}px, ${position.y - 100}px)`,
       }}
     />

@@ -7,22 +7,13 @@ import SectionNav from '@/components/SectionNav'
 import MatrixRainWrapper from '@/components/MatrixRainWrapper'
 import IntroScreen from '@/components/IntroScreen'
 import FloatingDock from '@/components/FloatingDock'
-import { Inter, JetBrains_Mono } from 'next/font/google'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-})
+import MobileOverlay from '@/components/MobileOverlay'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nisargvaghela.dev'),
+  metadataBase: new URL('https://nisarg-dev.vercel.app'),
+  alternates: {
+    canonical: 'https://nisarg-dev.vercel.app',
+  },
   title: 'Nisarg Vaghela | Full Stack Engineer',
   description: 'Full-stack engineer and B.Tech AI student at NIT Surat. Showcasing web, mobile, and artificial intelligence projects.',
   keywords: ['Nisarg Vaghela', 'Next.js', 'React', 'Tailwind CSS', 'Full Stack Developer', 'Software Engineer', 'AI Student'],
@@ -31,15 +22,24 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Nisarg Vaghela | Full Stack Engineer',
     description: 'Specializing in modern full-stack web and mobile architecture. View my latest projects and engineering work.',
-    url: 'https://nisargvaghela.dev',
+    url: 'https://nisarg-dev.vercel.app',
     siteName: 'Nisarg Vaghela Portfolio',
     locale: 'en_US',
     type: 'website',
+    images: [
+      {
+        url: '/portfolio-preview.png',
+        width: 1200,
+        height: 630,
+        alt: 'Nisarg Vaghela Portfolio Preview',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Nisarg Vaghela | Full Stack Engineer',
     description: 'Specializing in modern full-stack web and mobile architecture.',
+    images: ['/og-image.jpg'],
   },
 }
 
@@ -50,30 +50,42 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
-      <body suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200`}>
-
-        {/* Animated Boot Sequence (Only plays once per session) */}
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+          rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Nisarg Vaghela",
+              "url": "https://nisarg-dev.vercel.app",
+              "jobTitle": "Full Stack Engineer",
+              "description": "Full-stack engineer and B.Tech AI student at NIT Surat specializing in web, mobile, and AI projects.",
+              "sameAs": [
+                "https://github.com/nisargvghl27",
+                "https://linkedin.com/in/nisargvghl27"
+              ]
+            })
+          }}
+        />
+      </head>
+      <body suppressHydrationWarning className="font-sans antialiased min-h-screen flex flex-col selection:bg-neon/30 selection:text-neon">
+        <MobileOverlay />
         <IntroScreen />
-        {/* Top Scroll Progress Bar */}
         <ScrollProgress />
-
-        {/* Soft cyan radial glow following cursor */}
         <CursorGlow />
-
-        {/* Floating Table of Contents / Progress Pill */}
         <SectionNav />
-
-        {/* Secret Matrix Easter Egg — lazy loaded via client wrapper */}
         <MatrixRainWrapper />
-
-        {/* Floating Dock Social Panel */}
         <FloatingDock />
-
-        {/* Main Content Area */}
         <div className="flex-1 pb-0">
           {children}
         </div>
-
         <Analytics />
       </body>
     </html>
