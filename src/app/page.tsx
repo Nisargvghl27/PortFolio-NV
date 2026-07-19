@@ -2,9 +2,10 @@ import { prisma } from '@/lib/prisma'
 import type { Project, Certificate, Skill, SiteConfig } from '@prisma/client'
 import Hero from '@/components/sections/Hero'
 import ContactForm from '@/components/sections/ContactForm'
+import { Suspense } from 'react'
 import FadeIn from '@/components/ui/FadeIn'
-import CPStats from '@/components/metrics/CPStats'
-import LeetCodeStats from '@/components/metrics/LeetCodeStats'
+import { CPStatsWrapper, LeetCodeStatsWrapper } from '@/components/metrics/StatsWrappers'
+import { CPSkeleton, LeetCodeSkeleton } from '@/components/metrics/StatsSkeletons'
 import Education from '@/components/sections/Education'
 import Skills from '@/components/sections/Skills'
 import Certificates from '@/components/sections/Certificates'
@@ -15,69 +16,7 @@ import GitHubCalendar from '@/components/metrics/GitHubCalendar'
 import Footer from '@/components/sections/Footer'
 import ErrorBoundary from '@/components/ui/ErrorBoundary'
 
-// Type definitions
-interface CodeforcesStats {
-  handle: string
-  rating: number
-  maxRating: number
-  rank: string
-  maxRank: string
-}
-
-interface LeetCodeData {
-  totalSolved: number
-  easySolved: number
-  mediumSolved: number
-  hardSolved: number
-  ranking: number
-}
-
-// Server-side data fetchers (cached for 1 day at the edge)
-async function fetchCodeforcesStats(handle: string): Promise<CodeforcesStats | null> {
-  try {
-    const res = await fetch(
-      `https://codeforces.com/api/user.info?handles=${handle}`,
-      { next: { revalidate: 86400 } } // cache for 1 day
-    )
-    const data = await res.json()
-    
-    if (data.status === 'OK' && data.result?.length > 0) {
-      const user = data.result[0]
-      return {
-        handle: user.handle,
-        rating: user.rating || 0,
-        maxRating: user.maxRating || 0,
-        rank: user.rank || 'unranked',
-        maxRank: user.maxRank || 'unranked',
-      }
-    }
-  } catch (err) {
-    console.error('Failed fetching Codeforces stats:', err)
-  }
-  return null
-}
-
-async function fetchLeetCodeStats(username: string): Promise<LeetCodeData | null> {
-  try {
-    const res = await fetch(
-      `https://leetcode-api-faisalshohag.vercel.app/${username}`,
-      { next: { revalidate: 86400 } } // cache for 1 day
-    )
-    const data = await res.json()
-    if (data) {
-      return {
-        totalSolved: data.totalSolved || 0,
-        easySolved: data.easySolved || 0,
-        mediumSolved: data.mediumSolved || 0,
-        hardSolved: data.hardSolved || 0,
-        ranking: data.ranking || 0,
-      }
-    }
-  } catch (err) {
-    console.error('Failed fetching LeetCode stats:', err)
-  }
-  return null
-}
+// Type definitions & Server-side fetchers extracted to StatsWrappers
 
 // Page
 export default async function HomePage() {
@@ -86,11 +25,7 @@ export default async function HomePage() {
   let skills: Skill[] = []
   let siteConfig: SiteConfig | null = null
 
-  // All fetches run in parallel: Prisma Projects + Prisma Certs + Codeforces + LeetCode
-  const [cfStats, lcStats] = await Promise.all([
-    fetchCodeforcesStats('nisargvghl27'),
-    fetchLeetCodeStats('nisargvghl27'),
-  ])
+  // Prisma Fetches (Codeforces and LeetCode are now handled via Suspense in their own wrappers)
 
   try {
     projects = await prisma.project.findMany({
@@ -150,10 +85,14 @@ export default async function HomePage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
               <ErrorBoundary>
-                <CPStats stats={cfStats} />
+                <Suspense fallback={<CPSkeleton />}>
+                  <CPStatsWrapper handle="nisargvghl27" />
+                </Suspense>
               </ErrorBoundary>
               <ErrorBoundary>
-                <LeetCodeStats stats={lcStats} username="nisargvghl27" />
+                <Suspense fallback={<LeetCodeSkeleton />}>
+                  <LeetCodeStatsWrapper username="nisargvghl27" />
+                </Suspense>
               </ErrorBoundary>
             </div>
             <GitHubCalendar />
