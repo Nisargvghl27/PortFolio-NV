@@ -12,7 +12,7 @@
 
 > A full-stack personal portfolio built with **Next.js 16**, **Prisma 7**, and **Supabase** — featuring a live project showcase, secure admin panel, and a contact form backed by Nodemailer & Gmail SMTP.
 
-![Portfolio Preview](https://res.cloudinary.com/dic4befjx/image/upload/v1784415224/Screenshot_2026-07-19_042141_bow38a.png)
+![Portfolio Preview](https://res.cloudinary.com/dic4befjx/image/upload/v1784498894/Screenshot_2026-07-20_033753_kavzmm.png)
 
 ---
 
