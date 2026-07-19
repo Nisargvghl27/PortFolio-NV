@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
-import AddSkillForm from '@/components/AddSkillForm'
-import EditSkillForm from '@/components/EditSkillForm'
+import AddSkillForm from '@/components/admin/AddSkillForm'
+import EditSkillForm from '@/components/admin/EditSkillForm'
 import { deleteSkill } from '@/app/actions/skills'
 
 export default async function SkillsAdminPage({
@@ -54,7 +54,7 @@ export default async function SkillsAdminPage({
                   <span className="text-[10px] text-gray-500 w-4 text-center">{skill.order}</span>
                   <div>
                     <h3 className={`font-bold text-sm ${editId === skill.id ? 'text-yellow-400' : 'text-cyan-100'}`}>{skill.name}</h3>
-                    <p className="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">{skill.category} // {skill.status}</p>
+                    <p className="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">{skill.category} {`//`} {skill.status}</p>
                   </div>
                 </div>
                 

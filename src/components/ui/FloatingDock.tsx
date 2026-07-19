@@ -129,7 +129,7 @@ function DockIcon({
   idx,
   setHoveredIndex
 }: {
-  mouseX: any
+  mouseX: import('framer-motion').MotionValue<number>
   label: string
   ariaLabel: string
   href: string

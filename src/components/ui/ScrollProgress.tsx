@@ -7,7 +7,9 @@ export default function ScrollProgress() {
   const [isMobile, setIsMobile] = useState(false)
   const { scrollYProgress } = useScroll()
 
-  useEffect(() => setIsMobile(window.innerWidth < 768), [])
+  useEffect(() => {
+    setTimeout(() => setIsMobile(window.innerWidth < 768), 0)
+  }, [])
 
   // Spring animation for a smoother filling effect
   const scaleX = useSpring(scrollYProgress, {

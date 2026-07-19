@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
-import AddCertificateForm from '@/components/AddCertificateForm'
-import EditCertificateForm from '@/components/EditCertificateForm'
+import AddCertificateForm from '@/components/admin/AddCertificateForm'
+import EditCertificateForm from '@/components/admin/EditCertificateForm'
 import { deleteCertificate } from '@/app/actions/certificates'
 
 export default async function CertificatesAdminPage({
@@ -52,7 +52,7 @@ export default async function CertificatesAdminPage({
               <div key={cert.id} className={`glass-panel p-5 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 group transition-all ${editId === cert.id ? 'border-yellow-500/50 bg-yellow-500/5' : 'hover:border-cyan-500/30'}`}>
                 <div>
                   <h3 className={`font-bold text-lg ${editId === cert.id ? 'text-yellow-400' : 'text-cyan-100'}`}>{cert.title}</h3>
-                  <p className="text-xs text-gray-500 mt-1">{cert.issuer} // {cert.date}</p>
+                  <p className="text-xs text-gray-500 mt-1">{cert.issuer} {`//`} {cert.date}</p>
                 </div>
                 
                 <div className="flex items-center gap-2">

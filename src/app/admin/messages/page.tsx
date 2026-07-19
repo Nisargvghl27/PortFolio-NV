@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
-import MessageListClient from '@/components/MessageListClient'
+import MessageListClient from '@/components/admin/MessageListClient'
 
 // Ensures data is fresh on every load
 export const dynamic = 'force-dynamic'

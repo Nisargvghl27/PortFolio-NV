@@ -1,18 +1,27 @@
+<div align="center">
+  <img src="https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
+  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+</div>
+
+<br />
+
 # Nisarg Vaghela — Portfolio
 
-> A full-stack personal portfolio built with **Next.js 16**, **Prisma 7**, and **Supabase** — featuring a live project showcase and a contact form backed by a real PostgreSQL database.
+> A full-stack personal portfolio built with **Next.js 16**, **Prisma 7**, and **Supabase** — featuring a live project showcase, secure admin panel, and a contact form backed by Nodemailer & Gmail SMTP.
 
 ---
 
 ## ✨ Features
 
-- **Dynamic Project Showcase** — Projects are stored in Supabase and fetched server-side on every request via Prisma. No static data.
-- **Contact Form** — Messages submitted by visitors are saved directly to the database using Next.js Server Actions.
-- **Admin Dashboard** — A private `/admin` page lets you add new projects (title, description, tech stack, GitHub/live links) without touching code.
-- **Glassmorphism Navigation** — Sticky, blurred navbar with smooth scroll behaviour.
-- **Dark Mode** — Full dark/light mode support with Tailwind CSS v4.
-- **Premium UI** — Animated project cards with hover lift effects, gradient hero text, and rounded glass-card contact section.
-- **Zero Client-Side Data Fetching** — The homepage is a React Server Component; Prisma queries run entirely on the server.
+- **Dynamic Showcase** — Projects, skills, and certificates are stored in Supabase and fetched server-side on every request via Prisma. 
+- **Contact Form (Gmail SMTP)** — Messages submitted by visitors are routed securely using `Nodemailer` directly through Gmail (no paid third-party email APIs required).
+- **Admin Dashboard** — A secure `/admin` page lets you add, edit, or delete projects/skills/certificates without touching code. Secured via middleware.
+- **Glassmorphism & Cyberpunk UI** — Sticky blurred navbar, Matrix rain animations, smooth scroll progress, and custom floating dock.
+- **Dark Mode** — Full dark/light mode support engineered with Tailwind CSS v4.
+- **Zero Client-Side Data Fetching** — The homepage is a React Server Component; Prisma queries run entirely on the server for maximum performance and SEO.
 
 ---
 
@@ -21,19 +30,20 @@
 ```
 portfolio/
 ├── prisma/
-│   ├── schema.prisma          # Database models (Project, Message)
+│   ├── schema.prisma          # Database models (Project, Message, Skill, Certificate)
 │   └── migrations/            # SQL migration history
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx         # Root layout — nav, footer, Inter font
+│   │   ├── layout.tsx         # Root layout — nav, footer, UI wrappers
 │   │   ├── page.tsx           # Homepage (Server Component)
-│   │   ├── admin/
-│   │   │   └── page.tsx       # Admin dashboard — add projects
-│   │   └── actions/
-│   │       ├── contact.ts     # Server Action — save contact messages
-│   │       └── project.ts     # Server Action — publish new projects
+│   │   ├── admin/             # Admin dashboard & login
+│   │   └── actions/           # Server Actions (Contact, Projects, Skills)
 │   └── components/
-│       └── ContactForm.tsx    # Client Component — contact form UI
+│       ├── admin/             # CMS tools and data entry forms
+│       ├── layout/            # Navigations, overlays, boundaries
+│       ├── metrics/           # Statistics, GitHub tracking, counters
+│       ├── sections/          # Major landing page chunks (Hero, Skills)
+│       └── ui/                # Reusable animations, glimmers, blocks
 ├── prisma.config.ts           # Prisma 7 CLI config (uses DIRECT_URL)
 ├── .env                       # Environment variables (never commit this)
 └── package.json
@@ -47,39 +57,11 @@ portfolio/
 |---|---|
 | Framework | [Next.js 16](https://nextjs.org) (App Router, Turbopack) |
 | Language | TypeScript |
-| Styling | Tailwind CSS v4 |
+| Styling | Tailwind CSS v4 & Framer Motion |
 | ORM | Prisma 7 (driver adapter pattern) |
 | Database | PostgreSQL via [Supabase](https://supabase.com) |
-| DB Adapter | `@prisma/adapter-pg` + `pg` |
+| Email Service | Nodemailer + Gmail App Passwords |
 | Font | Inter (Google Fonts) |
-| Hosting | (Your deployment platform) |
-
----
-
-## 🗄️ Database Schema
-
-```prisma
-model Project {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  techStack   String[]
-  githubLink  String?
-  liveLink    String?
-  imageUrl    String?
-  featured    Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model Message {
-  id        String   @id @default(uuid())
-  name      String
-  email     String
-  message   String
-  createdAt DateTime @default(now())
-}
-```
 
 ---
 
@@ -89,11 +71,12 @@ model Message {
 
 - Node.js 18+
 - A [Supabase](https://supabase.com) project (free tier works)
+- A Google Account with 2FA enabled (for Gmail App Password)
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/portfolio.git
+git clone https://github.com/nisargvghl27/portfolio.git
 cd portfolio
 ```
 
@@ -105,18 +88,24 @@ npm install
 
 ### 3. Set up environment variables
 
-Create a `.env` file at the project root:
+Create a `.env` file at the project root based on `.env.example`:
 
 ```env
-# Pooler connection — used by the app at runtime (port 6543)
+# Database Connections
 DATABASE_URL="postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:6543/postgres"
-
-# Direct connection — used by Prisma CLI for migrations (port 5432)
 DIRECT_URL="postgresql://postgres.[ref]:[password]@aws-0-[region].supabase.com:5432/postgres"
+
+# Admin Dashboard Password
+ADMIN_PASSWORD="your_secure_password"
+
+# Gmail SMTP Configuration
+GMAIL_USER="your.email@gmail.com"
+GMAIL_APP_PASSWORD="your_16_char_app_password"
 ```
 
-> **Where to find these:** Supabase Dashboard → Project → Settings → Database → Connection string.  
-> Use the **Transaction pooler** string for `DATABASE_URL` and the **Direct connection** string for `DIRECT_URL`.
+> **Where to find these:** 
+> - **Supabase**: Dashboard → Project → Settings → Database → Connection string.  
+> - **Gmail**: Google Account → Security → 2-Step Verification → App Passwords.
 
 ### 4. Run database migrations
 
@@ -154,42 +143,15 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## ⚙️ Architecture Notes
-
-### Why two database URLs?
-
-Supabase's connection pooler (PgBouncer on port **6543**) uses **transaction mode**, which doesn't support the prepared statements that Prisma's migration engine requires.
-
-- **`DATABASE_URL`** (port 6543, pooler) → used by the running Next.js app via `@prisma/adapter-pg` — handles concurrent connections efficiently.
-- **`DIRECT_URL`** (port 5432, direct) → used only by the Prisma CLI (`migrate`, `generate`, `studio`) — bypasses PgBouncer so migrations work correctly.
-
-### Prisma 7 + Next.js
-
-Prisma 7 removed the ability to set `url`/`directUrl` inside `schema.prisma`. Instead:
-- **CLI config** lives in `prisma.config.ts` (uses `DIRECT_URL`)
-- **Runtime client** is created with `@prisma/adapter-pg` (uses `DATABASE_URL`)
-
-```ts
-// src/lib/prisma.ts
-import { PrismaClient } from '.prisma/client'
-import { PrismaPg } from '@prisma/adapter-pg'
-
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
-export const prisma = new PrismaClient({ adapter })
-```
-
-### Server Actions
-
-Forms use Next.js [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations) — no API routes needed. The `'use server'` directive marks functions that run exclusively on the server, keeping database credentials out of the browser bundle.
-
----
-
 ## 🔐 Environment Variables
 
 | Variable | Required | Description |
 |---|---|---|
 | `DATABASE_URL` | ✅ | Supabase pooler connection (port 6543) |
 | `DIRECT_URL` | ✅ | Supabase direct connection (port 5432) |
+| `ADMIN_PASSWORD` | ✅ | Password to unlock the `/admin` dashboard routes |
+| `GMAIL_USER` | ✅ | The Gmail address used to send/receive contact emails |
+| `GMAIL_APP_PASSWORD` | ✅ | The 16-character App Password generated from Google |
 
 > ⚠️ **Never commit your `.env` file.** It is already listed in `.gitignore`.
 
@@ -197,24 +159,22 @@ Forms use Next.js [Server Actions](https://nextjs.org/docs/app/building-your-app
 
 ## 📬 Admin Panel
 
-Navigate to [http://localhost:3000/admin](http://localhost:3000/admin) to add new projects to your portfolio.
+Navigate to [http://localhost:3000/admin](http://localhost:3000/admin) to manage your portfolio dynamically.
+The `/admin` routes are protected by Next.js `middleware.ts`. You must log in using the `ADMIN_PASSWORD` defined in your `.env` file.
 
-Fields:
-- **Title** — The project name
-- **Description** — What the project does
-- **Tech Stack** — Comma-separated list (e.g. `Next.js, TypeScript, Prisma`)
-- **GitHub Link** *(optional)* — Link to the source code repository
-- **Live Demo Link** *(optional)* — Link to the deployed app
+From the Admin Dashboard you can:
+- **Projects**: Add, Edit, or Delete projects (Tech Stack, URLs, Impact Metrics).
+- **Skills**: Manage your technical arsenal.
+- **Certificates**: Upload and order your academic credentials.
+- **Messages**: View messages submitted via the Contact form, and reply to them directly via Gmail SMTP.
 
-After submitting, the homepage updates instantly via `revalidatePath('/')`.
-
-> 💡 **Tip:** For a production deployment, protect `/admin` behind authentication (e.g. [NextAuth.js](https://next-auth.js.org) or [Clerk](https://clerk.com)).
+After submitting any changes, the homepage updates instantly via `revalidatePath('/')`.
 
 ---
 
 ## 📄 License
 
-MIT — feel free to use this as a template for your own portfolio.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 

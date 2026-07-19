@@ -1,6 +1,6 @@
 'use client'
 
-import FadeIn from './FadeIn'
+import FadeIn from '@/components/ui/FadeIn'
 
 const educationData = [
   {

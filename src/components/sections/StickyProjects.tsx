@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import Image from 'next/image'
-import DeviceFrame from './DeviceFrame'
+import DeviceFrame from '@/components/ui/DeviceFrame'
 
 interface Project {
     id: string
@@ -45,7 +45,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
         <>
             {/* --- MOBILE VIEW: Highly optimized, no scroll hijacking, simple vertical stack --- */}
             <div className="lg:hidden w-full max-w-7xl mx-auto px-6 relative z-10 pt-16 pb-12 flex flex-col gap-16">
-                
+
                 {/* Mobile Section Header */}
                 <div className="flex items-center gap-4 mb-4">
                     <h2 className="text-xl md:text-2xl font-mono font-bold text-white uppercase tracking-widest">
@@ -76,7 +76,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                                 </div>
                                 <div className="w-10" />
                             </div>
-                            
+
                             <div className="w-full xs:pt-8 aspect-video">
                                 <DeviceFrame type={project.projectType}>
                                     {project.imageUrl ? (
@@ -112,30 +112,30 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                             <p className="text-slate-300 leading-relaxed mb-4 text-xs tracking-wide border-l-2 border-neon/50 pl-3 bg-gradient-to-r from-neon/5 to-transparent py-2 custom-scrollbar">
                                 {project.description}
                             </p>
-                            
+
                             {(project.impactUsers || project.impactUptime || project.impactScore || project.impactStars) && (
-                              <div className="flex flex-wrap gap-2 mb-5 font-mono">
-                                {project.impactUsers && (
-                                  <span className="text-[9px] border border-emerald-500/30 bg-emerald-500/5 text-emerald-400 px-2 py-1 uppercase tracking-widest">
-                                    USERS: {project.impactUsers}
-                                  </span>
-                                )}
-                                {project.impactUptime && (
-                                  <span className="text-[9px] border border-neon/30 bg-neon/5 text-neon px-2 py-1 uppercase tracking-widest">
-                                    UPTIME: {project.impactUptime}
-                                  </span>
-                                )}
-                                {project.impactScore && (
-                                  <span className="text-[9px] border border-violet-500/30 bg-violet-500/5 text-violet-400 px-2 py-1 uppercase tracking-widest">
-                                    SCORE: {project.impactScore}
-                                  </span>
-                                )}
-                                {project.impactStars && (
-                                  <span className="text-[9px] border border-amber-500/30 bg-amber-500/5 text-amber-400 px-2 py-1 uppercase tracking-widest">
-                                    STARS: {project.impactStars}
-                                  </span>
-                                )}
-                              </div>
+                                <div className="flex flex-wrap gap-2 mb-5 font-mono">
+                                    {project.impactUsers && (
+                                        <span className="text-[9px] border border-emerald-500/30 bg-emerald-500/5 text-emerald-400 px-2 py-1 uppercase tracking-widest">
+                                            USERS: {project.impactUsers}
+                                        </span>
+                                    )}
+                                    {project.impactUptime && (
+                                        <span className="text-[9px] border border-neon/30 bg-neon/5 text-neon px-2 py-1 uppercase tracking-widest">
+                                            UPTIME: {project.impactUptime}
+                                        </span>
+                                    )}
+                                    {project.impactScore && (
+                                        <span className="text-[9px] border border-violet-500/30 bg-violet-500/5 text-violet-400 px-2 py-1 uppercase tracking-widest">
+                                            SCORE: {project.impactScore}
+                                        </span>
+                                    )}
+                                    {project.impactStars && (
+                                        <span className="text-[9px] border border-amber-500/30 bg-amber-500/5 text-amber-400 px-2 py-1 uppercase tracking-widest">
+                                            STARS: {project.impactStars}
+                                        </span>
+                                    )}
+                                </div>
                             )}
 
                             <div className="mb-5">
@@ -183,7 +183,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                                         </span>
                                     </motion.a>
                                 )}
-                                
+
                                 {project.githubLink && (
                                     <motion.a
                                         href={project.githubLink}
@@ -223,7 +223,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
             <div className="hidden lg:block">
                 <div ref={containerRef} style={{ height: containerHeight }} className="relative w-full">
                     <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
-                        
+
                         {/* PINNED HEADER */}
                         <div className="absolute top-24 md:top-20 left-0 w-full z-40">
                             <motion.div
@@ -247,7 +247,7 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                         </div>
 
                         {/* CONTENT WRAPPER */}
-                        <div className="w-full max-w-7xl mx-auto px-6 relative z-10 pt-28 md:pt-16">
+                        <div className="w-full max-w-7xl mx-auto px-6 relative z-10 pt-30 md:pt-26">
                             <AnimatePresence mode="popLayout">
                                 <motion.div
                                     key={activeIndex}
@@ -272,8 +272,8 @@ export default function StickyProjects({ projects }: { projects: Project[] }) {
                                 <div
                                     key={i}
                                     className={`h-1.5 transition-all duration-500 rounded-full ${i === activeIndex
-                                            ? 'w-10 bg-neon shadow-[0_0_15px_#00f0ff]'
-                                            : 'w-2 bg-neon/20'
+                                        ? 'w-10 bg-neon shadow-[0_0_15px_#00f0ff]'
+                                        : 'w-2 bg-neon/20'
                                         }`}
                                 />
                             ))}
@@ -299,7 +299,7 @@ function ProjectImage({ project }: { project: Project }) {
                 </div>
                 <div className="w-10" />
             </div>
-            
+
             <div className="w-full xs:pt-8 aspect-video lg:aspect-auto lg:h-[45vh]">
                 <DeviceFrame type={project.projectType}>
                     {project.imageUrl ? (
@@ -339,30 +339,30 @@ function ProjectDetails({ project }: { project: Project }) {
             </p>
 
             {(project.impactUsers || project.impactUptime || project.impactScore || project.impactStars) && (
-              <div className="flex flex-wrap gap-2 mb-5 font-mono">
-                {project.impactUsers && (
-                  <span className="text-[9px] border border-emerald-500/30 bg-emerald-500/5 text-emerald-400 px-2 py-1 uppercase tracking-widest">
-                    USERS: {project.impactUsers}
-                  </span>
-                )}
-                {project.impactUptime && (
-                  <span className="text-[9px] border border-neon/30 bg-neon/5 text-neon px-2 py-1 uppercase tracking-widest">
-                    UPTIME: {project.impactUptime}
-                  </span>
-                )}
-                {project.impactScore && (
-                  <span className="text-[9px] border border-violet-500/30 bg-violet-500/5 text-violet-400 px-2 py-1 uppercase tracking-widest">
-                    SCORE: {project.impactScore}
-                  </span>
-                )}
-                {project.impactStars && (
-                  <span className="text-[9px] border border-amber-500/30 bg-amber-500/5 text-amber-400 px-2 py-1 uppercase tracking-widest">
-                    STARS: {project.impactStars}
-                  </span>
-                )}
-              </div>
+                <div className="flex flex-wrap gap-2 mb-5 font-mono">
+                    {project.impactUsers && (
+                        <span className="text-[9px] border border-emerald-500/30 bg-emerald-500/5 text-emerald-400 px-2 py-1 uppercase tracking-widest">
+                            USERS: {project.impactUsers}
+                        </span>
+                    )}
+                    {project.impactUptime && (
+                        <span className="text-[9px] border border-neon/30 bg-neon/5 text-neon px-2 py-1 uppercase tracking-widest">
+                            UPTIME: {project.impactUptime}
+                        </span>
+                    )}
+                    {project.impactScore && (
+                        <span className="text-[9px] border border-violet-500/30 bg-violet-500/5 text-violet-400 px-2 py-1 uppercase tracking-widest">
+                            SCORE: {project.impactScore}
+                        </span>
+                    )}
+                    {project.impactStars && (
+                        <span className="text-[9px] border border-amber-500/30 bg-amber-500/5 text-amber-400 px-2 py-1 uppercase tracking-widest">
+                            STARS: {project.impactStars}
+                        </span>
+                    )}
+                </div>
             )}
-            
+
             <div className="mb-5 md:mb-10">
                 <span className="text-slate-500 text-[9px] md:text-[10px] font-bold tracking-widest uppercase mb-2 md:mb-3 block">TARGET_ARCHITECTURE</span>
                 <div className="flex flex-wrap gap-1.5 md:gap-2.5">
@@ -376,7 +376,7 @@ function ProjectDetails({ project }: { project: Project }) {
                     ))}
                 </div>
             </div>
-            
+
             <div className="flex flex-wrap justify-end w-full gap-3 md:gap-4 text-[10px] md:text-sm font-bold uppercase tracking-widest mt-2">
                 {project.liveLink && (
                     <motion.a
@@ -407,7 +407,7 @@ function ProjectDetails({ project }: { project: Project }) {
                         </span>
                     </motion.a>
                 )}
-                
+
                 {project.githubLink && (
                     <motion.a
                         href={project.githubLink}

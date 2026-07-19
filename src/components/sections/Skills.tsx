@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import FadeIn from './FadeIn'
+import FadeIn from '@/components/ui/FadeIn'
 import type { Skill } from '@prisma/client'
 
 // Categories for filter buttons

@@ -24,12 +24,11 @@ function useGlitchText(finalText: string, startDelay: number, duration: number) 
       return () => clearTimeout(timeout)
     }
 
-    let startTimeout: NodeJS.Timeout
     let frame = 0
     let rafId: number
     let lastTime = 0
 
-    startTimeout = setTimeout(() => {
+    const startTimeout = setTimeout(() => {
       const totalFrames = Math.floor(duration / 30)
 
       const animate = (now: number) => {
@@ -85,11 +84,11 @@ export default function IntroScreen() {
     const hasSeenIntro = sessionStorage.getItem('hasSeenIntro')
     if (hasSeenIntro) return
 
-    setShowIntro(true)
+    setTimeout(() => setShowIntro(true), 0)
     sessionStorage.setItem('hasSeenIntro', 'true')
     
     // Check for mobile screen width to disable heavy scanline animation
-    setIsMobile(window.innerWidth < 768)
+    setTimeout(() => setIsMobile(window.innerWidth < 768), 0)
 
     // Stagger the boot log lines
     const lineTimers: NodeJS.Timeout[] = BOOT_LINES.map((_, i) =>

@@ -19,11 +19,11 @@ export default function MessageListClient({ initialMessages }: { initialMessages
     }
   }
 
-  const handleReplySubmit = async (e: React.FormEvent, id: string, email: string) => {
+  const handleReplySubmit = async (e: React.FormEvent, id: string, email: string, name: string) => {
     e.preventDefault()
     setReplyStatus('sending')
     try {
-      await replyToMessage(id, email, replyBody)
+      await replyToMessage(id, email, name, replyBody)
       setReplyStatus('success')
       setTimeout(() => {
         setReplyStatus('idle')
@@ -120,7 +120,7 @@ export default function MessageListClient({ initialMessages }: { initialMessages
                   <span className="w-1.5 h-1.5 rounded-full bg-neon animate-pulse"></span>
                   INITIATE_REPLY_SEQUENCE
                 </span>
-                <form onSubmit={(e) => handleReplySubmit(e, msg.id, msg.email)} className="space-y-3">
+                <form onSubmit={(e) => handleReplySubmit(e, msg.id, msg.email, msg.name)} className="space-y-3">
                   <textarea
                     rows={4}
                     value={replyBody}

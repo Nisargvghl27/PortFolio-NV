@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
-import AddProjectForm from '@/components/AddProjectForm'
-import EditProjectForm from '@/components/EditProjectForm'
+import AddProjectForm from '@/components/admin/AddProjectForm'
+import EditProjectForm from '@/components/admin/EditProjectForm'
 import { deleteProject } from '@/app/actions/project'
 
 export default async function ProjectsAdminPage({

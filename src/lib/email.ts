@@ -1,59 +1,38 @@
-// import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 
-// // Initialize Resend with your API key
-// const resend = new Resend(process.env.RESEND_API_KEY)
+// ─── Gmail SMTP transporter ──────────────────────────────────────────────────
+// Requires GMAIL_USER and GMAIL_APP_PASSWORD in .env
+function getGmailTransporter() {
+  const user = process.env.GMAIL_USER
+  const pass = process.env.GMAIL_APP_PASSWORD
 
-// export async function sendNotificationEmail({ name, email, message }: { name: string, email: string, message: string }) {
-//   if (!process.env.RESEND_API_KEY) {
-//     console.warn('RESEND_API_KEY is not set. Skipping notification email.')
-//     return
-//   }
-  
-//   try {
-//     await resend.emails.send({
-//       from: 'Portfolio System <onboarding@resend.dev>', // Use a verified domain in production if you have one
-//       to: ['nisargvaghela103@gmail.com'],
-//       subject: `New Transmission from: ${name}`,
-//       text: `> NEW CONNECTION ESTABLISHED\n\nNAME: ${name}\nEMAIL: ${email}\n\nMESSAGE:\n${message}`,
-//     })
-//   } catch (error) {
-//     console.error('Failed to send notification email:', error)
-//   }
-// }
-
-// export async function sendReplyEmail({ to, subject, replyBody }: { to: string, subject: string, replyBody: string }) {
-//   if (!process.env.RESEND_API_KEY) {
-//     throw new Error('RESEND_API_KEY is not set. Cannot send reply.')
-//   }
-
-//   try {
-//     await resend.emails.send({
-//       from: 'Nisarg Vaghela <onboarding@resend.dev>', // Ensure you use a verified domain in production
-//       to: [to],
-//       subject: subject,
-//       text: replyBody,
-//     })
-//   } catch (error) {
-//     console.error('Failed to send reply email:', error)
-//     throw error
-//   }
-// }
-
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
-
-export async function sendNotificationEmail({ name, email, message }: { name: string, email: string, message: string }) {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('RESEND_API_KEY is not set. Skipping notification email.')
-    return
+  if (!user || !pass) {
+    throw new Error('GMAIL_USER or GMAIL_APP_PASSWORD is not set in environment variables.')
   }
 
+  return nodemailer.createTransport({
+    service: 'gmail',
+    auth: { user, pass },
+  })
+}
+
+// ─── Notification: User → You (via Gmail SMTP) ───────────────────────────────
+export async function sendNotificationEmail({
+  name,
+  email,
+  message,
+}: {
+  name: string
+  email: string
+  message: string
+}) {
   try {
-    await resend.emails.send({
-      from: 'Portfolio System <onboarding@resend.dev>', // Use your verified domain
-      to: ['nisargvaghela103@gmail.com'],
-      replyTo: email, // This allows direct replies to the user
+    const transporter = getGmailTransporter()
+
+    await transporter.sendMail({
+      from: `"Portfolio System" <${process.env.GMAIL_USER}>`,
+      to: process.env.GMAIL_USER, // Send to yourself
+      replyTo: email, // If you click reply in Gmail, it goes to the user
       subject: `New Transmission from: ${name}`,
       text: `> NEW CONNECTION ESTABLISHED\n\nNAME: ${name}\nEMAIL: ${email}\n\nMESSAGE:\n${message}`,
     })
@@ -62,21 +41,25 @@ export async function sendNotificationEmail({ name, email, message }: { name: st
   }
 }
 
-export async function sendReplyEmail({ to, subject, replyBody }: { to: string, subject: string, replyBody: string }) {
-  if (!process.env.RESEND_API_KEY) {
-    throw new Error('RESEND_API_KEY is not set. Cannot send reply.')
-  }
+// ─── Reply: You → User (via Gmail SMTP) ──────────────────────────────────────
+export async function sendReplyEmail({
+  to,
+  toName,
+  subject,
+  replyBody,
+}: {
+  to: string
+  toName: string
+  subject: string
+  replyBody: string
+}) {
+  const transporter = getGmailTransporter()
 
-  try {
-    await resend.emails.send({
-      from: 'Nisarg Vaghela <onboarding@resend.dev>', // Use your verified domain
-      to: [to],
-      replyTo: 'nisargvaghela103@gmail.com', // So the user can reply back to your gmail
-      subject: subject,
-      text: replyBody,
-    })
-  } catch (error) {
-    console.error('Failed to send reply email:', error)
-    throw error
-  }
+  await transporter.sendMail({
+    from: `"Nisarg Vaghela" <${process.env.GMAIL_USER}>`,
+    to: `"${toName}" <${to}>`,
+    replyTo: process.env.GMAIL_USER, // User can reply back to your Gmail
+    subject,
+    text: replyBody,
+  })
 }

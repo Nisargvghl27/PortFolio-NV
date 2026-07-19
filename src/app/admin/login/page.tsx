@@ -1,12 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 export default function AdminLogin() {
   const [password, setPassword] = useState('')
-  const router = useRouter()
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()

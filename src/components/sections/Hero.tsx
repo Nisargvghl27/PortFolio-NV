@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { SiteConfig } from '@prisma/client';
 
+const roles = ['Full Stack Developer', 'Competitive Programmer'];
+
 // --- SCRAMBLE TEXT COMPONENT ---
 function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
   const [displayText, setDisplayText] = useState('');
@@ -13,7 +15,7 @@ function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
     const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || navigator.maxTouchPoints > 0);
     
     if (isMobile || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setDisplayText(text);
+      setTimeout(() => setDisplayText(text), 0);
       return;
     }
 
@@ -167,7 +169,7 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
   const [hasRun, setHasRun] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const roles = ['Full Stack Developer', 'Competitive Programmer'];
+
 
   // Initial delay so it doesn't type while the layout is scrambling
   useEffect(() => {
@@ -176,58 +178,6 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
     }, 1000);
     return () => clearTimeout(startTimer);
   }, []);
-
-  // Auto-run terminal logic
-  useEffect(() => {
-    const autoRunTimer = setTimeout(() => {
-      // Execute only if desktop width (>=1024px) and sequence hasn't run yet
-      if (window.innerWidth >= 1024 && !hasRun && !isTerminalRunning) {
-        handleTerminalSequence();
-      }
-    }, 2000);
-    
-    // Clear timeout on unmount
-    return () => clearTimeout(autoRunTimer);
-  }, [hasRun, isTerminalRunning]);
-
-  // Typing effect for the roles
-  useEffect(() => {
-    if (!hasStartedTyping) return;
-
-    let timeout: NodeJS.Timeout;
-    const currentRole = roles[roleIndex];
-    const speed = 1000 / (currentRole.length || 1);
-
-    if (!isDeleting && displayText === currentRole) {
-      timeout = setTimeout(() => setIsDeleting(true), 1000);
-    } else if (isDeleting && displayText === '') {
-      setIsDeleting(false);
-      setRoleIndex((prev) => (prev + 1) % roles.length);
-    } else {
-      timeout = setTimeout(() => {
-        const nextText = isDeleting
-          ? currentRole.substring(0, displayText.length - 1)
-          : currentRole.substring(0, displayText.length + 1);
-        setDisplayText(nextText);
-      }, speed);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, roleIndex, hasStartedTyping]);
-
-  // Auto-scroll only the terminal container
-  useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({
-        top: scrollContainerRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
-    }
-  }, [history]);
-
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   // Terminal Execution Logic
   const handleTerminalSequence = async () => {
@@ -254,6 +204,63 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
     }
     setIsTerminalRunning(false);
   };
+
+  // Auto-run terminal logic
+  useEffect(() => {
+    const autoRunTimer = setTimeout(() => {
+      // Execute only if desktop width (>=1024px) and sequence hasn't run yet
+      if (window.innerWidth >= 1024 && !hasRun && !isTerminalRunning) {
+        handleTerminalSequence();
+      }
+    }, 2000);
+    
+    // Clear timeout on unmount
+    return () => clearTimeout(autoRunTimer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasRun, isTerminalRunning]);
+
+  // Typing effect for the roles
+  useEffect(() => {
+    if (!hasStartedTyping) return;
+
+    let timeout: NodeJS.Timeout;
+    const currentRole = roles[roleIndex];
+    const speed = 1000 / (currentRole.length || 1);
+
+    if (!isDeleting && displayText === currentRole) {
+      timeout = setTimeout(() => setIsDeleting(true), 1000);
+    } else if (isDeleting && displayText === '') {
+      timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setRoleIndex((prev) => (prev + 1) % roles.length);
+      }, 0);
+    } else {
+      timeout = setTimeout(() => {
+        const nextText = isDeleting
+          ? currentRole.substring(0, displayText.length - 1)
+          : currentRole.substring(0, displayText.length + 1);
+        setDisplayText(nextText);
+      }, speed);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, roleIndex, hasStartedTyping]);
+
+  // Auto-scroll only the terminal container
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, [history]);
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+
 
   const runClear = () => {
     if (isTerminalRunning) return;
@@ -310,7 +317,7 @@ export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null })
             transition={{ duration: 0.6, delay: 0.9, ease: [0.215, 0.61, 0.355, 1] }}
             className="font-mono text-xs sm:text-sm text-slate-400 max-w-md mb-6 leading-relaxed tracking-wide opacity-90 min-h-[80px]"
           >
-            {`// SYSTEM_OVERVIEW: Compiling elegant solutions from complex data. Engineering robust full-stack architectures and integrating advanced artificial intelligence models.`}
+            {`// SYSTEM_OVERVIEW: Full-stack software engineer and B.Tech AI student at NIT Surat. Focused on building robust, scalable architectures, developing intuitive web/mobile applications, and integrating applied artificial intelligence.`}
           </motion.p>
 
           {siteConfig?.openToWork && (

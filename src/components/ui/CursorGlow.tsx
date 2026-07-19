@@ -10,11 +10,11 @@ export default function CursorGlow() {
   useEffect(() => {
     // Skip on touch/mobile devices — no mouse cursor exists
     if (navigator.maxTouchPoints > 0 || window.matchMedia('(hover: none)').matches) {
-      setIsTouch(true)
+      setTimeout(() => setIsTouch(true), 0)
       return
     }
 
-    setIsMounted(true)
+    setTimeout(() => setIsMounted(true), 0)
     const updatePosition = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY })
     }

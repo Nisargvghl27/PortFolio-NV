@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import FadeIn from './FadeIn'
+import FadeIn from '@/components/ui/FadeIn'
 import type { Certificate } from '@prisma/client'
 
 export default function Certificates({ certificatesData }: { certificatesData: Certificate[] }) {

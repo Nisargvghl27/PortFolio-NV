@@ -10,10 +10,9 @@ interface CodeforcesStats {
 
 interface CPStatsProps {
   stats: CodeforcesStats | null
-  handle: string
 }
 
-export default function CPStats({ stats, handle }: CPStatsProps) {
+export default function CPStats({ stats }: CPStatsProps) {
   return (
     <div className="glass-panel relative overflow-hidden flex flex-col justify-between font-mono rounded-md min-h-[220px]">
       {/* Terminal Header Bar */}

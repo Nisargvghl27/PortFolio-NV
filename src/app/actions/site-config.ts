@@ -9,7 +9,7 @@ export async function getSiteConfig() {
   })
 }
 
-export async function updateSiteConfig(formData: FormData) {
+export async function updateSiteConfig() {
   // ... existing implementation
   revalidatePath('/')
   revalidatePath('/admin/site-config')

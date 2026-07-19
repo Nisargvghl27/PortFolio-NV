@@ -1,4 +1,4 @@
-import NotFoundTerminal from '@/components/NotFoundTerminal'
+import NotFoundTerminal from '@/components/layout/NotFoundTerminal'
 
 export default function NotFound() {
   return <NotFoundTerminal />

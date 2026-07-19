@@ -1,19 +1,19 @@
 import { prisma } from '@/lib/prisma'
 import type { Project, Certificate, Skill, SiteConfig } from '@prisma/client'
-import Hero from '@/components/Hero'
-import ContactForm from '@/components/ContactForm'
-import FadeIn from '@/components/FadeIn'
-import CPStats from '@/components/CPStats'
-import LeetCodeStats from '@/components/LeetCodeStats'
-import Education from '@/components/Education'
-import Skills from '@/components/Skills'
-import Certificates from '@/components/Certificates'
-import ScanlineDivider from '@/components/ScanlineDivider'
-import StickyProjects from '@/components/StickyProjects'
-import VisitorCounter from '@/components/VisitorCounter'
-import GitHubCalendar from '@/components/GitHubCalendar'
-import Footer from '@/components/Footer'
-import ErrorBoundary from '@/components/ErrorBoundary'
+import Hero from '@/components/sections/Hero'
+import ContactForm from '@/components/sections/ContactForm'
+import FadeIn from '@/components/ui/FadeIn'
+import CPStats from '@/components/metrics/CPStats'
+import LeetCodeStats from '@/components/metrics/LeetCodeStats'
+import Education from '@/components/sections/Education'
+import Skills from '@/components/sections/Skills'
+import Certificates from '@/components/sections/Certificates'
+import ScanlineDivider from '@/components/ui/ScanlineDivider'
+import StickyProjects from '@/components/sections/StickyProjects'
+import VisitorCounter from '@/components/metrics/VisitorCounter'
+import GitHubCalendar from '@/components/metrics/GitHubCalendar'
+import Footer from '@/components/sections/Footer'
+import ErrorBoundary from '@/components/ui/ErrorBoundary'
 
 // Type definitions
 interface CodeforcesStats {
@@ -126,13 +126,13 @@ export default async function HomePage() {
       </div>
 
       {/* Main Content Area - unified background handled globally */}
-      <main className="max-w-6xl mx-auto px-6 space-y-32 overflow-clip pb-32">
+      <main className="max-w-6xl mx-auto px-6 space-y-32 overflow-clip pb-12">
         
         {/* Matrix Project Cards */}
         <section id="systems" className="relative max-md:border-t max-md:border-neon/5 max-md:pt-16">
           {projects.length === 0 ? (
             <div className="pt-20">
-              <p className="text-slate-500 font-mono italic max-w-6xl mx-auto px-6">{'// No systems initialized yet...'}</p>
+              <p className="text-slate-500 font-mono italic max-w-6xl mx-auto px-6">{`//`} No systems initialized yet...</p>
             </div>
           ) : (
             <ErrorBoundary>
@@ -211,7 +211,7 @@ export default async function HomePage() {
                       Initialize_<span className="text-neon">Connection</span>
                     </h2>
                     <p className="text-slate-400 font-mono text-sm leading-relaxed tracking-wide">
-                      // SYSTEM_PROMPT: Have a project proposal, collaboration idea, or question? Initiate a secure message transmission below, or reach out directly via my official network channels.
+                      {`//`} SYSTEM_PROMPT: Have a project proposal, collaboration idea, or question? Initiate a secure message transmission below, or reach out directly via my official network channels.
                     </p>
                   </div>
 

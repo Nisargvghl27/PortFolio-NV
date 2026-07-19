@@ -68,22 +68,22 @@ export default function AddProjectForm() {
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs text-cyan-500 mb-2"> IMPACT_USERS (e.g. "500+")</label>
+          <label className="block text-xs text-cyan-500 mb-2"> IMPACT_USERS (e.g. &quot;500+&quot;)</label>
           <input name="impactUsers" type="text" placeholder="e.g. 500+ (Optional)" suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500" />
         </div>
         <div>
-          <label className="block text-xs text-cyan-500 mb-2"> IMPACT_UPTIME (e.g. "99.9%")</label>
+          <label className="block text-xs text-cyan-500 mb-2"> IMPACT_UPTIME (e.g. &quot;99.9%&quot;)</label>
           <input name="impactUptime" type="text" placeholder="e.g. 99.9% (Optional)" suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500" />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs text-cyan-500 mb-2"> IMPACT_SCORE (e.g. "95/100")</label>
+          <label className="block text-xs text-cyan-500 mb-2"> IMPACT_SCORE (e.g. &quot;95/100&quot;)</label>
           <input name="impactScore" type="text" placeholder="e.g. 95/100 (Optional)" suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500" />
         </div>
         <div>
-          <label className="block text-xs text-cyan-500 mb-2"> IMPACT_STARS (e.g. "1.2k")</label>
+          <label className="block text-xs text-cyan-500 mb-2"> IMPACT_STARS (e.g. &quot;1.2k&quot;)</label>
           <input name="impactStars" type="text" placeholder="e.g. 1.2k (Optional)" suppressHydrationWarning className="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-cyan-500" />
         </div>
       </div>
