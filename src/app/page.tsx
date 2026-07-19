@@ -150,7 +150,7 @@ export default async function HomePage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
               <ErrorBoundary>
-                <CPStats stats={cfStats} handle="nisargvghl27" />
+                <CPStats stats={cfStats} />
               </ErrorBoundary>
               <ErrorBoundary>
                 <LeetCodeStats stats={lcStats} username="nisargvghl27" />
