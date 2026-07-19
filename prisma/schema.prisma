@@ -16,6 +16,14 @@ model Project {
   imageUrl    String?
   projectType String   @default("other")
   featured    Boolean  @default(false)
+  
+  // NEW impact metrics fields
+  impactUsers    String?
+  impactUptime   String?
+  impactScore    String?
+  impactStars    String?
+  order          Int      @default(0)
+  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -32,7 +40,7 @@ model Certificate {
 }
 
 model Skill {
-  id       String   @id @default(uuid())
+  id       String @id @default(uuid())
   name     String
   category String
   color    String
@@ -40,7 +48,7 @@ model Skill {
   latency  String
   status   String
   desc     String
-  order    Int      @default(0)
+  order    Int    @default(0)
 }
 
 model Message {
@@ -53,19 +61,11 @@ model Message {
   createdAt DateTime @default(now())
 }
 
-/*
--- Migration SQL --
-CREATE TABLE "Certificate" (
-    "id" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
-    "issuer" TEXT NOT NULL,
-    "date" TEXT NOT NULL,
-    "url" TEXT NOT NULL,
-    "desc" TEXT NOT NULL,
-    "order" INTEGER NOT NULL DEFAULT 0,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Certificate_pkey" PRIMARY KEY ("id")
-);
--- Trigger Vercel Build
-*/
+// NEW model for site settings (open to work badge, resume URL, visitor count)
+model SiteConfig {
+  id            String  @id @default("singleton")
+  openToWork    Boolean @default(true)
+  openToWorkMsg String  @default("AVAILABLE_FOR_INTERNSHIP")
+  resumeUrl     String  @default("https://drive.google.com/file/d/1AJ-d8MkJ6JpmOlhDuiNdKl2j0TPmHBmc/view?usp=sharing")
+  visitorCount  Int     @default(0)
+}

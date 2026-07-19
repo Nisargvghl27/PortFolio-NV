@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { SiteConfig } from '@prisma/client';
 
 // --- SCRAMBLE TEXT COMPONENT ---
 function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
@@ -28,7 +29,6 @@ function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
 
         const scrambled = text.split('').map((char, index) => {
           if (char === ' ') return ' ';
-
           if (frame > totalFramesToWait) {
             const decodeFrame = frame - totalFramesToWait;
             if (decodeFrame >= index * 2) {
@@ -36,7 +36,6 @@ function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
               return char;
             }
           }
-
           return CHARS[Math.floor(Math.random() * CHARS.length)];
         }).join('');
 
@@ -51,7 +50,6 @@ function ScrambleText({ text, delay = 0 }: { text: string; delay?: number }) {
     };
 
     animationFrameId = requestAnimationFrame(animate);
-
     return () => cancelAnimationFrame(animationFrameId);
   }, [text, delay]);
 
@@ -63,17 +61,19 @@ function CyberButton({
   children, 
   primary = false, 
   onClick, 
-  href 
+  href,
+  download
 }: { 
   children: React.ReactNode; 
   primary?: boolean; 
   onClick?: () => void;
   href?: string;
+  download?: boolean;
 }) {
   const baseClasses = `relative group px-6 py-3 md:px-8 md:py-4 font-mono text-xs md:text-sm font-bold tracking-widest uppercase overflow-hidden transition-colors w-full sm:w-auto text-center ${
     primary 
       ? 'text-black bg-[#00f0ff] shadow-[0_0_15px_rgba(0,240,255,0.4)] hover:shadow-[0_0_25px_rgba(0,240,255,0.6)]' 
-      : 'text-[#00f0ff] bg-black/40 border border-[#00f0ff]/50 hover:bg-[#00f0ff]/10 backdrop-blur-sm'
+      : 'text-[#00f0ff] bg-black/40 border border-[#00f0ff]/30 hover:border-[#00f0ff] hover:bg-[#00f0ff]/10 backdrop-blur-sm'
   }`;
 
   const innerContent = (
@@ -127,6 +127,7 @@ function CyberButton({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        download={download}
         whileHover="hover"
         whileTap="tap"
         className={baseClasses}
@@ -151,7 +152,7 @@ function CyberButton({
 }
 
 // --- MAIN HERO COMPONENT ---
-export default function Hero() {
+export default function Hero({ siteConfig }: { siteConfig?: SiteConfig | null }) {
   const [displayText, setDisplayText] = useState('');
   const [roleIndex, setRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -162,9 +163,13 @@ export default function Hero() {
     { id: 'init', type: 'system', text: `Last login: ${new Date().toDateString()} on ttys001` }
   ]);
   const [isTerminalRunning, setIsTerminalRunning] = useState(false);
+  const [hasRun, setHasRun] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const roles = ['Full Stack Developer', 'Competitive Programmer'];
+  
+  // Use the DB URL if it exists, otherwise fallback to local PDF
+  const activeResumeUrl = siteConfig?.resumeUrl || '/resume.pdf';
 
   // Initial delay so it doesn't type while the layout is scrambling
   useEffect(() => {
@@ -174,11 +179,21 @@ export default function Hero() {
     return () => clearTimeout(startTimer);
   }, []);
 
+  // Auto-run terminal logic
+  useEffect(() => {
+    const autoRunTimer = setTimeout(() => {
+      if (window.innerWidth >= 768 && !hasRun && !isTerminalRunning) {
+        runAboutMe();
+      }
+    }, 2000);
+    return () => clearTimeout(autoRunTimer);
+  }, [hasRun, isTerminalRunning]);
+
   // Typing effect for the roles
   useEffect(() => {
     if (!hasStartedTyping) return;
-
     let timeout: NodeJS.Timeout;
+
     const currentRole = roles[roleIndex];
     const speed = 1000 / (currentRole.length || 1);
 
@@ -215,8 +230,9 @@ export default function Hero() {
 
   // Terminal Execution Logic
   const runAboutMe = async () => {
-    if (isTerminalRunning) return;
+    if (isTerminalRunning || hasRun) return;
     setIsTerminalRunning(true);
+    setHasRun(true);
     
     setHistory(prev => [...prev, { id: crypto.randomUUID(), type: 'input', text: './about_me.sh' }]);
     
@@ -235,7 +251,6 @@ export default function Hero() {
       await new Promise(resolve => setTimeout(resolve, Math.random() * 200 + 100));
       setHistory(prev => [...prev, { id: crypto.randomUUID(), type: 'output', text: scriptLines[i] }]);
     }
-
     setIsTerminalRunning(false);
   };
 
@@ -291,27 +306,35 @@ export default function Hero() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9, ease: [0.215, 0.61, 0.355, 1] }}
-            className="font-mono text-xs sm:text-sm text-slate-400 max-w-md mb-10 leading-relaxed tracking-wide opacity-90 min-h-[80px]"
+            className="font-mono text-xs sm:text-sm text-slate-400 max-w-md mb-6 leading-relaxed tracking-wide opacity-90 min-h-[80px]"
           >
             {`// SYSTEM_OVERVIEW: Compiling elegant solutions from complex data. Engineering robust full-stack architectures and integrating advanced artificial intelligence models.`}
           </motion.p>
 
+          {siteConfig?.openToWork && (
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 rounded-sm font-mono text-xs text-emerald-400 mb-6 animate-pulse">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+              [ {siteConfig.openToWorkMsg} ]
+            </motion.div>
+          )}
+
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 w-full font-mono text-xs sm:text-sm font-bold uppercase tracking-widest">
-            <CyberButton primary={true} href="/resume.pdf">
-              <ScrambleText text="[ DOWNLOAD_RESUME ]" delay={1100} />
+            <CyberButton primary={true} onClick={() => scrollToSection('contact')}>
+              <ScrambleText text="[ ESTABLISH_UPLINK ]" delay={1100} />
             </CyberButton>
-            <CyberButton primary={false} onClick={() => scrollToSection('contact')}>
-              <ScrambleText text="[ ESTABLISH_UPLINK ]" delay={1200} />
+            
+            <CyberButton primary={false} href={activeResumeUrl} download>
+              <ScrambleText text="[ DOWNLOAD_CV ]" delay={1200} />
             </CyberButton>
           </motion.div>
 
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.5, type: 'spring' }} className="lg:col-span-5 w-full mt-12 lg:mt-0 relative">
+        <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.5, type: 'spring' }} className="lg:col-span-5 w-full mt-12 lg:mt-0 relative flex flex-col items-center">
           <div className="absolute inset-0 bg-[#00f0ff]/5 blur-xl rounded-lg" />
           
-          <div className="relative border border-[#00f0ff]/30 rounded-md bg-[#0a0f12]/95 backdrop-blur-xl shadow-[0_0_30px_rgba(0,240,255,0.05),inset_0_0_20px_rgba(0,240,255,0.05)] overflow-hidden font-mono text-sm flex flex-col h-[380px]">
-            
+          <div className="relative w-full border border-[#00f0ff]/30 rounded-md bg-[#0a0f12]/95 backdrop-blur-xl shadow-[0_0_30px_rgba(0,240,255,0.05),inset_0_0_20px_rgba(0,240,255,0.05)] overflow-hidden font-mono text-sm flex flex-col h-[380px]">
+             
             <div className="bg-black/50 border-b border-[#00f0ff]/20 px-4 py-2.5 flex items-center justify-between">
               <div className="flex gap-2 items-center">
                 <div className="w-2.5 h-2.5 rounded-full bg-slate-600" /><div className="w-2.5 h-2.5 rounded-full bg-slate-600" /><div className="w-2.5 h-2.5 rounded-full bg-slate-600" />
@@ -341,9 +364,21 @@ export default function Hero() {
                 ) : <span className="animate-pulse text-[#00f0ff]">&#9608;</span>}
               </div>
             </div>
-
           </div>
+          
+          {/* Subtle click to interact hint below terminal */}
+          {!hasRun && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="mt-3 text-[10px] text-slate-500 animate-pulse tracking-widest font-mono uppercase"
+            >
+              [ CLICK TO INTERACT ]
+            </motion.div>
+          )}
         </motion.div>
+
       </div>
       <style dangerouslySetInnerHTML={{ __html: `.custom-scrollbar::-webkit-scrollbar { width: 6px; } .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); } .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.2); border-radius: 3px; } .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 240, 255, 0.5); }` }} />
     </section>
