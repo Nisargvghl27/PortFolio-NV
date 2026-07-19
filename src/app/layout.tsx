@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-image.jpg',
+        url: 'https://res.cloudinary.com/dic4befjx/image/upload/v1784484003/og-image_by9ppw.jpg',
         width: 1200,
         height: 630,
         alt: 'Nisarg Vaghela Portfolio Preview',
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Nisarg Vaghela | Full Stack Engineer',
     description: 'Specializing in modern full-stack web and mobile architecture.',
-    images: ['/og-image.jpg'],
+    images: ['https://res.cloudinary.com/dic4befjx/image/upload/v1784484003/og-image_by9ppw.jpg'],
   },
 }
 
