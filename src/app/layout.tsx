@@ -28,10 +28,11 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://res.cloudinary.com/dic4befjx/image/upload/v1784484003/og-image_by9ppw.jpg',
+        url: 'https://res.cloudinary.com/dic4befjx/image/upload/q_auto,f_auto/v1784484003/og-image_by9ppw.jpg',
         width: 1200,
         height: 630,
         alt: 'Nisarg Vaghela Portfolio Preview',
+        type: 'image/jpeg',
       },
     ],
   },
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Nisarg Vaghela | Full Stack Engineer',
     description: 'Full-stack engineer & AI student specializing in scalable web and mobile architecture. Explore my latest projects and technical implementations.',
-    images: ['https://res.cloudinary.com/dic4befjx/image/upload/v1784484003/og-image_by9ppw.jpg'],
+    images: ['https://res.cloudinary.com/dic4befjx/image/upload/q_auto,f_auto/v1784484003/og-image_by9ppw.jpg'],
   },
 }
 
