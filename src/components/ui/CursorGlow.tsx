@@ -17,12 +17,6 @@ export default function CursorGlow() {
     }
     setTimeout(() => setIsMounted(true), 0)
 
-    // Hide the default Windows/Mac arrow cursor completely
-    const style = document.createElement('style')
-    style.id = 'hide-default-cursor'
-    style.innerHTML = `* { cursor: none !important; }`
-    document.head.appendChild(style)
-
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY })
       
@@ -82,7 +76,7 @@ export default function CursorGlow() {
           y: mousePos.y,
           scale: isClicking ? 0.5 : isHovering ? 0 : 1
         }}
-        transition={{ type: 'tween', duration: 0 }}
+        transition={{ type: 'tween', duration: 0.1 }}
       />
     </>
   )
